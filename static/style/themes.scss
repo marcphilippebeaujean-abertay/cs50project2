@@ -1,0 +1,21 @@
+$main-clr: rgb(93, 139, 166);
+$scndry-clr: rgb(49, 83, 155);
+
+#logo{
+   margin-top: 0px;
+  h1{
+    font-size: 80px;
+    margin-top: 0px;
+  }
+}
+#logo:hover{
+   cursor: default;
+}
+
+#logo_pt1{
+  color: $main-clr;
+}
+
+#logo_pt2{
+  color: $scndry-clr;
+}

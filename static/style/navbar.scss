@@ -1,0 +1,14 @@
+$navbar-bg-clr: rgba(152, 153, 155, 0.51);
+$navbar-height: 15%;
+
+#nav-bar{
+  height: 80px;
+  width: 100%;
+  background-color: $navbar-bg-clr;
+  margin-top: 0px;
+}
+
+#nav-bar-content{
+  width: 60%;
+  margin: auto;
+}
