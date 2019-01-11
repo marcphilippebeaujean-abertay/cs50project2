@@ -29,7 +29,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-node_modules/
-
 # C extensions
 *.so
+
+# JS stuff
+dist/
+node_modules/

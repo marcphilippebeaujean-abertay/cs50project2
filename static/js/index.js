@@ -1,3 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('#js-test').innerHTML = "Javascript is working!"
-})
+import x from "./testmodule";
+
+
+console.log(`${x} hello world`)
