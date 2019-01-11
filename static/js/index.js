@@ -1,4 +1,4 @@
 import x from "./testmodule";
 
-
-console.log(`${x} hello world`)
+const z = 23;
+console.log(`${x} hello world Variable z is ${z}`);
