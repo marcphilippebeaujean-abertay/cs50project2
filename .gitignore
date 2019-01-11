@@ -35,3 +35,5 @@ __pycache__/
 # JS stuff
 dist/
 node_modules/
+
+.log
