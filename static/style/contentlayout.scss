@@ -1,0 +1,16 @@
+#layout-grid{
+  width: 60%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+#left-info-sidebar{
+  grid-column: 1;
+  background-color: $scndry-clr;
+}
+
+#main-display-div{
+  grid-column: 2;
+  background-color: gray;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "project2",
+  "version": "1.0.0",
+  "description": "js dependancies for chat app",
+  "main": "index.js",
+  "repository": "https://github.com/marcphilippebeaujean-abertay/cs50project2.git",
+  "author": "marcphilippebeaujean-abertay <marcphilippebeaujean@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.28.4"
+  }
+}
