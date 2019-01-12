@@ -1,0 +1,24 @@
+#signup-header{
+  h1{
+    color: $main-clr;
+    text-align: center;
+  }
+  h1:hover{
+    cursor: default;
+  }
+  h2{
+    color: $scndry-clr;
+  }
+}
+
+#sign-in-link{
+  padding-top: 10px;
+}
+
+.sign-form{
+  width: 500px;
+  margin: auto;
+  h2:hover{
+    cursor: default;
+  }
+}

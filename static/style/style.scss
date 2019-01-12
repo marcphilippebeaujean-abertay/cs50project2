@@ -1,9 +1,11 @@
 @import './themes';
 @import './navbar';
 @import "./contentlayout";
+@import "./home.scss";
 
 body{
   margin: 0px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 
