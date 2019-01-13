@@ -7,7 +7,6 @@ venv/
 *.pyo
 env/
 env*
-dist/
 build/
 *.egg
 *.egg-info/
@@ -33,6 +32,5 @@ __pycache__/
 *.so
 
 # JS stuff
-dist/
 node_modules/
-.log
+*.log
