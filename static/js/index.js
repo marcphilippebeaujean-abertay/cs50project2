@@ -1,7 +1,5 @@
-import x from "./testmodule";
 import "../style/style.scss";
+import UserAccessView from "./user_access/userAccessView";
 
-
-class Controller{
-
-}
+const userAccessView = new UserAccessView();
+userAccessView.initView();
