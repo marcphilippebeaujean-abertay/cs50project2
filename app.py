@@ -37,6 +37,13 @@ def register():
     return render_template('register_form.html')
 
 
+@app.route('/add_user', methods=["POST"])
+def register_user():
+    print(f'attempting to register {request.form["email"]}')
+    print(f'attempting to register {request.form["name"]}')
+    return ' '
+
+
 @app.route('/<string:user_id>')
 def user_view(user_id):
     if session.get('current_user_id') is not user_id:
