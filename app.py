@@ -19,6 +19,7 @@ Session(app)
 # Configure session variables
 current_user_id = ''
 
+
 @app.route('/')
 def home():
     if session.get('current_user_id') is None:
@@ -28,7 +29,7 @@ def home():
 
 @app.route('/login')
 def login():
-    return render_template('user_access.html')
+    return render_template('login.html')
 
 
 @app.route('/register')

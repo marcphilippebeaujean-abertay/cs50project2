@@ -1,5 +1,4 @@
 import "../style/style.scss";
-import UserAccessView from "./user_access/userAccessView";
+import UserAccessController from "./user_access/userAccessController";
 
-const userAccessView = new UserAccessView();
-userAccessView.initView();
+const userAccessController = new UserAccessController();

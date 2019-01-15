@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} {{ super() }} {% endblock %}
+{% block title %} {{ super() }} - Log In {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -10,15 +10,14 @@
             <h2>Sign In</h2>
             <div class="form-group">
               <label for="emailInput">Email address</label>
-              <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
+              <input name="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
             <div class="form-group">
               <label for="passwordInput">Password</label>
-              <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+              <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Password">
             </div>
-            <button type="submit" class="btn btn-primary">Log In</button>
-            <p>Don't have an account? <a href="{{ url_for('register') }}">Sign Up</a></p>
+            <button type="submit" class="btn btn-primary" id="usr-access-btn">Log In</button>
+            <p id="register-view-txt">Don't have an account? <a href="{{ url_for('register') }}">Sign Up</a></p>
             <div class="alert alert-danger" id="log-error" role="alert">
                 Error when logging in!
             </div>
