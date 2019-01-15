@@ -15,12 +15,14 @@ export default class UserAccessController extends Controller{
             'updateType': 'errorUpdate',
             'showError': false
         });
-        if(document.getElementById('#sign-form') !== null) {
-            document.getElementById('#sign-form').addEventListener('submit', this.onUserSubmission);
+        if(document.getElementsByClassName(('sign-form')).length > 0) {
+            console.log("binding on submit event");
+            document.getElementsByClassName('sign-form')[0].addEventListener('submit', this.onUserSubmission);
         }
     }
     onUserSubmission(event){
         event.preventDefault();
+        console.log('submission event initiated');
         let formInput = this.model.queryModelData({
             'dataType': 'fieldInputs'
         });

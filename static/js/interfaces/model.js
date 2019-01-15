@@ -8,7 +8,7 @@ export default class Model{
         }
     }
     static formToJSON(formId) {
-        let form = document.getElementById(formId);
+        let form = document.getElementsByClassName(formId)[0];
         if(form === null){
             return {};
         }
