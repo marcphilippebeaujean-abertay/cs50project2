@@ -13,14 +13,20 @@
               <input name="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
             <div class="form-group">
+              <label for="usernameInput">Username</label>
+              <input name="username" type="username" class="form-control" id="usernameInput" placeholder="Enter username">
+            </div>
+            <div class="form-group">
               <label for="passwordInput">Password</label>
               <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Password">
               <input name="passwordConfirmation" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
             </div>
             <button type="submit" class="btn btn-primary" id="usr-access-btn">Sign Up</button>
             <p>Already have an account? <a href="{{ url_for('login') }}">Sign In</a></p>
-            <div class="alert alert-danger" id="log-error" role="alert">
-                Error when logging in!
+            <div class="alert alert-danger">
+                <div class="log-error" role="alert">
+                    Error when logging in!
+                </div>
             </div>
         </form>
     </div>

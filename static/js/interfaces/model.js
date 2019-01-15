@@ -7,8 +7,8 @@ export default class Model{
             throw 'data type not defined for request';
         }
     }
-    static formToJSON(formId) {
-        let form = document.getElementsByClassName(formId)[0];
+    static formToJSON(formClass) {
+        let form = document.getElementsByClassName(formClass)[0];
         if(form === null){
             return {};
         }

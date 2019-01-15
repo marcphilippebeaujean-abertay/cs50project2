@@ -8,17 +8,26 @@ class UserAccessView extends View {
     updateView(data) {
         super.updateView(data);
         switch(data['updateType']){
-            case 'errorUpdate':
-                let errorElem = document.getElementById('log-error');
+            case 'error':
+                let errorElem = document.getElementsByClassName('log-error')[0];
                 if(errorElem === null){
+                    throw 'tried to throw error on element select';
                     return;
                 }
-                if(data['showError'] === false) {
+                if(!('errorMessage' in data)){
+                    throw 'forgot to add error message';
+                    return;
+                }
+                if(data['errorMessage'].length === 0) {
                     errorElem.style.display = 'none';
                 }else{
-                    errorElem.style.display = 'inline';
+                    errorElem.style.display = 'block';
+                    errorElem.innerHTML = `${data['errorMessage']}`;
                 }
-            break;
+                break;
+            default:
+                throw 'strange view update for user access view';
+                break;
         }
     }
 };

@@ -1,5 +1,7 @@
 export default class Controller{
-    constructor(){
+    constructor(view, model){
+        this.view = view;
+        this.model = model;
         this.initController = this.initController.bind(this);
 
         document.addEventListener('DOMContentLoaded', () =>{
@@ -7,6 +9,6 @@ export default class Controller{
         });
     }
     initController(){
-        alert("controller initialisier not assigned");
+        throw 'controller initialisier not assigned';
     }
 }
