@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} {{ super() }} - Home{% endblock %}
+{% block title %} {{ super() }} {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -15,9 +15,13 @@
             <div class="form-group">
               <label for="passwordInput">Password</label>
               <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>
             <p>Don't have an account? <a href="{{ url_for('register') }}">Sign Up</a></p>
+            <div class="alert alert-danger" id="log-error" role="alert">
+                Error when logging in!
+            </div>
         </form>
     </div>
 {% endblock %}
