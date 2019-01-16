@@ -10,7 +10,7 @@
             <h2>Sign Up</h2>
             <div class="form-group">
               <label for="emailInput">Email address</label>
-              <input name="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
+              <input name="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email" autocomplete="email">
             </div>
             <div class="form-group">
               <label for="usernameInput">Username</label>
@@ -19,7 +19,7 @@
             <div class="form-group">
               <label for="passwordInput">Password</label>
               <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Password">
-              <input name="passwordConfirmation" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+              <input name="passwordConfirmation" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" autocomplete="new-password">
             </div>
             <button type="submit" class="btn btn-primary" id="usr-access-btn">Sign Up</button>
             <p>Already have an account? <a href="{{ url_for('login') }}">Sign In</a></p>

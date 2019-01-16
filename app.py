@@ -43,7 +43,7 @@ def register_user():
                   'username': request.form['name'],
                   'email': request.form['email']}).fetchone() is not None:
         # user entry already exists in one form or another
-        return jsonify({'success': False, 'error': 'Username or Email already in use!'})
+        return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
     else:
         db.execute('INSERT INTO users (username, password, email) VALUES (:username, :password, :email)', {
                    'username': request.form['name'],

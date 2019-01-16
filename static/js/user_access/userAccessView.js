@@ -1,6 +1,7 @@
 export default class UserAccessView{
     constructor(){
-        this.updateError = this.updateError.bind(this);
+        this.addErrorMsg = this.addErrorMsg.bind(this);
+        this.addSuccessMsg = this.addSuccessMsg.bind(this);
         this.btnEnabled = true;
     }
     getFormErrorLog(){
@@ -24,7 +25,7 @@ export default class UserAccessView{
         errorElem.style.display = 'none';
         console.log("clearing messages");
     }
-    updateError(errorMessage) {
+    addErrorMsg(errorMessage) {
         let errorElem = this.getFormErrorLog();
         errorElem.style.display = 'inline';
         if(errorElem === null){
@@ -39,7 +40,7 @@ export default class UserAccessView{
             errorElem.insertAdjacentHTML('beforeend', markup);
         }
     }
-    displayRegistrationSuccess(){
+    addSuccessMsg(){
         const markup = `
             <div class="alert alert-success" role="alert">
                 User has been registered!

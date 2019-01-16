@@ -1,7 +1,7 @@
 import Controller from "../interfaces/controller";
 import UserAccessView from "./userAccessView";
 import UserAccessModel from "./userAccessModel";
-import {clearFormInput} from "../formUtilities";
+import {clearFormInput, formToJSON} from "../formUtilities";
 
 const emailRegex = new RegExp(
   /(?=.{7,})(?!.*[\s])(?!.*[A-Z])[a-z]+([.][a-z]+)?[@][\w]+[.][a-z]+([.][a-z]+)?$/
@@ -12,8 +12,11 @@ export default class UserAccessController extends Controller{
     constructor(){
         super(new UserAccessView(), new UserAccessModel());
 
+        this.handleResponse = this.handleResponse.bind(this);
         this.onUserSubmission = this.onUserSubmission.bind(this);
+        this.model.responseHandleCallback = this.handleResponse;
     }
+
     initController() {
         this.view.clearErrorMessages();
         if(document.getElementsByClassName(('sign-form')).length > 0) {
@@ -24,7 +27,7 @@ export default class UserAccessController extends Controller{
         event.preventDefault();
         this.view.clearErrorMessages();
         this.view.toggleSubmitButtonEnabled();
-        let formInput = this.model.queryFormData();
+        let formInput = formToJSON('sign-form');
         let formErrors = [];
         if(!emailRegex.test(formInput['email'])){
             formErrors.push('Invalid email!');
@@ -48,26 +51,27 @@ export default class UserAccessController extends Controller{
             if(formErrors.length === 0){
                 // Passed all local tests for registering
                 // Dispatch request to register user
-                this.model.makeRegistrationRequest(formInput, (respData) =>{
-                    if(respData['success']){
-                        this.view.displayRegistrationSuccess();
-                    }else{
-                        this.view.updateError(respData['error']);
-                    }
-                    clearFormInput('sign-form');
-                    this.view.toggleSubmitButtonEnabled();
-                });
+                this.model.makeRegistrationRequest(formInput);
                 return;
             }else{
-                formErrors.forEach( error => this.view.updateError(error) );
+                formErrors.forEach( error => this.view.addErrorMsg(error) );
             }
         }else{
             // Otherwise, this is a log in request
             if(formErrors.length === 0){
 
             }else{
-                formErrors.forEach( error => this.view.updateError(error) );
+                formErrors.forEach( error => this.view.addErrorMsg(error) );
             }
+        }
+        this.view.toggleSubmitButtonEnabled();
+    }
+    handleResponse(respData){
+        if(respData['success']){
+            clearFormInput('sign-form');
+            this.view.addSuccessMsg(respData['respMessage']);
+        }else{
+            this.view.updateError(respData['respMessage']);
         }
         this.view.toggleSubmitButtonEnabled();
     }
