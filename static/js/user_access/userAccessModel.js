@@ -10,18 +10,25 @@ export default class UserAccessModel{
         }
         const request = new XMLHttpRequest();
         request.timeout = 2000;
-        request.open('POST', '/add_user');
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(`name=${formInput['username']}&password=${formInput['password']}&email=${formInput['email']}`);
+        request.onerror = () => {
+            console.log('error occured');
+            this.responseHandleCallback({
+                'success': false,
+                'respMessage': 'Failed to dispatch request!'
+            });
+        };
         request.onload = () => {
             this.responseHandleCallback(JSON.parse(request.responseText));
         };
         request.ontimeout = (e) => {
             this.responseHandleCallback({
                 'success': false,
-                'error': 'Request timed out!'
+                'respMessage': 'Request timed out!'
             });
         };
+        request.open('POST', '/add_user');
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send(`name=${formInput['username']}&password=${formInput['password']}&email=${formInput['email']}`);
         return request;
     }
 

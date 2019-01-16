@@ -45,7 +45,8 @@ export default class UserAccessView{
             <div class="alert alert-success" role="alert">
                 User has been registered!
             </div>`;
-        this.getFormErrorLog().style = 'inline';
-        this.getFormErrorLog().insertAdjacentHTML('beforeend', markup);
+        let formElem = this.getFormErrorLog();
+        formElem.style = 'inline';
+        formElem.insertAdjacentHTML('beforeend', markup);
     }
 };

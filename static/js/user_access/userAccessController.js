@@ -71,7 +71,7 @@ export default class UserAccessController extends Controller{
             clearFormInput('sign-form');
             this.view.addSuccessMsg(respData['respMessage']);
         }else{
-            this.view.updateError(respData['respMessage']);
+            this.view.addErrorMsg(respData['respMessage']);
         }
         this.view.toggleSubmitButtonEnabled();
     }
