@@ -8,3 +8,7 @@ export const formToJSON = (formClass) => {
             return data;
         }, {});
     };
+
+export const clearFormInput = (formClass) =>{
+
+};

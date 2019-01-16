@@ -23,26 +23,38 @@ export default class UserAccessController extends Controller{
         event.preventDefault();
         this.view.clearErrorMessages();
         let formInput = this.model.queryFormData();
+        let formErrors = [];
         if(!emailRegex.test(formInput['email'])){
-            this.view.updateError('Invalid email!');
+            formErrors.push('Invalid email!');
         }
         if(formInput['password'].length < 6){
-            this.view.updateError('Password too short!');
+            formErrors.push('Password too short!');
         }else if(formInput['password'].length > 20){
-            this.view.updateError('Password too long!');
+            formErrors.push('Password too long!');
         }
+        // If password confirmation field exists, we are attempting
+        // to register a user
         if(('passwordConfirmation' in formInput)){
             if(formInput['passwordConfirmation'] !== formInput['password']){
-                this.view.updateError('Passwords mismatch!');
+                formErrors.push('Passwords mismatch!');
             }
-            if(('username' in formInput)){
-                if(!nameRegex.test(formInput['username'])){
-                    this.view.updateError('Invalid username!');
-                }else{
-                    // Passed all local tests for registering
-                    // Dispatch request to register user
-                    const response = this.model.makeRegistrationRequest(formInput);
+            if(('username' in formInput)) {
+                if (!nameRegex.test(formInput['username'])) {
+                    formErrors.push('Invalid username!');
                 }
+            }
+            if(formErrors.length === 0){
+                // Passed all local tests for registering
+                // Dispatch request to register user
+                const response = this.model.makeRegistrationRequest(formInput, (respData) =>{
+                    if(respData['success']){
+                        this.view.displayRegistrationSuccess();
+                    }else{
+                        this.view.updateError(respData['error']);
+                    }
+                });
+            }else{
+                formErrors.forEach( error => this.view.updateError(error) );
             }
         }else{
             // Otherwise, this is a log in request

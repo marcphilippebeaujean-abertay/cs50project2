@@ -39,9 +39,17 @@ def register():
 
 @app.route('/add_user', methods=["POST"])
 def register_user():
-    print(f'attempting to register {request.form["email"]}')
-    print(f'attempting to register {request.form["name"]}')
-    return ' '
+    print(f'attempting to register user {request.form["name"]} with email {request.form["email"]}')
+    if db.execute("SELECT * FROM users WHERE username =:username OR email =:email",
+               {'username': request.form['name'], 'email': request.form['email']}).fetchone() is not None:
+        # user entry already exists in one form or another
+        return jsonify({'success': False, 'error': 'Username or Email already in use!'})
+    else:
+        db.execute("INSERT INTO users (username, password, email) VALUES (:username, :password, :email)",
+                  {'username': request.form['name'], 'password': request.form['password'], 'email': request.form['email']})
+        db.commit()
+        print('added user to db')
+        return jsonify({'success': True})
 
 
 @app.route('/<string:user_id>')

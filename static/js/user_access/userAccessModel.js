@@ -1,4 +1,4 @@
-import { formToJSON } from "../utilities";
+import { formToJSON } from "../formUtilities";
 
 export default class UserAccessModel{
     constructor() {
@@ -9,13 +9,14 @@ export default class UserAccessModel{
         let data = formToJSON(this.formId);
         return data;
     }
-    makeRegistrationRequest(formInput){
+    makeRegistrationRequest(formInput, callback){
         const request = new XMLHttpRequest();
         request.open('POST', '/add_user');
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.send(`name=${formInput['username']}&password=${formInput['password']}&email=${formInput['email']}`);
         request.onload = ()=> {
-            const data = JSON.parse(request.responseText);
+            callback(JSON.parse(request.responseText));
         }
     }
+
 }
