@@ -9,6 +9,6 @@ export default class Controller{
         });
     }
     initController(){
-        throw 'controller initialisier not assigned';
+        throw 'controller initialisation not defined';
     }
 }

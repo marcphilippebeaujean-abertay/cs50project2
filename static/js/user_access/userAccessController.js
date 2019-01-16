@@ -23,6 +23,7 @@ export default class UserAccessController extends Controller{
     onUserSubmission(event){
         event.preventDefault();
         this.view.clearErrorMessages();
+        this.view.toggleSubmitButtonEnabled();
         let formInput = this.model.queryFormData();
         let formErrors = [];
         if(!emailRegex.test(formInput['email'])){
@@ -47,20 +48,27 @@ export default class UserAccessController extends Controller{
             if(formErrors.length === 0){
                 // Passed all local tests for registering
                 // Dispatch request to register user
-                const response = this.model.makeRegistrationRequest(formInput, (respData) =>{
+                this.model.makeRegistrationRequest(formInput, (respData) =>{
                     if(respData['success']){
                         this.view.displayRegistrationSuccess();
                     }else{
                         this.view.updateError(respData['error']);
                     }
                     clearFormInput('sign-form');
+                    this.view.toggleSubmitButtonEnabled();
                 });
+                return;
             }else{
                 formErrors.forEach( error => this.view.updateError(error) );
             }
         }else{
             // Otherwise, this is a log in request
+            if(formErrors.length === 0){
 
+            }else{
+                formErrors.forEach( error => this.view.updateError(error) );
+            }
         }
+        this.view.toggleSubmitButtonEnabled();
     }
 }

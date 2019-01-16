@@ -24,7 +24,7 @@ current_user_id = ''
 def home():
     if session.get('current_user_id') is None:
         return redirect(url_for('login'))
-    return render_template()
+    return render_template('user_view.html')
 
 
 @app.route('/login')
@@ -39,16 +39,17 @@ def register():
 
 @app.route('/add_user', methods=["POST"])
 def register_user():
-    print(f'attempting to register user {request.form["name"]} with email {request.form["email"]}')
-    if db.execute("SELECT * FROM users WHERE username =:username OR email =:email",
-               {'username': request.form['name'], 'email': request.form['email']}).fetchone() is not None:
+    if db.execute('SELECT * FROM users WHERE username =:username OR email =:email', {
+                  'username': request.form['name'],
+                  'email': request.form['email']}).fetchone() is not None:
         # user entry already exists in one form or another
         return jsonify({'success': False, 'error': 'Username or Email already in use!'})
     else:
-        db.execute("INSERT INTO users (username, password, email) VALUES (:username, :password, :email)",
-                  {'username': request.form['name'], 'password': request.form['password'], 'email': request.form['email']})
+        db.execute('INSERT INTO users (username, password, email) VALUES (:username, :password, :email)', {
+                   'username': request.form['name'],
+                   'password': request.form['password'],
+                   'email': request.form['email']})
         db.commit()
-        print('added user to db')
         return jsonify({'success': True})
 
 
