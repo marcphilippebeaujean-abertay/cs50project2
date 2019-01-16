@@ -1,6 +1,7 @@
 import Controller from "../interfaces/controller";
 import UserAccessView from "./userAccessView";
 import UserAccessModel from "./userAccessModel";
+import {clearFormInput} from "../formUtilities";
 
 const emailRegex = new RegExp(
   /(?=.{7,})(?!.*[\s])(?!.*[A-Z])[a-z]+([.][a-z]+)?[@][\w]+[.][a-z]+([.][a-z]+)?$/
@@ -52,6 +53,7 @@ export default class UserAccessController extends Controller{
                     }else{
                         this.view.updateError(respData['error']);
                     }
+                    clearFormInput('sign-form');
                 });
             }else{
                 formErrors.forEach( error => this.view.updateError(error) );
