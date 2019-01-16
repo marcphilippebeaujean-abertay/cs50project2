@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} {{ super() }} - Home{% endblock %}
+{% block title %} {{ super() }} {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -7,7 +7,7 @@
     <div id="signup-header">
         <h1>Chat with the World</h1>
         <form class="sign-form">
-            <h2>Sign Up</h2>
+            <h2>{%  block form_header %}</h2>
             <div class="form-group">
               <label for="emailInput">Email address</label>
               <input name="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
@@ -21,7 +21,7 @@
               <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Password">
               <input name="passwordConfirmation" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
             </div>
-            <button type="submit" class="btn btn-primary" id="usr-access-btn">Sign Up</button>
+            <button type="submit" class="btn btn-primary" id="usr-access-btn">Submit</button>
             <p>Already have an account? <a href="{{ url_for('login') }}">Sign In</a></p>
             <div class="log-error">
             </div>

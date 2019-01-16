@@ -14,40 +14,34 @@ export default class UserAccessController extends Controller{
         this.onUserSubmission = this.onUserSubmission.bind(this);
     }
     initController() {
-        this.view.updateError('');
+        this.view.clearErrorMessages();
         if(document.getElementsByClassName(('sign-form')).length > 0) {
             document.getElementsByClassName('sign-form')[0].addEventListener('submit', this.onUserSubmission);
         }
     }
     onUserSubmission(event){
         event.preventDefault();
+        this.view.clearErrorMessages();
         let formInput = this.model.queryFormData();
         if(!emailRegex.test(formInput['email'])){
             this.view.updateError('Invalid email!');
-            return;
         }
         if(formInput['password'].length < 6){
             this.view.updateError('Password too short!');
-            return;
+        }else if(formInput['password'].length > 20){
+            this.view.updateError('Password too long!');
         }
         if(('passwordConfirmation' in formInput)){
             if(formInput['passwordConfirmation'] !== formInput['password']){
                 this.view.updateError('Passwords mismatch!');
-                return;
             }
             if(('username' in formInput)){
                 if(!nameRegex.test(formInput['username'])){
                     this.view.updateError('Invalid username!');
-                    return;
                 }else{
                     // Passed all local tests for registering
-                    const request = new XMLHttpRequest();
-                    request.open('POST', '/add_user');
-                    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                    request.send(`name=${formInput['username']}&password=${formInput['password']}&email=${formInput['email']}`);
-                    request.onload = ()=> {
-                        const data = JSON.parse(request.responseText);
-                    }
+                    // Dispatch request to register user
+                    const response = this.model.makeRegistrationRequest(formInput);
                 }
             }
         }else{
