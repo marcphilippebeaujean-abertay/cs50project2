@@ -26,7 +26,6 @@ export default class UserAccessController extends Controller{
     onUserSubmission(event){
         event.preventDefault();
         this.view.clearErrorMessages();
-        console.log("handling a user submission");
         this.view.toggleSubmitButtonEnabled();
         let formInput = formToJSON('sign-form');
         let formErrors = [];

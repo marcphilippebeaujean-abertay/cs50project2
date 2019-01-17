@@ -5,6 +5,9 @@ export default class UserAccessView{
         this.btnEnabled = true;
     }
     getFormErrorLog(){
+        if(document.getElementsByClassName('log-error').length === 0){
+            return null;
+        }
         return document.getElementsByClassName('log-error')[0];
     }
     toggleSubmitButtonEnabled(){
@@ -20,10 +23,12 @@ export default class UserAccessView{
         }
     }
     clearErrorMessages(){
-        let errorElem = this.getFormErrorLog();
+        const errorElem = this.getFormErrorLog();
+        if(errorElem === null){
+            return;
+        }
         errorElem.innerHTML = '';
         errorElem.style.display = 'none';
-        console.log("clearing messages");
     }
     addErrorMsg(errorMessage) {
         let errorElem = this.getFormErrorLog();

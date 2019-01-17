@@ -48,14 +48,15 @@ def register():
 
 @app.route('/user/<int:userid>')
 def user_view(userid):
-    session_user = session.get('user_id')
-    print(session_user)
-    print(userid)
-    if session_user is None:
+    session_user_id = session.get('user_id')
+    if session_user_id is None:
         return redirect(url_for('home'))
-    if session_user is not userid:
+    if session_user_id is not userid:
         return redirect(url_for('home'))
-    return render_template('user_view.html')
+    username = db.execute('SELECT username FROM users WHERE userid =:userid', {
+                'userid': session_user_id
+                }).fetchone().username
+    return render_template('user_view.html', username=username)
 
 
 @app.route('/add_user', methods=["POST"])
