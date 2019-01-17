@@ -16,15 +16,12 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure session variables
-current_user_id = ''
-
 
 @app.route('/')
 def home():
-    if session.get('current_user_id') is None:
+    if session.get('user_id') is None:
         return redirect(url_for('login'))
-    return render_template('user_view.html')
+    return redirect(url_for('user_view', userid=session.get('user_id')))
 
 
 @app.route('/login')
@@ -32,9 +29,33 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/login_user', methods=['POST'])
+def login_user():
+    req_user = db.execute('SELECT * FROM users WHERE email =:email AND password =:password', {
+                  'email': request.form['email'],
+                  'password': request.form['password']}).fetchone()
+    if req_user is None:
+        return jsonify({'success': False, 'respMessage': 'Email or password did not match!'})
+    else:
+        session['user_id'] = req_user.userid
+        return jsonify(dict(redirect=url_for('user_view', userid=req_user.userid)))
+
+
 @app.route('/register')
 def register():
     return render_template('register_form.html')
+
+
+@app.route('/user/<int:userid>')
+def user_view(userid):
+    session_user = session.get('user_id')
+    print(session_user)
+    print(userid)
+    if session_user is None:
+        return redirect(url_for('home'))
+    if session_user is not userid:
+        return redirect(url_for('home'))
+    return render_template('user_view.html')
 
 
 @app.route('/add_user', methods=["POST"])
@@ -51,13 +72,6 @@ def register_user():
                    'email': request.form['email']})
         db.commit()
         return jsonify({'success': True})
-
-
-@app.route('/<string:user_id>')
-def user_view(user_id):
-    if session.get('current_user_id') is not user_id:
-        return redirect(url_for('login'))
-    return render_template('user_view.html', user_id=user_id)
 
 
 if __name__ == '__main__':

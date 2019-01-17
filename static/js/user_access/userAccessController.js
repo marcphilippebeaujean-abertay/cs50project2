@@ -26,6 +26,7 @@ export default class UserAccessController extends Controller{
     onUserSubmission(event){
         event.preventDefault();
         this.view.clearErrorMessages();
+        console.log("handling a user submission");
         this.view.toggleSubmitButtonEnabled();
         let formInput = formToJSON('sign-form');
         let formErrors = [];
@@ -52,21 +53,25 @@ export default class UserAccessController extends Controller{
                 // Passed all local tests for registering
                 // Dispatch request to register user
                 this.model.makeRegistrationRequest(formInput);
-                return;
-            }else{
-                formErrors.forEach( error => this.view.addErrorMsg(error) );
             }
         }else{
+            console.log('sending login request');
             // Otherwise, this is a log in request
             if(formErrors.length === 0){
-
-            }else{
-                formErrors.forEach( error => this.view.addErrorMsg(error) );
+                this.model.makeLoginRequest(formInput);
             }
         }
-        this.view.toggleSubmitButtonEnabled();
+        console.log("checking for errors?");
+        if(formErrors.length > 0){
+            formErrors.forEach( error => this.view.addErrorMsg(error) );
+            this.view.toggleSubmitButtonEnabled();
+        }
     }
     handleResponse(respData){
+        if(respData.redirect){
+            window.location.href = respData.redirect;
+            return;
+        }
         if(respData['success']){
             clearFormInput('sign-form');
             this.view.addSuccessMsg(respData['respMessage']);
