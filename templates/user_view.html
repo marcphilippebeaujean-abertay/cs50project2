@@ -6,7 +6,22 @@
 {% block content %}
     <div id="user-view-grid">
         <div class="overlay" id="chatroom-creation-overlay">
-
+            <div id="chatroom-creation-window">
+                <form class="chatroom-form">
+                    <h2>Add New Chat Room</h2>
+                    <div class="form-group">
+                        <label for="roomName">Room Name</label>
+                        <input name="roomName" type="name" class="form-control" id="roomName" aria-describedby="newRoomName" placeholder="Enter room name">
+                    </div>
+                    <div class="form-group">
+                        <div class="inline-radio-btns">
+                            <input type="radio" name="room-creation-choice"  value="create" checked /> <span>Create</span>
+                            <input type="radio" name="room-creation-choice"  value="join" /> Join
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="usr-access-btn">Submit</button>
+                </form>
+            </div>
         </div>
         <div id="user-sidebar">
             <h2>{{ username }}</h2>
