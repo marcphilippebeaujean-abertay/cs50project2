@@ -30,7 +30,10 @@ export default class UserViewModel{
         };
         request.onload = () => {
             console.log(JSON.parse((request.responseText)));
-            this.responseCallback(JSON.parse(request.responseText));
+            this.responseCallback({
+                'form': form,
+                ...JSON.parse(request.responseText)
+            });
         };
         return request
     }
@@ -42,14 +45,16 @@ export default class UserViewModel{
             this.responseCallback({
                 'form': 'addChatRoom',
                 'success': false,
-                'message': 'Invalid room name (between 5 to 19 characters and no white space)'
+                'respMessage': 'Room name can only be 5 to 19 alphabetical characters'
             });
         }else{
-            //const request = this.initXMLHttpReq('addChatRoom');
-            //if(formInput['roomCreationChoice'] === 'create') {
-            //    request.open('POST', '/add_chatroom');
-            //    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            //}
+            const request = this.initXMLHttpReq('addChatRoom');
+            if(formInput['roomCreationChoice'] === 'create') {
+                console.log(formInput);
+                request.open('POST', '/add_chatroom');
+                request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                request.send(`roomName=${formInput['roomName']}`);
+            }
         }
     }
 }

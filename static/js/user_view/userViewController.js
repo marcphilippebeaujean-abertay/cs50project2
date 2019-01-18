@@ -38,7 +38,7 @@ export default class UserViewController extends Controller{
     }
     responseCallback(responseMessage){
         if(responseMessage['form'] === 'addChatRoom'){
-            this.view.setMessageForAddChatroom(responseMessage['message'], responseMessage['success']);
+            this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
         }
     }
 

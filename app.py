@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, redirect, session, j
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import string
+import random
 import os
 
 # Configure DB
@@ -15,6 +17,12 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+
+def random_string(string_len=10):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(string_len))
 
 
 @app.route('/')
@@ -80,6 +88,39 @@ def register_user():
                    'email': request.form['email']})
         db.commit()
         return jsonify({'success': True})
+
+
+@app.route('/add_chatroom', methods=["POST"])
+def add_chat_room():
+    print(request.form)
+    if db.execute('SELECT * FROM chatrooms WHERE roomname =:roomName', {
+                'roomName': request.form['roomName']}).fetchone() is not None:
+        return jsonify({'success': False, 'respMessage': 'Not a unique chatroom name!'})
+    else:
+        session_user_id = session.get('user_id')
+        if session_user_id is None:
+            return jsonify({'success': False, 'respMessage': 'Strange user id!'})
+        unique_id = None
+        for i in range(5):
+            new_id = random_string()
+            if db.execute('SELECT * FROM chatrooms WHERE inviteid =:inviteid',{
+                'inviteid': new_id}).fetchone() is None:
+                unique_id = new_id
+                break
+        if unique_id is None:
+            return jsonify({'success': False, 'respMessage': 'Could not generate unique invite code!'})
+        db.execute('INSERT INTO chatrooms (roomname, userid, inviteid) VALUES (:roomname, :userid, :inviteid)', {
+            'roomname': request.form['roomName'],
+            'userid': session_user_id,
+            'inviteid': unique_id
+            })
+        db.commit()
+        return jsonify({
+            'success': True,
+            'respMessage': f'Generated new room with invite key {unique_id}',
+            'roomName': request.form['roomName'],
+            'roomOwnerId': session_user_id
+        })
 
 
 if __name__ == '__main__':
