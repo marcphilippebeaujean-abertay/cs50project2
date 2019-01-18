@@ -17,12 +17,12 @@ export default class UserViewUpdater{
             addChatroomWindow.style.display = 'none';
         }
     }
-    setMessageForAddChatroom(msgInfo){
+    setMessageForAddChatroom(msg, isSuccess){
         const errorElem = document.getElementsByClassName('adding-chat-error')[0];
-        const style = msgInfo['success'] === true ? '"alert alert-success" role="alert"' : '"alert alert-danger" role="alert"';
+        const style = isSuccess ? '"alert alert-success" role="alert"' : '"alert alert-danger" role="alert"';
         const markup = `
                 <div id="adding-chat-update-msg" class=${style}>
-                    ${msgInfo['message']}
+                    ${msg}
                 </div>`;
         errorElem.innerHTML = markup;
     }
