@@ -15,6 +15,7 @@ _mailinglist
 .cache/
 .pytest_cache/
 .idea/
+sass-cache/
 docs/_build/
 flask_session/
 

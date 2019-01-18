@@ -1,8 +1,30 @@
 {% extends "layout.html" %}
-{% block title %} {{ super }} - {{ username }} {% endblock %}
+{% block title %} {{ super() }} - {{ username }} {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
 {% block content %}
-    <h1>hello, {{ username }}</h1>
+    <div id="user-view-grid">
+        <div id="user-sidebar">
+            <h2>{{ username }}</h2>
+            <ul id="chatroom-list">
+
+            </ul>
+            <div id="user-inceractions-div">
+                <img
+                    src="{{ url_for('static', filename='images/add_logo.png') }}"
+                    alt="log out button"
+                    class="interaction-logo"
+                />
+                <a href="{{ url_for('log_out_user') }}"><img
+                    src="{{ url_for('static', filename='images/logout.png') }}"
+                    alt="log out button"
+                    class="interaction-logo"
+                /></a>
+            </div>
+        </div>
+        <div id="chatroom-view">
+            <h2>No chatrooms to view :(</h2>
+        </div>
+    </div>
 {% endblock %}

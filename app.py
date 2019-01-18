@@ -41,6 +41,13 @@ def login_user():
         return jsonify(dict(redirect=url_for('user_view', userid=req_user.userid)))
 
 
+@app.route('/log_out')
+def log_out_user():
+    if session.get('user_id') is not None:
+        session['user_id'] = None
+    return redirect(url_for('home'))
+
+
 @app.route('/register')
 def register():
     return render_template('register_form.html')
