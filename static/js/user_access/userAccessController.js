@@ -54,13 +54,11 @@ export default class UserAccessController extends Controller{
                 this.model.makeRegistrationRequest(formInput);
             }
         }else{
-            console.log('sending login request');
             // Otherwise, this is a log in request
             if(formErrors.length === 0){
                 this.model.makeLoginRequest(formInput);
             }
         }
-        console.log("checking for errors?");
         if(formErrors.length > 0){
             formErrors.forEach( error => this.view.addErrorMsg(error) );
             this.view.toggleSubmitButtonEnabled();

@@ -12,6 +12,7 @@
                         src="{{ url_for('static', filename='images/close_window_btn.png') }}"
                         alt="close window button"
                         id="close-chat-window"
+                        class="toggle-add-chatroom-window"
                     />
                     <h2>Add New Chat Room</h2>
                     <div class="form-group">
@@ -43,7 +44,7 @@
                 <img
                     src="{{ url_for('static', filename='images/add_logo.png') }}"
                     alt="add chatroom button"
-                    class="interaction-logo"
+                    class="interaction-logo toggle-add-chatroom-window"
                 />
                 <a href="{{ url_for('log_out_user') }}"><img
                     src="{{ url_for('static', filename='images/logout.png') }}"
