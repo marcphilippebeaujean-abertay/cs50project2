@@ -7,7 +7,7 @@
     <div id="user-view-grid">
         <div class="overlay" id="chatroom-creation-overlay">
             <div id="chatroom-creation-window">
-                <form class="chatroom-form">
+                <form class="add-chatroom-form">
                     <img
                         src="{{ url_for('static', filename='images/close_window_btn.png') }}"
                         alt="close window button"
@@ -26,12 +26,19 @@
                         >
                     </div>
                     <div class="form-group">
-                        <div class="inline-radio-btns">
-                            <input type="radio" name="room-creation-choice"  value="create" checked /> <span>Create</span>
-                            <input type="radio" name="room-creation-choice"  value="join" /> Join
-                        </div>
+                        <fieldset class="inline-radio-btns">
+                            <input type="radio" id="create-room" name="room-creation-choice"  value="create" checked />
+                            <label for="create-room" >Create Room</label>
+                            <input type="radio" id="join-room" name="room-creation-choice"  value="join" />
+                            <label for="join-room" >Join Room</label>
+                        </fieldset>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="usr-access-btn">Submit</button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="add-chatroom-btn">
+                            Submit
+                    </button>
                 </form>
             </div>
         </div>

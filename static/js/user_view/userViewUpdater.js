@@ -4,7 +4,6 @@ export default class UserViewUpdater{
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
     }
     toggleChatroomAddWindow(){
-        console.log('toggling the add chatroom window');
         this.addChatroomWindowOpen = !this.addChatroomWindowOpen;
         const addChatroomWindow = document.getElementById('chatroom-creation-overlay');
         if(this.addChatroomWindowOpen){

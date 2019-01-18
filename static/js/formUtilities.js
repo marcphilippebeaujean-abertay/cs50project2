@@ -4,7 +4,14 @@ export const formToJSON = (formClass) => {
         return {};
     }
     return [].reduce.call(form.elements, (data, element) => {
-        data[element.name] = element.value;
+        if(element.name !== ""){
+            if(element.type === 'radio'){
+                if(!element.checked){
+                    return data;
+                }
+            }
+            data[element.name] = element.value;
+        }
         return data;
     }, {});
 };
