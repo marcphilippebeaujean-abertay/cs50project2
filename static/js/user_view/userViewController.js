@@ -8,6 +8,10 @@ export default class UserViewController extends Controller{
         super(new UserViewUpdater(), new UserViewModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
+        this.responseCallback = this.responseCallback.bind(this);
+
+        this.model.responseCallback = this.responseCallback;
+
     }
     initController(){
         const addChatrmBtn = document.getElementsByClassName('add-chatroom-form')[0];
@@ -29,7 +33,13 @@ export default class UserViewController extends Controller{
     }
     onAddChatroomAttempt(e){
         event.preventDefault();
-        console.log('attempted to add chatroom!');
-        console.log(formToJSON('add-chatroom-form'));
+        this.model.dispatchAddChatroomRequest(formToJSON('add-chatroom-form'));
+
     }
+    responseCallback(responseMessage){
+        if(responseMessage['form'] === 'addChatRoom'){
+            this.view.setMessageForAddChatroom(responseMessage);
+        }
+    }
+
 }
