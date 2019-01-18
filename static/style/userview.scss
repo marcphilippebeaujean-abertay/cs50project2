@@ -45,6 +45,14 @@
 }
 
 .chatroom-form{
+  position: relative;
   width: 90%;
   margin: 10px auto;
+}
+
+#close-chat-window{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0%;
 }

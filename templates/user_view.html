@@ -8,10 +8,21 @@
         <div class="overlay" id="chatroom-creation-overlay">
             <div id="chatroom-creation-window">
                 <form class="chatroom-form">
+                    <img
+                        src="{{ url_for('static', filename='images/close_window_btn.png') }}"
+                        alt="close window button"
+                        id="close-chat-window"
+                    />
                     <h2>Add New Chat Room</h2>
                     <div class="form-group">
                         <label for="roomName">Room Name</label>
-                        <input name="roomName" type="name" class="form-control" id="roomName" aria-describedby="newRoomName" placeholder="Enter room name">
+                        <input name="roomName"
+                               type="name"
+                               class="form-control"
+                               id="roomName"
+                               aria-describedby="newRoomName"
+                               placeholder="Enter room name"
+                        >
                     </div>
                     <div class="form-group">
                         <div class="inline-radio-btns">
@@ -31,7 +42,7 @@
             <div id="user-inceractions-div">
                 <img
                     src="{{ url_for('static', filename='images/add_logo.png') }}"
-                    alt="log out button"
+                    alt="add chatroom button"
                     class="interaction-logo"
                 />
                 <a href="{{ url_for('log_out_user') }}"><img
