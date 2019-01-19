@@ -38,9 +38,6 @@ export default class UserViewModel{
         return request
     }
     dispatchAddChatroomRequest(formInput){
-        if(this.responseCallback === null){
-            throw 'response callback not defined';
-        }
         if(!chatroomNameReg.test(formInput['roomName'])){
             this.responseCallback({
                 'form': 'addChatRoom',
@@ -56,5 +53,11 @@ export default class UserViewModel{
                 request.send(`roomName=${formInput['roomName']}`);
             }
         }
+    }
+    dispatchChatroomListRequest(){
+        const request = this.initXMLHttpReq('getChatrooms');
+        request.open('GET', '/get_chatrooms');
+        // Send request
+        request.send();
     }
 }

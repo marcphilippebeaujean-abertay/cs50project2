@@ -5,7 +5,10 @@ const clearAddChatRoomWindowMsgs = () =>{
 export default class UserViewUpdater{
     constructor(){
         this.addChatroomWindowOpen = false;
+        this.currentSelectedChat = null;
+
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
+        this.addChatroomBtn = this.addChatroomBtn.bind(this);
     }
     toggleChatroomAddWindow(){
         clearAddChatRoomWindowMsgs();
@@ -25,5 +28,21 @@ export default class UserViewUpdater{
                     ${msg}
                 </div>`;
         errorElem.innerHTML = markup;
+    }
+    addChatroomBtn(chatroomInfo, chatroomButtonCallback){
+        const chatroomList = document.getElementById('chatroom-list');
+        const markup = `
+            <li class="chatroom-btn" id="${chatroomInfo['roomName']}">
+                ${chatroomInfo['roomName']}
+            </li>
+        `;
+        chatroomList.insertAdjacentHTML('beforeend', markup);
+        const chatroomButton = document.getElementById(`${chatroomInfo['roomName']}`);
+        chatroomButton.addEventListener(
+            'click',
+            () => {
+                chatroomButtonCallback(chatroomInfo['roomName']);
+            }
+        );
     }
 }

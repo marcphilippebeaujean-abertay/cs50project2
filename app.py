@@ -103,7 +103,7 @@ def add_chat_room():
         unique_id = None
         for i in range(5):
             new_id = random_string()
-            if db.execute('SELECT * FROM chatrooms WHERE inviteid =:inviteid',{
+            if db.execute('SELECT * FROM chatrooms WHERE inviteid =:inviteid', {
                 'inviteid': new_id}).fetchone() is None:
                 unique_id = new_id
                 break
@@ -120,6 +120,26 @@ def add_chat_room():
             'respMessage': f'Generated new room with invite key {unique_id}',
             'roomName': request.form['roomName'],
             'roomOwnerId': session_user_id
+        })
+
+
+@app.route('/get_chatrooms', methods=["GET"])
+def get_user_chatrooms():
+    if session.get('user_id') is None:
+        return redirect(url_for('home'))
+    else:
+        chatrooms = db.execute('SELECT * FROM chatrooms WHERE userid =:userid', {
+                    'userid': session.get('user_id')}).fetchall()
+        chatrooms_list = []
+        for chatroom in chatrooms:
+            chatrooms_list.append({
+                'roomId': chatroom[0],
+                'roomName': chatroom[1],
+                'roomOwner': chatroom[2],
+                'inviteKey': chatroom[3]
+            })
+        return jsonify({
+            'chatrooms': chatrooms_list
         })
 
 

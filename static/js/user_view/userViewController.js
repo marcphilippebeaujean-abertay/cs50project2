@@ -14,18 +14,18 @@ export default class UserViewController extends Controller{
 
     }
     initController(){
-        const addChatrmBtn = document.getElementsByClassName('add-chatroom-form')[0];
-        if(addChatrmBtn === undefined){
+        const addChatroomForm = document.getElementsByClassName('add-chatroom-form')[0];
+        if(addChatroomForm === undefined){
             // Couldn't find add chat room button - that means this controller
             // was not meant to be used for the given view
             return;
         }
-        addChatrmBtn.addEventListener(
+        addChatroomForm.addEventListener(
             'submit',
             this.onAddChatroomAttempt
         );
-        const toggleChatrmMenuBtns = document.getElementsByClassName('toggle-add-chatroom-window');
-        Array.from(toggleChatrmMenuBtns).forEach((element) => {
+        const toggleChatroomMenuBtns = document.getElementsByClassName('toggle-add-chatroom-window');
+        Array.from(toggleChatroomMenuBtns).forEach((element) => {
             element.addEventListener(
                 'click',
                 this.view.toggleChatroomAddWindow);
@@ -37,9 +37,21 @@ export default class UserViewController extends Controller{
 
     }
     responseCallback(responseMessage){
-        if(responseMessage['form'] === 'addChatRoom'){
-            this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
+        switch(responseMessage['form']){
+            case 'addChatRoom':
+                this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
+                if (responseMessage['success']) {
+                    // Add new chatroom to list
+                }
+                break;
+            case 'getChatrooms':
+                console.log(responseMessage['chatrooms']);
+                break;
+            default:
+                console.log('weird response form');
         }
     }
-
+    onChatroomOpened(chatroomName){
+        console.log(`opening ${chatroomName}`);
+    }
 }
