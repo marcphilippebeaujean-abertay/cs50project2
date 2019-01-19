@@ -61,6 +61,6 @@ export default class UserViewUpdater{
         inviteKey.innerHTML = chatroomInfo['inviteKey'];
     }
     initChatroomView(){
-        document.getElementById('user-view-grid').style.display = 'flex';
+        document.getElementById('user-view-grid').style.display = 'grid';
     }
 }
