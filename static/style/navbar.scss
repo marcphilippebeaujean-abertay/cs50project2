@@ -11,6 +11,12 @@ $navbar-height: 80px;
 }
 
 #nav-bar-content{
-  width: 60%;
+  width: $init-content-width;
   margin: auto;
+}
+
+@media only screen and (max-width: 980px) {
+  #nav-bar{
+    width: 100%;
+  }
 }
