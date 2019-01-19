@@ -97,3 +97,21 @@
   color: white;
 }
 
+#chat-msg-form{
+  position: fixed;
+  bottom: 10px;
+  margin: 0px auto;
+}
+
+#chat-msg-area{
+  resize: none;
+}
+
+#send-msg-btn{
+  position: relative;
+  bottom: 14px;
+}
+
+#user-view-grid{
+  display: none;
+}

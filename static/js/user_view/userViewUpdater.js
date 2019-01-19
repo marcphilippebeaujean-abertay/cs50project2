@@ -5,6 +5,7 @@ const clearAddChatRoomWindowMsgs = () =>{
 export default class UserViewUpdater{
     constructor(){
         this.addChatroomWindowOpen = false;
+        this.viewInitialised = false;
         this.currentSelectedChat = null;
 
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
@@ -53,9 +54,13 @@ export default class UserViewUpdater{
         }
         const newChatroom = document.getElementById(`${chatroomInfo['roomName']}`);
         newChatroom.classList.add('chatroom-current');
-        const chatView = document.getElementById('chatroom-view');
+        const chatView = document.getElementById('messages-view');
         chatView.innerHTML = '';
         const inviteKey = document.getElementById(`invite-key`);
         inviteKey.innerHTML = chatroomInfo['inviteKey'];
+        if(!this.viewInitialised){
+            document.getElementById('user-view-grid').style.display = 'flex';
+            this.viewInitialised = true;
+        }
     }
 }
