@@ -9,6 +9,7 @@ export default class UserViewController extends Controller{
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.responseCallback = this.responseCallback.bind(this);
+        this.onChatroomOpened = this.onChatroomOpened.bind(this);
 
         this.model.responseCallback = this.responseCallback;
         this.chatrooms = [];
@@ -49,7 +50,7 @@ export default class UserViewController extends Controller{
             case 'getChatrooms':
                 this.chatrooms = responseMessage['chatrooms'];
                 this.chatrooms.forEach( chatroom =>{
-                    this.view.addChatroomBtn(chatroom, this.onChatroomOpened(chatroom['roomName']));
+                    this.view.addChatroomBtn(chatroom, this.onChatroomOpened);
                 });
                 break;
             default:
