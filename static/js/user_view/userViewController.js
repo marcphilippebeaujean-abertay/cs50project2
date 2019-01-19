@@ -10,6 +10,7 @@ export default class UserViewController extends Controller{
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.responseCallback = this.responseCallback.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
+        this.dispatchMessage = this.dispatchMessage.bind(this);
 
         this.model.responseCallback = this.responseCallback;
         this.currentChatroom = {
@@ -27,19 +28,21 @@ export default class UserViewController extends Controller{
         this.model.dispatchChatroomListRequest();
         addChatroomForm.addEventListener(
             'submit',
-            this.onAddChatroomAttempt
-        );
+            this.onAddChatroomAttempt);
         const toggleChatroomMenuBtns = document.getElementsByClassName('toggle-add-chatroom-window');
         Array.from(toggleChatroomMenuBtns).forEach((element) => {
             element.addEventListener(
                 'click',
                 this.view.toggleChatroomAddWindow);
         });
+        const messageSend = document.getElementById('chat-msg-form');
+        messageSend.addEventListener(
+            'submit',
+            this.dispatchMessage);
     }
     onAddChatroomAttempt(e){
-        event.preventDefault();
+        e.preventDefault();
         this.model.dispatchAddChatroomRequest(formToJSON('add-chatroom-form'));
-
     }
     responseCallback(responseMessage){
         switch(responseMessage['form']){
@@ -47,6 +50,11 @@ export default class UserViewController extends Controller{
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
+                    this.view.addChatroomBtn(responseMessage['room']);
+                    if(this.currentChatroom['roomName'] === '') {
+                        this.view.changeChatroom(responseMessage['room']);
+                        this.onChatroomOpened(responseMessage['room']);
+                    }
                 }
                 break;
             case 'getChatrooms':
@@ -57,6 +65,9 @@ export default class UserViewController extends Controller{
                     });
                     this.onChatroomOpened(chatrooms[0]);
                 }
+                // Initialise view after chatrooms have been
+                // queried from the backend
+                this.view.initChatroomView();
                 break;
             default:
                 console.log('weird response form');
@@ -68,5 +79,15 @@ export default class UserViewController extends Controller{
         }
         this.currentChatroom = chatroomInfo;
         this.view.changeChatroom(chatroomInfo);
+    }
+    dispatchMessage(e){
+        e.preventDefault();
+        if(this.currentChatroom['roomName'] === ''){
+            return;
+        }
+        const msg = document.getElementById('chat-msg-area').value;
+        if(msg.length === 0){
+            return;
+        }
     }
 }

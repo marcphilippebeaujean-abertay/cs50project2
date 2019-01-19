@@ -118,8 +118,9 @@ def add_chat_room():
         return jsonify({
             'success': True,
             'respMessage': f'Generated new room with invite key {unique_id}',
-            'roomName': request.form['roomName'],
-            'roomOwnerId': session_user_id
+            'room': {'roomName': request.form['roomName'],
+                     'roomOwner': session_user_id,
+                     'inviteKey': unique_id}
         })
 
 
