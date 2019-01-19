@@ -9,6 +9,7 @@ export default class UserViewUpdater{
 
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
         this.addChatroomBtn = this.addChatroomBtn.bind(this);
+        this.changeChatroom = this.changeChatroom.bind(this);
     }
     toggleChatroomAddWindow(){
         clearAddChatRoomWindowMsgs();
@@ -41,8 +42,18 @@ export default class UserViewUpdater{
         chatroomButton.addEventListener(
             'click',
             () => {
-                chatroomButtonCallback(chatroomInfo['roomName']);
+                chatroomButtonCallback(chatroomInfo);
             }
         );
+    }
+    changeChatroom(chatroomInfo){
+        const prevChat = document.getElementsByClassName('chatroom-current')[0];
+        if(prevChat){
+            prevChat.classList.remove('chatroom-current');
+        }
+        const newChatroom = document.getElementById(`${chatroomInfo['roomName']}`);
+        newChatroom.classList.add('chatroom-current');
+        const chatView = document.getElementById('chatroom-view');
+        chatView.innerHTML = '';
     }
 }

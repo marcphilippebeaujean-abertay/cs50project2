@@ -68,3 +68,32 @@
 #adding-chat-update-msg{
   margin-top: 10px;
 }
+
+#user-sidebar{
+  ul{
+    margin: 0; /* To remove default bottom margin */
+    padding: 0; /* To remove default left padding */
+  }
+}
+
+.chatroom-btn{
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  list-style-type: none;
+  font-size: 16px;
+  color: black;
+  background-color: white;
+}
+
+.chatroom-btn:hover{
+  cursor: pointer;
+  background-color: $main-clr;
+  color: white;
+}
+
+.chatroom-current{
+  background-color: $scndry-clr;
+  color: white;
+}
+

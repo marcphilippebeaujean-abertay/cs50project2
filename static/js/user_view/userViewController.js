@@ -12,7 +12,9 @@ export default class UserViewController extends Controller{
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
 
         this.model.responseCallback = this.responseCallback;
-        this.chatrooms = [];
+        this.currentChatroom = {
+            'roomName': ''
+        };
 
     }
     initController(){
@@ -48,16 +50,23 @@ export default class UserViewController extends Controller{
                 }
                 break;
             case 'getChatrooms':
-                this.chatrooms = responseMessage['chatrooms'];
-                this.chatrooms.forEach( chatroom =>{
-                    this.view.addChatroomBtn(chatroom, this.onChatroomOpened);
-                });
+                const chatrooms = responseMessage['chatrooms'];
+                if(chatrooms.length > 0) {
+                    chatrooms.forEach(chatroom => {
+                        this.view.addChatroomBtn(chatroom, this.onChatroomOpened);
+                    });
+                    this.onChatroomOpened(chatrooms[0]);
+                }
                 break;
             default:
                 console.log('weird response form');
         }
     }
-    onChatroomOpened(chatroomName){
-        console.log(`opening ${chatroomName}`);
+    onChatroomOpened(chatroomInfo){
+        if(this.currentChatroom['roomName'] === chatroomInfo['roomName']){
+            return;
+        }
+        this.currentChatroom = chatroomInfo;
+        this.view.changeChatroom(chatroomInfo);
     }
 }

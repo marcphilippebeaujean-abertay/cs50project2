@@ -1,11 +1,13 @@
 $navbar-bg-clr: rgba(152, 153, 155, 0.51);
-$navbar-height: 15%;
+$navbar-height: 80px;
 
 #nav-bar{
-  height: 80px;
+  height: $navbar-height;
   width: 100%;
+  top: 0;
   background-color: $navbar-bg-clr;
   margin-top: 0px;
+  position: fixed;
 }
 
 #nav-bar-content{
