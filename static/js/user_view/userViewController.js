@@ -11,6 +11,7 @@ export default class UserViewController extends Controller{
         this.responseCallback = this.responseCallback.bind(this);
 
         this.model.responseCallback = this.responseCallback;
+        this.chatrooms = [];
 
     }
     initController(){
@@ -20,6 +21,7 @@ export default class UserViewController extends Controller{
             // was not meant to be used for the given view
             return;
         }
+        this.model.dispatchChatroomListRequest();
         addChatroomForm.addEventListener(
             'submit',
             this.onAddChatroomAttempt
@@ -45,7 +47,10 @@ export default class UserViewController extends Controller{
                 }
                 break;
             case 'getChatrooms':
-                console.log(responseMessage['chatrooms']);
+                this.chatrooms = responseMessage['chatrooms'];
+                this.chatrooms.forEach( chatroom =>{
+                    this.view.addChatroomBtn(chatroom, this.onChatroomOpened(chatroom['roomName']));
+                });
                 break;
             default:
                 console.log('weird response form');
