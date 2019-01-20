@@ -5,7 +5,6 @@ export default class SocketController{
         this.userid = userid;
         this.getRoomInfo = getRoomCallback;
         this.view = view;
-        this.pendingMsgs = new Map();
     }
     initSocket(){
         // Connect to server websocket
@@ -25,9 +24,6 @@ export default class SocketController{
                 document.getElementById('chat-msg-area').value = "";
                 if(chatMsg !== ''){
                     let uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-                    while(this.pendingMsgs.has(uniqueKey)){
-                        uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-                    }
                     const msg = {
                         'userid': this.userid,
                         'roomName': roomInfo['roomId'],
@@ -39,14 +35,12 @@ export default class SocketController{
                         ...msg,
                         'fromCurrentUser': true
                     });
-                    this.pendingMsgs.set(uniqueKey, true);
                     this.view.addMessageToView(msg);
                 }
             });
         this.socket.on('server message callback', data => {
-            console.log('recieved confirmation that server got message');
-            if(data['userid'] === this.userid){
-            }
+            console.log(data['pendingId']);
+            this.view.confirmMessage(data);
         });
     }
 

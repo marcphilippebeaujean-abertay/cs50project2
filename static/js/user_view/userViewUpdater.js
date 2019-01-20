@@ -65,13 +65,23 @@ export default class UserViewUpdater{
     }
     addMessageToView(msgData){
         const msgList = document.getElementById('messages-view');
-        const pendingClass = msgData['isPending'] ? ' chat-msg-pending' : '';
+        const pendingClass = msgData['isPending'] ? 'chat-msg-pending' : '';
         const curUserClass = msgData['fromCurrentUser'] ? 'other-user-msg' : '';
         const markup = `
-            <div class="chat-msg ${curUserClass}${pendingClass}" id="${msgData['pendingId']}">
+            <div class="chat-msg ${curUserClass} ${pendingClass}" id="${msgData['pendingId']}">
                 <span class="msg-content">${msgData['message']}</span>
             </div>
         `;
         msgList.insertAdjacentHTML('beforeend', markup);
+    }
+    confirmMessage(msgData){
+        const pendingMsg = document.getElementById(msgData['pendingId']);
+        if(pendingMsg === null){
+            console.log('couldnt find message that is pending');
+        }else{
+            console.log('removing pending class...');
+            pendingMsg.id = "";
+            pendingMsg.className = 'chat-msg';
+        }
     }
 }
