@@ -18,8 +18,8 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = 'secret!'
-socketio = SocketIO(app)
 Session(app)
+socketio = SocketIO(app)
 
 
 def random_string(string_len=10):
@@ -159,9 +159,6 @@ def get_user_info():
     })
 
 
-@socketio.on('new message')
+@socketio.on('post message')
 def add_new_msg(data):
-    print(f'socket msg recieved from {data["username"]}')
-    msg_owner = data["username"]
-    room_name = data['roomName']
-    emit("vote totals", {}, broadcast=True)
+    emit('server message callback', data, broadcast=True)

@@ -1,7 +1,11 @@
-export default class SocketManager{
-    constructor(username, getRoomCallback){
+import './userViewUpdater';
+
+export default class SocketController{
+    constructor(userid, getRoomCallback, view){
+        this.userid = userid;
         this.getRoomInfo = getRoomCallback;
-        this.userName = username;
+        this.view = view;
+        this.pendingMsgs = new Map();
     }
     initSocket(){
         // Connect to server websocket
@@ -13,20 +17,34 @@ export default class SocketManager{
             'submit',
             (e) => {
                 e.preventDefault();
-                console.log('sending msg');
                 const roomInfo = this.getRoomInfo();
                 if(roomInfo['roomName'] === ''){
                     return;
                 }
                 const chatMsg = document.getElementById('chat-msg-area').value;
+                document.getElementById('chat-msg-area').value = "";
                 if(chatMsg !== ''){
-                    this.socket.emit('new message', {
-                        'username': this.userName,
-                        'roomName': roomInfo['roomName'],
-                        'message': chatMsg
-                    });
+                    let uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+                    while(this.pendingMsgs.has(uniqueKey)){
+                        uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+                    }
+                    const msg = {
+                        'userid': this.userid,
+                        'roomName': roomInfo['roomId'],
+                        'message': chatMsg,
+                        'pendingId': uniqueKey,
+                        'isPending': true
+                    };
+                    this.socket.emit('post message', msg);
+                    this.pendingMsgs.set(uniqueKey, true);
+                    this.view.addMessageToView(msg);
                 }
             });
+        this.socket.on('server message callback', data => {
+            console.log('recieved confirmation that server got message');
+            if(data['userid'] === this.userid){
+            }
+        });
     }
 
 }

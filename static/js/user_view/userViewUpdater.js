@@ -63,4 +63,14 @@ export default class UserViewUpdater{
     initChatroomView(){
         document.getElementById('user-view-grid').style.display = 'grid';
     }
+    addMessageToView(msgData){
+        const msgList = document.getElementById('messages-view');
+        const pendingClass = msgData['isPending'] ? ' chat-msg-pending' : '';
+        const markup = `
+            <div class="chat-msg ${msgData['fromCurrentUser']}${pendingClass}" id="${msgData['pendingId']}">
+                <p>${msgData['message']}</p>
+            </div>
+        `
+        msgList.insertAdjacentHTML('beforeend', markup);
+    }
 }

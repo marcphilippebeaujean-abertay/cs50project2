@@ -1,7 +1,7 @@
 import Controller from '../interfaces/controller';
 import UserViewUpdater from './userViewUpdater';
 import UserViewModel from './userViewModel';
-import SocketManager from './socketManager';
+import SocketController from './socketManager';
 import { formToJSON } from '../formUtilities';
 
 export default class UserViewController extends Controller{
@@ -81,10 +81,11 @@ export default class UserViewController extends Controller{
                         'userid': responseMessage['userid']
                     };
                     this.model.dispatchChatroomListRequest();
-                    //this.socketManager = new SocketManager(
-                    //    responseMessage['username'],
-                    //    this.getRoomInfo);
-                    //this.socketManager.initSocket();
+                    this.socketController = new SocketController(
+                        responseMessage['userid'],
+                        this.getRoomInfo,
+                        this.view);
+                    this.socketController.initSocket();
                 }
                 break;
             default:
