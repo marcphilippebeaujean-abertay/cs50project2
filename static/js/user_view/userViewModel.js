@@ -7,6 +7,7 @@ export default class UserViewModel{
         this.responseCallback = null;
         this.dispatchAddChatroomRequest = this.dispatchAddChatroomRequest.bind(this);
         this.initXMLHttpReq = this.initXMLHttpReq.bind(this);
+        this.dispatchUserInfoRequest = this.dispatchUserInfoRequest.bind(this);
     }
     initXMLHttpReq(form){
         if(this.responseCallback === null){
@@ -58,6 +59,11 @@ export default class UserViewModel{
         const request = this.initXMLHttpReq('getChatrooms');
         request.open('GET', '/get_chatrooms');
         // Send request
+        request.send();
+    }
+    dispatchUserInfoRequest(){
+        const request = this.initXMLHttpReq('getUserInfo');
+        request.open('GET', '/get_user_info');
         request.send();
     }
 }

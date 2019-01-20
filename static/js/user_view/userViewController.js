@@ -1,6 +1,7 @@
 import Controller from '../interfaces/controller';
 import UserViewUpdater from './userViewUpdater';
 import UserViewModel from './userViewModel';
+import SocketManager from './socketManager';
 import { formToJSON } from '../formUtilities';
 
 export default class UserViewController extends Controller{
@@ -11,12 +12,12 @@ export default class UserViewController extends Controller{
         this.responseCallback = this.responseCallback.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
         this.dispatchMessage = this.dispatchMessage.bind(this);
+        this.getRoomInfo = this.getRoomInfo.bind(this);
 
         this.model.responseCallback = this.responseCallback;
         this.currentChatroom = {
             'roomName': ''
         };
-
     }
     initController(){
         const addChatroomForm = document.getElementsByClassName('add-chatroom-form')[0];
@@ -25,7 +26,8 @@ export default class UserViewController extends Controller{
             // was not meant to be used for the given view
             return;
         }
-        this.model.dispatchChatroomListRequest();
+        // Initialises chatrooms and other user info
+        this.model.dispatchUserInfoRequest();
         addChatroomForm.addEventListener(
             'submit',
             this.onAddChatroomAttempt);
@@ -44,6 +46,7 @@ export default class UserViewController extends Controller{
         e.preventDefault();
         this.model.dispatchAddChatroomRequest(formToJSON('add-chatroom-form'));
     }
+    getRoomInfo(){ return this.currentChatroom; }
     responseCallback(responseMessage){
         switch(responseMessage['form']){
             case 'addChatRoom':
@@ -68,6 +71,21 @@ export default class UserViewController extends Controller{
                 // Initialise view after chatrooms have been
                 // queried from the backend
                 this.view.initChatroomView();
+                break;
+            case 'getUserInfo':
+                if(('redirect' in responseMessage)){
+                    window.location.href = responseMessage.redirect;
+                }else{
+                    this.userInfo = {
+                        'username': responseMessage['username'],
+                        'userid': responseMessage['userid']
+                    };
+                    this.model.dispatchChatroomListRequest();
+                    //this.socketManager = new SocketManager(
+                    //    responseMessage['username'],
+                    //    this.getRoomInfo);
+                    //this.socketManager.initSocket();
+                }
                 break;
             default:
                 console.log('weird response form');

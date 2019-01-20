@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify
 from flask_session import Session
+from flask_socketio import SocketIO, emit
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import string
@@ -16,6 +17,8 @@ app = Flask(__name__)
 # Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SECRET_KEY"] = 'secret!'
+socketio = SocketIO(app)
 Session(app)
 
 
@@ -76,9 +79,9 @@ def user_view(userid):
 
 @app.route('/add_user', methods=["POST"])
 def register_user():
-    if db.execute('SELECT * FROM users WHERE username =:username OR email =:email', {
+    if db.execute('SELECT COUNT(*) FROM users WHERE username =:username OR email =:email', {
                   'username': request.form['name'],
-                  'email': request.form['email']}).fetchone() is not None:
+                  'email': request.form['email']}) > 0:
         # user entry already exists in one form or another
         return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
     else:
@@ -144,5 +147,21 @@ def get_user_chatrooms():
         })
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/get_user_info', methods=["GET"])
+def get_user_info():
+    if session.get('user_id') is None:
+        return redirect(url_for('home'))
+    user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
+                'userid': session.get('user_id')}).fetchone()
+    return jsonify({
+        'username': user_info['username'],
+        'userid': user_info['userid']
+    })
+
+
+@socketio.on('new message')
+def add_new_msg(data):
+    print(f'socket msg recieved from {data["username"]}')
+    msg_owner = data["username"]
+    room_name = data['roomName']
+    emit("vote totals", {}, broadcast=True)
