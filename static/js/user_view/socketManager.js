@@ -35,7 +35,10 @@ export default class SocketController{
                         'pendingId': uniqueKey,
                         'isPending': true
                     };
-                    this.socket.emit('post message', msg);
+                    this.socket.emit('post message', {
+                        ...msg,
+                        'fromCurrentUser': true
+                    });
                     this.pendingMsgs.set(uniqueKey, true);
                     this.view.addMessageToView(msg);
                 }

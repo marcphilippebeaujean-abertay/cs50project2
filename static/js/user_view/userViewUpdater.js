@@ -66,9 +66,10 @@ export default class UserViewUpdater{
     addMessageToView(msgData){
         const msgList = document.getElementById('messages-view');
         const pendingClass = msgData['isPending'] ? ' chat-msg-pending' : '';
+        const curUserClass = msgData['fromCurrentUser'] ? 'other-user-msg' : '';
         const markup = `
-            <div class="chat-msg ${msgData['fromCurrentUser']}${pendingClass}" id="${msgData['pendingId']}">
-                <p class="msg-content">${msgData['message']}</p>
+            <div class="chat-msg ${curUserClass}${pendingClass}" id="${msgData['pendingId']}">
+                <span class="msg-content">${msgData['message']}</span>
             </div>
         `;
         msgList.insertAdjacentHTML('beforeend', markup);

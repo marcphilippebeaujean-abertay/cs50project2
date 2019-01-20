@@ -4,10 +4,26 @@
   border-style: solid;
   border-radius: 15px;
   border-width: thin;
-  width: 50%;
+  display: inline-block;
+  color: white;
+}
+
+.chat-msg:hover{
+  cursor: default;
 }
 
 .msg-content{
   margin-left: 5px;
+  margin-right: 5px;
   margin-top: 5px;
+}
+
+.chat-msg-pending{
+  background-color: $main-clr;
+}
+
+.other-user-msg{
+  float: right;
+  background-color: white;
+  color: black;
 }
