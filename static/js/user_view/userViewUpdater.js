@@ -7,6 +7,7 @@ export default class UserViewUpdater{
         this.addChatroomWindowOpen = false;
         this.viewInitialised = false;
         this.currentSelectedChat = null;
+        this.lastMsgSender = '';
 
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
         this.addChatroomBtn = this.addChatroomBtn.bind(this);
@@ -66,20 +67,24 @@ export default class UserViewUpdater{
     addMessageToView(msgData){
         const msgList = document.getElementById('messages-view');
         const pendingClass = msgData['isPending'] ? 'chat-msg-pending' : '';
-        const curUserClass = msgData['fromCurrentUser'] ? 'other-user-msg' : '';
+        const curUserClass = msgData['fromCurrentUser'] ? '' : 'other-user-msg';
         const markup = `
             <div class="chat-msg ${curUserClass} ${pendingClass}" id="${msgData['pendingId']}">
                 <span class="msg-content">${msgData['message']}</span>
             </div>
         `;
+        if(this.lastMsgSender !== msgData['username']){
+            const curUser = msgData['fromCurrentUser'] ? 'You' : msgData['username'];
+            msgList.insertAdjacentHTML('beforeend', `<p class='user-indicator'>${curUser}</p>`);
+            this.lastMsgSender = msgData['username'];
+        }
         msgList.insertAdjacentHTML('beforeend', markup);
     }
     confirmMessage(msgData){
         const pendingMsg = document.getElementById(msgData['pendingId']);
         if(pendingMsg === null){
-            console.log('couldnt find message that is pending');
+
         }else{
-            console.log('removing pending class...');
             pendingMsg.id = "";
             pendingMsg.className = 'chat-msg';
         }

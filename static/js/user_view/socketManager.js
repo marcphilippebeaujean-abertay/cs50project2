@@ -1,8 +1,8 @@
 import './userViewUpdater';
 
 export default class SocketController{
-    constructor(userid, getRoomCallback, view){
-        this.userid = userid;
+    constructor(userinfo, getRoomCallback, view){
+        this.userinfo = userinfo;
         this.getRoomInfo = getRoomCallback;
         this.view = view;
     }
@@ -25,7 +25,8 @@ export default class SocketController{
                 if(chatMsg !== ''){
                     let uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
                     const msg = {
-                        'userid': this.userid,
+                        'userid': this.userinfo['userid'],
+                        'username': this.userinfo['username'],
                         'roomName': roomInfo['roomId'],
                         'message': chatMsg,
                         'pendingId': uniqueKey,
@@ -35,12 +36,18 @@ export default class SocketController{
                         ...msg,
                         'fromCurrentUser': true
                     });
-                    this.view.addMessageToView(msg);
+                    this.view.addMessageToView({
+                        ...msg,
+                        'fromCurrentUser': true
+                    });
                 }
             });
         this.socket.on('server message callback', data => {
             console.log(data['pendingId']);
-            this.view.confirmMessage(data);
+            this.view.confirmMessage({
+                ...data,
+                'fromCurrentUser': false
+            });
         });
     }
 

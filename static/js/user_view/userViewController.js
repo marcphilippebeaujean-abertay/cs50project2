@@ -82,7 +82,7 @@ export default class UserViewController extends Controller{
                     };
                     this.model.dispatchChatroomListRequest();
                     this.socketController = new SocketController(
-                        responseMessage['userid'],
+                        this.userInfo,
                         this.getRoomInfo,
                         this.view);
                     this.socketController.initSocket();

@@ -161,4 +161,5 @@ def get_user_info():
 
 @socketio.on('post message')
 def add_new_msg(data):
+    data['isPending'] = False
     emit('server message callback', data, broadcast=True)
