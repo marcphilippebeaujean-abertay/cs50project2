@@ -50,8 +50,9 @@ export default class UserViewModel{
             if(formInput['roomCreationChoice'] === 'create') {
                 console.log(formInput);
                 request.open('POST', '/add_chatroom');
-                request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                request.send(`roomName=${formInput['roomName']}`);
+                const data = new FormData();
+                data.append('roomName', formInput['roomName']);
+                request.send(data);
             }
         }
     }

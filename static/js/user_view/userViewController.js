@@ -44,7 +44,8 @@ export default class UserViewController extends Controller{
     }
     onAddChatroomAttempt(e){
         e.preventDefault();
-        this.model.dispatchAddChatroomRequest(formToJSON('add-chatroom-form'));
+        this.model.dispatchAddChatroomRequest({
+            ...formToJSON('add-chatroom-form')})
     }
     getRoomInfo(){ return this.currentChatroom; }
     responseCallback(responseMessage){

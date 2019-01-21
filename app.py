@@ -79,9 +79,9 @@ def user_view(userid):
 
 @app.route('/add_user', methods=["POST"])
 def register_user():
-    if db.execute('SELECT COUNT(*) FROM users WHERE username =:username OR email =:email', {
+    if db.execute('SELECT * FROM users WHERE username =:username OR email =:email', {
                   'username': request.form['name'],
-                  'email': request.form['email']}) > 0:
+                  'email': request.form['email']}) is not None:
         # user entry already exists in one form or another
         return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
     else:
@@ -133,7 +133,7 @@ def get_user_chatrooms():
         return redirect(url_for('home'))
     else:
         chatrooms = db.execute('SELECT * FROM chatrooms WHERE userid =:userid', {
-                    'userid': session.get('user_id')}).fetchall()
+                    'userid': session.get('user_id') }).fetchall()
         chatrooms_list = []
         for chatroom in chatrooms:
             chatrooms_list.append({
@@ -163,3 +163,10 @@ def get_user_info():
 def add_new_msg(data):
     data['isPending'] = False
     emit('server message callback', data, broadcast=True)
+    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername)', {
+        'chatroomid': data['roomId'],
+        'messagecontent': data['message'],
+        'timestamp': data['timestamp'],
+        'sendername': data['username']
+        })
+    db.commit()

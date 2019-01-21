@@ -20,8 +20,6 @@ const convertTimeStamp = (timestamp) => {
 export default class UserViewUpdater{
     constructor(){
         this.addChatroomWindowOpen = false;
-        this.viewInitialised = false;
-        this.currentSelectedChat = null;
         this.lastMsgSender = '';
 
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);

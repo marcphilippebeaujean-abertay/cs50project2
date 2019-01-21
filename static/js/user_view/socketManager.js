@@ -30,7 +30,7 @@ export default class SocketController{
                     const msg = {
                         'userid': this.userinfo['userid'],
                         'username': this.userinfo['username'],
-                        'roomName': roomInfo['roomId'],
+                        'roomId': roomInfo['roomId'],
                         'message': chatMsg,
                         'pendingId': uniqueKey,
                         'isPending': true,
