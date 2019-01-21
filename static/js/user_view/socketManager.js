@@ -23,6 +23,9 @@ export default class SocketController{
                 const chatMsg = document.getElementById('chat-msg-area').value;
                 document.getElementById('chat-msg-area').value = "";
                 if(chatMsg !== ''){
+                    const ts = new Date();
+                    console.log(ts.getTime());
+                    console.log(ts.getMonth());
                     let uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
                     const msg = {
                         'userid': this.userinfo['userid'],
@@ -30,12 +33,10 @@ export default class SocketController{
                         'roomName': roomInfo['roomId'],
                         'message': chatMsg,
                         'pendingId': uniqueKey,
-                        'isPending': true
+                        'isPending': true,
+                        'timestamp': ts.getTime()
                     };
-                    this.socket.emit('post message', {
-                        ...msg,
-                        'fromCurrentUser': true
-                    });
+                    this.socket.emit('post message', msg);
                     this.view.addMessageToView({
                         ...msg,
                         'fromCurrentUser': true
@@ -43,12 +44,14 @@ export default class SocketController{
                 }
             });
         this.socket.on('server message callback', data => {
-            console.log(data['pendingId']);
-            this.view.confirmMessage({
-                ...data,
-                'fromCurrentUser': false
-            });
+            if(data['userid'] == this.userinfo['userid']) {
+                this.view.confirmMessage(data);
+            }else{
+                this.view.addMessageToView({
+                    ...data,
+                    'fromCurrentUser': false
+                })
+            }
         });
     }
-
 }
