@@ -88,7 +88,7 @@ export default class UserViewUpdater{
             <div class="chat-msg ${curUserClass} ${pendingClass}" id="${msgData['pendingId']}">
                 <span class="msg-content">${msgData['message']}</span>
             </div>
-            <small>${convertTimeStamp(msgData['timestamp'])}</small>
+            <small class="msg-timestamp">${convertTimeStamp(msgData['timestamp'])}</small>
         `;
         if(this.lastMsgSender !== msgData['username']){
             const curUsername = msgData['fromCurrentUser'] ? 'You' : msgData['username'];
