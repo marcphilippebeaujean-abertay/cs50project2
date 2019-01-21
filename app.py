@@ -133,15 +133,16 @@ def get_user_chatrooms():
         return redirect(url_for('home'))
     else:
         chatrooms = db.execute('SELECT * FROM chatrooms WHERE userid =:userid', {
-                    'userid': session.get('user_id') }).fetchall()
+                    'userid': session.get('user_id')}).fetchall()
         chatrooms_list = []
         for chatroom in chatrooms:
             chatrooms_list.append({
                 'roomId': chatroom[0],
                 'roomName': chatroom[1],
-                'roomOwner': chatroom[2],
-                'inviteKey': chatroom[3]
+                'roomOwner': chatroom[3],
+                'inviteKey': chatroom[2]
             })
+        print(chatrooms_list)
         return jsonify({
             'chatrooms': chatrooms_list
         })
@@ -150,7 +151,7 @@ def get_user_chatrooms():
 @app.route('/get_user_info', methods=["GET"])
 def get_user_info():
     if session.get('user_id') is None:
-        return redirect(url_for('home'))
+        return jsonify({'success': False})
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session.get('user_id')}).fetchone()
     return jsonify({
@@ -159,14 +160,26 @@ def get_user_info():
     })
 
 
+@app.route('/get_room_msgs')
+def get_room_msgs():
+    if session.get('user_id') is None:
+        return jsonify({'success': False})
+    room_name = request.form['roomName']
+    msgs = db.execute('SELECT * FROM messages ORDER BY timestamp LIMIT 30 WHERE chatroomname =:chatroomname', {
+                'chatroomname': room_name}).fetchall()
+    message_list = []
+    print(msgs)
+
+
 @socketio.on('post message')
 def add_new_msg(data):
     data['isPending'] = False
     emit('server message callback', data, broadcast=True)
-    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername)', {
+    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername, chatroomname) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername, :chatroomname)', {
         'chatroomid': data['roomId'],
         'messagecontent': data['message'],
         'timestamp': data['timestamp'],
-        'sendername': data['username']
+        'sendername': data['username'],
+        'chatroomname': data['roomName']
         })
     db.commit()

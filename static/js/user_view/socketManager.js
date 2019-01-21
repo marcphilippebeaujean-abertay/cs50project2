@@ -31,6 +31,7 @@ export default class SocketController{
                         'userid': this.userinfo['userid'],
                         'username': this.userinfo['username'],
                         'roomId': roomInfo['roomId'],
+                        'roomName': roomInfo['roomName'],
                         'message': chatMsg,
                         'pendingId': uniqueKey,
                         'isPending': true,

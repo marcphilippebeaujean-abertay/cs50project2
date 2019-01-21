@@ -97,7 +97,9 @@ export default class UserViewController extends Controller{
         if(this.currentChatroom['roomName'] === chatroomInfo['roomName']){
             return;
         }
+        console.log(chatroomInfo);
         this.currentChatroom = chatroomInfo;
+        this.model.dispatchGetMessagesRequest();
         this.view.changeChatroom(chatroomInfo);
     }
     dispatchMessage(e){

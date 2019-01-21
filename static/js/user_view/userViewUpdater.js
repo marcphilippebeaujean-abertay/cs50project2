@@ -72,6 +72,7 @@ export default class UserViewUpdater{
         const chatView = document.getElementById('messages-view');
         chatView.innerHTML = '';
         const inviteKey = document.getElementById(`invite-key`);
+        console.log(chatroomInfo['inviteKey']);
         inviteKey.innerHTML = chatroomInfo['inviteKey'];
     }
     initChatroomView(){
