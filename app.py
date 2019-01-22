@@ -95,7 +95,6 @@ def register_user():
 
 @app.route('/add_chatroom', methods=["POST"])
 def add_chat_room():
-    print(request.form)
     if db.execute('SELECT * FROM chatrooms WHERE roomname =:roomName', {
                 'roomName': request.form['roomName']}).fetchone() is not None:
         return jsonify({'success': False, 'respMessage': 'Not a unique chatroom name!'})
@@ -112,10 +111,15 @@ def add_chat_room():
                 break
         if unique_id is None:
             return jsonify({'success': False, 'respMessage': 'Could not generate unique invite code!'})
-        db.execute('INSERT INTO chatrooms (roomname, userid, inviteid) VALUES (:roomname, :userid, :inviteid)', {
-            'roomname': request.form['roomName'],
+        chatroom_id = db.execute('INSERT INTO chatrooms (roomname, userid, inviteid) VALUES (:roomname, :userid, :inviteid) RETURNING chatroomid', {
+                    'roomname': request.form['roomName'],
+                    'userid': session_user_id,
+                    'inviteid': unique_id
+                    }).fetchone()[0]
+        print(chatroom_id)
+        db.execute('INSERT INTO chatroomusers (userid, chatid) VALUES (:userid, :chatid)', {
             'userid': session_user_id,
-            'inviteid': unique_id
+            'chatid': chatroom_id
             })
         db.commit()
         return jsonify({
@@ -142,7 +146,6 @@ def get_user_chatrooms():
                 'roomOwner': chatroom[3],
                 'inviteKey': chatroom[2]
             })
-        print(chatrooms_list)
         return jsonify({
             'chatrooms': chatrooms_list
         })
@@ -164,7 +167,10 @@ def get_user_info():
 def get_room_msgs():
     if session.get('user_id') is None:
         return jsonify({'success': False})
+    # TODO : Create intermediary chatroomusers table
+    # to check if user is in chatroom
     room_name = request.form['roomName']
+    # TODO : Get all messages from a given chatroom
     msgs = db.execute('SELECT * FROM messages ORDER BY timestamp LIMIT 30 WHERE chatroomname =:chatroomname', {
                 'chatroomname': room_name}).fetchall()
     message_list = []
