@@ -116,7 +116,6 @@ def add_chat_room():
                     'userid': session_user_id,
                     'inviteid': unique_id
                     }).fetchone()[0]
-        print(chatroom_id)
         db.execute('INSERT INTO chatroomusers (userid, chatid) VALUES (:userid, :chatid)', {
             'userid': session_user_id,
             'chatid': chatroom_id
@@ -131,7 +130,7 @@ def add_chat_room():
         })
 
 
-@app.route('/get_chatrooms', methods=["GET"])
+@app.route('/get_chatrooms', methods=['GET'])
 def get_user_chatrooms():
     if session.get('user_id') is None:
         return redirect(url_for('home'))
@@ -163,29 +162,44 @@ def get_user_info():
     })
 
 
-@app.route('/get_room_msgs')
+@app.route('/get_room_msgs', methods=['POST'])
 def get_room_msgs():
     if session.get('user_id') is None:
         return jsonify({'success': False})
-    # TODO : Create intermediary chatroomusers table
     # to check if user is in chatroom
-    room_name = request.form['roomName']
-    # TODO : Get all messages from a given chatroom
-    msgs = db.execute('SELECT * FROM messages ORDER BY timestamp LIMIT 30 WHERE chatroomname =:chatroomname', {
-                'chatroomname': room_name}).fetchall()
+    room_id = request.form['roomId']
+    if room_id is None:
+        return jsonify({'success': False, 'respMessage': 'Invalid room ID'})
+    if db.execute('SELECT * FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
+        'userid': session.get('user_id'),
+        'roomid': room_id}).fetchone() is None:
+        print('couldnt find corresponding user and chatroom')
+        return jsonify({ 'success': False, 'respMessage': 'User does not have permission to these messages or chatroom does not exist' })
+    # Get all messages from a given chatroom
+    msgs = db.execute('SELECT * FROM messages WHERE chatroomid =:chatroomid', {
+                      'chatroomid': room_id}).fetchall()
     message_list = []
     print(msgs)
+    for msg in msgs:
+        message_list.append({
+            'messagecontent': msg[1],
+            'timestamp': msg[2],
+            'sendername': msg[3]
+        })
+    return jsonify({
+        'success': True,
+        'messages': message_list
+    })
 
 
 @socketio.on('post message')
 def add_new_msg(data):
     data['isPending'] = False
     emit('server message callback', data, broadcast=True)
-    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername, chatroomname) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername, :chatroomname)', {
+    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername)', {
         'chatroomid': data['roomId'],
         'messagecontent': data['message'],
         'timestamp': data['timestamp'],
-        'sendername': data['username'],
-        'chatroomname': data['roomName']
+        'sendername': data['username']
         })
     db.commit()

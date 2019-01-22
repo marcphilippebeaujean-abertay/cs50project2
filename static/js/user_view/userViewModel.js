@@ -67,11 +67,11 @@ export default class UserViewModel{
         request.open('GET', '/get_user_info');
         request.send();
     }
-    dispatchGetMessagesRequest(roomName){
-        //const request = this.initXMLHttpReq('fetchRoomMessages');
-        //request.open('GET', '/get_room_msgs');
-        //const data = new FormData();
-        //data.append('roomName', roomName);
-        //request.send(data);
+    dispatchGetMessagesRequest(roomId){
+        const request = this.initXMLHttpReq('getRoomMessages');
+        request.open('POST', '/get_room_msgs');
+        const data = new FormData();
+        data.append('roomId', roomId);
+        request.send(data);
     }
 }

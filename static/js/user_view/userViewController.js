@@ -89,6 +89,9 @@ export default class UserViewController extends Controller{
                     this.socketController.initSocket();
                 }
                 break;
+            case 'getRoomMessages':
+                console.log(responseMessage);
+                break;
             default:
                 console.log('weird response form');
         }
@@ -97,10 +100,9 @@ export default class UserViewController extends Controller{
         if(this.currentChatroom['roomName'] === chatroomInfo['roomName']){
             return;
         }
-        console.log(chatroomInfo);
         this.currentChatroom = chatroomInfo;
-        this.model.dispatchGetMessagesRequest();
         this.view.changeChatroom(chatroomInfo);
+        this.model.dispatchGetMessagesRequest(chatroomInfo['roomId']);
     }
     dispatchMessage(e){
         e.preventDefault();
