@@ -182,9 +182,11 @@ def get_room_msgs():
     print(msgs)
     for msg in msgs:
         message_list.append({
-            'messagecontent': msg[1],
+            'message': msg[1],
             'timestamp': msg[2],
-            'sendername': msg[3]
+            'username': msg[3],
+            'fromStore': True,
+            'isPending': False
         })
     return jsonify({
         'success': True,

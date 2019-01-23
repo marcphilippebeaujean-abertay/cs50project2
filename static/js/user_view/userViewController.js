@@ -90,7 +90,12 @@ export default class UserViewController extends Controller{
                 }
                 break;
             case 'getRoomMessages':
-                console.log(responseMessage);
+                responseMessage['messages'].forEach( msg => {
+                   this.view.addMessageToView({
+                       ...msg,
+                       'fromCurrentUser': msg['username'] === this.userInfo.username
+                   });
+                });
                 break;
             default:
                 console.log('weird response form');
