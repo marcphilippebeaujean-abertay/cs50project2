@@ -122,6 +122,18 @@
   display: none;
 }
 
+.delete-room-btn{
+  color: #de604b;
+  float: right;
+  margin-right: 10px;
+  margin-top: 3px;
+  z-index: 2;
+}
+
+.delete-room-btn:hover{
+  color: white;
+}
+
 @media only screen and (max-width: 760px) {
   #send-msg-btn{
     bottom: 0px;

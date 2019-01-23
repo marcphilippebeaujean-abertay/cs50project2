@@ -158,8 +158,10 @@ def get_user_info():
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session.get('user_id')}).fetchone()
     return jsonify({
-        'username': user_info['username'],
-        'userid': user_info['userid']
+        'userInfo': {
+            'username': user_info['username'],
+            'userid': user_info['userid']
+        }
     })
 
 

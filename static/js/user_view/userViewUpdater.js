@@ -46,11 +46,16 @@ export default class UserViewUpdater{
                 </div>`;
         errorElem.innerHTML = markup;
     }
-    addChatroomBtn(chatroomInfo, chatroomButtonCallback){
+    addChatroomBtn(chatroomInfo, chatroomButtonCallback, deleteChatroomCallback){
         const chatroomList = document.getElementById('chatroom-list');
+        let deleteBtnMarkup = `<i class="fas fa-trash delete-room-btn"></i>`;
+        if(deleteChatroomCallback === undefined){
+            deleteBtnMarkup = '';
+            console.log('user does not own this chat');
+        }
         const markup = `
             <li class="chatroom-btn" id="${chatroomInfo['roomName']}">
-                ${chatroomInfo['roomName']}
+                ${chatroomInfo['roomName']} ${deleteBtnMarkup}
             </li>
         `;
         chatroomList.insertAdjacentHTML('beforeend', markup);

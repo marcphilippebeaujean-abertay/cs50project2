@@ -54,7 +54,13 @@ export default class UserViewController extends Controller{
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
-                    this.view.addChatroomBtn(responseMessage['room'], this.onChatroomOpened);
+                    let chatDeleteCallback = undefined;
+                    console.log(`${responseMessage['roomOwner']} - ${this.userInfo.userid}`);
+                    if(responseMessage['roomOwner'] === this.userInfo.userid){
+                        chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
+                        console.log('this is the room owner!')
+                    }
+                    this.view.addChatroomBtn(responseMessage['room'], this.onChatroomOpened, chatDeleteCallback);
                     if(this.currentChatroom['roomName'] === '') {
                         this.view.changeChatroom(responseMessage['room']);
                         this.onChatroomOpened(responseMessage['room']);
@@ -65,7 +71,11 @@ export default class UserViewController extends Controller{
                 const chatrooms = responseMessage['chatrooms'];
                 if(chatrooms.length > 0) {
                     chatrooms.forEach(chatroom => {
-                        this.view.addChatroomBtn(chatroom, this.onChatroomOpened);
+                        let chatDeleteCallback = undefined;
+                        if(chatroom['roomOwner'] === this.userInfo.userid){
+                            chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
+                        }
+                        this.view.addChatroomBtn(chatroom, this.onChatroomOpened, chatDeleteCallback);
                     });
                     this.onChatroomOpened(chatrooms[0]);
                 }
@@ -77,10 +87,7 @@ export default class UserViewController extends Controller{
                 if(('redirect' in responseMessage)){
                     window.location.href = responseMessage.redirect;
                 }else{
-                    this.userInfo = {
-                        'username': responseMessage['username'],
-                        'userid': responseMessage['userid']
-                    };
+                    this.userInfo = responseMessage['userInfo'];
                     this.model.dispatchChatroomListRequest();
                     this.socketController = new SocketController(
                         this.userInfo,

@@ -8,6 +8,7 @@ export default class UserViewModel{
         this.dispatchAddChatroomRequest = this.dispatchAddChatroomRequest.bind(this);
         this.initXMLHttpReq = this.initXMLHttpReq.bind(this);
         this.dispatchUserInfoRequest = this.dispatchUserInfoRequest.bind(this);
+        this.dispatchRoomDeletionRequest = this.dispatchRoomDeletionRequest.bind(this);
     }
     initXMLHttpReq(form){
         if(this.responseCallback === null){
@@ -72,5 +73,8 @@ export default class UserViewModel{
         const data = new FormData();
         data.append('roomId', roomId);
         request.send(data);
+    }
+    dispatchRoomDeletionRequest(roomInfo){
+
     }
 }
