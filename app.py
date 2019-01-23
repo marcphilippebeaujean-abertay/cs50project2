@@ -176,7 +176,7 @@ def get_room_msgs():
         'roomid': room_id}).fetchone() is None:
         return jsonify({ 'success': False, 'respMessage': 'User does not have permission to these messages or chatroom does not exist' })
     # Get all messages from a given chatroom
-    msgs = db.execute('SELECT * FROM messages WHERE chatroomid =:chatroomid', {
+    msgs = db.execute('SELECT * FROM messages WHERE chatroomid =:chatroomid LIMIT 30', {
                       'chatroomid': room_id}).fetchall()
     message_list = []
     for msg in msgs:
