@@ -126,7 +126,8 @@ def add_chat_room():
             'respMessage': f'Generated new room with invite key {unique_id}',
             'room': {'roomName': request.form['roomName'],
                      'roomOwner': session_user_id,
-                     'inviteKey': unique_id}
+                     'inviteKey': unique_id,
+                     'roomId': chatroom_id}
         })
 
 
@@ -184,9 +185,7 @@ def get_room_msgs():
         message_list.append({
             'message': msg[1],
             'timestamp': msg[2],
-            'username': msg[3],
-            'fromStore': True,
-            'isPending': False
+            'username': msg[3]
         })
     return jsonify({
         'success': True,

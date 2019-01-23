@@ -54,7 +54,7 @@ export default class UserViewController extends Controller{
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
-                    this.view.addChatroomBtn(responseMessage['room']);
+                    this.view.addChatroomBtn(responseMessage['room'], this.onChatroomOpened);
                     if(this.currentChatroom['roomName'] === '') {
                         this.view.changeChatroom(responseMessage['room']);
                         this.onChatroomOpened(responseMessage['room']);
@@ -93,6 +93,7 @@ export default class UserViewController extends Controller{
                 responseMessage['messages'].forEach( msg => {
                    this.view.addMessageToView({
                        ...msg,
+                       'isPending': false,
                        'fromCurrentUser': msg['username'] === this.userInfo.username
                    });
                 });

@@ -72,14 +72,12 @@ export default class UserViewUpdater{
         const chatView = document.getElementById('messages-view');
         chatView.innerHTML = '';
         const inviteKey = document.getElementById(`invite-key`);
-        console.log(chatroomInfo['inviteKey']);
         inviteKey.innerHTML = chatroomInfo['inviteKey'];
     }
     initChatroomView(){
         document.getElementById('user-view-grid').style.display = 'grid';
     }
     addMessageToView(msgData){
-        console.log(msgData);
         const msgList = document.getElementById('messages-view');
         const pendingClass = msgData['isPending'] ? 'chat-msg-pending' : '';
         const curUserClass = msgData['fromCurrentUser'] ? '' : 'other-user-msg';
