@@ -75,6 +75,6 @@ export default class UserViewModel{
         request.send(data);
     }
     dispatchRoomDeletionRequest(roomInfo){
-
+        console.log(`Deleting room with room info ${roomInfo}`);
     }
 }

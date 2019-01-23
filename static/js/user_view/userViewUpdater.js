@@ -48,11 +48,10 @@ export default class UserViewUpdater{
     }
     addChatroomBtn(chatroomInfo, chatroomButtonCallback, deleteChatroomCallback){
         const chatroomList = document.getElementById('chatroom-list');
-        let deleteBtnMarkup = `<i class="fas fa-trash delete-room-btn"></i>`;
+        let deleteBtnMarkup = `<i class="fas fa-trash delete-room-btn" id="delete-${chatroomInfo['roomName']}"></i>`;
         if(deleteChatroomCallback === undefined){
             deleteBtnMarkup = '';
-            console.log('user does not own this chat');
-        }
+        };
         const markup = `
             <li class="chatroom-btn" id="${chatroomInfo['roomName']}">
                 ${chatroomInfo['roomName']} ${deleteBtnMarkup}
@@ -66,6 +65,16 @@ export default class UserViewUpdater{
                 chatroomButtonCallback(chatroomInfo);
             }
         );
+        let deleteBtn = document.getElementById(`delete-${chatroomInfo['roomName']}`);
+        if(deleteBtn !== null){
+            deleteBtn.addEventListener(
+                'click',
+                () => {
+                    deleteChatroomCallback(chatroomInfo);
+                    chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
+                }
+            );
+        }
     }
     changeChatroom(chatroomInfo){
         this.lastMsgSender = '';

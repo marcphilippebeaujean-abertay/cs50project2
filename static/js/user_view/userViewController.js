@@ -55,10 +55,8 @@ export default class UserViewController extends Controller{
                 if (responseMessage['success']) {
                     // Add new chatroom to list
                     let chatDeleteCallback = undefined;
-                    console.log(`${responseMessage['roomOwner']} - ${this.userInfo.userid}`);
                     if(responseMessage['roomOwner'] === this.userInfo.userid){
                         chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
-                        console.log('this is the room owner!')
                     }
                     this.view.addChatroomBtn(responseMessage['room'], this.onChatroomOpened, chatDeleteCallback);
                     if(this.currentChatroom['roomName'] === '') {
