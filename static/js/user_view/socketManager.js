@@ -24,7 +24,6 @@ export default class SocketController{
                 document.getElementById('chat-msg-area').value = "";
                 if(chatMsg !== ''){
                     const ts = new Date();
-                    let uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
                     const msg = {
                         'userid': this.userinfo['userid'],
                         'username': this.userinfo['username'],

@@ -63,6 +63,7 @@ export default class UserViewUpdater{
         );
     }
     changeChatroom(chatroomInfo){
+        this.lastMsgSender = '';
         const prevChat = document.getElementsByClassName('chatroom-current')[0];
         if(prevChat){
             prevChat.classList.remove('chatroom-current');

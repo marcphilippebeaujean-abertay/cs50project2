@@ -174,13 +174,11 @@ def get_room_msgs():
     if db.execute('SELECT * FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
         'userid': session.get('user_id'),
         'roomid': room_id}).fetchone() is None:
-        print('couldnt find corresponding user and chatroom')
         return jsonify({ 'success': False, 'respMessage': 'User does not have permission to these messages or chatroom does not exist' })
     # Get all messages from a given chatroom
     msgs = db.execute('SELECT * FROM messages WHERE chatroomid =:chatroomid', {
                       'chatroomid': room_id}).fetchall()
     message_list = []
-    print(msgs)
     for msg in msgs:
         message_list.append({
             'message': msg[1],

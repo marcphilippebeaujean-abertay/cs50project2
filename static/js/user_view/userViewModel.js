@@ -30,7 +30,6 @@ export default class UserViewModel{
             });
         };
         request.onload = () => {
-            console.log(JSON.parse((request.responseText)));
             this.responseCallback({
                 'form': form,
                 ...JSON.parse(request.responseText)
