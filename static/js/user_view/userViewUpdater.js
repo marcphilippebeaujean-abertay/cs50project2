@@ -19,19 +19,20 @@ const convertTimeStamp = (timestamp) => {
 
 export default class UserViewUpdater{
     constructor(){
-        this.addChatroomWindowOpen = false;
+        this.overlayOpen = false;
         this.lastMsgSender = '';
 
         this.toggleChatroomAddWindow = this.toggleChatroomAddWindow.bind(this);
         this.addChatroomBtn = this.addChatroomBtn.bind(this);
         this.changeChatroom = this.changeChatroom.bind(this);
         this.initChatroomView = this.initChatroomView.bind(this);
+        this.toggleDeletionConfirmation = this.toggleDeletionConfirmation.bind(this);
     }
     toggleChatroomAddWindow(){
         clearAddChatRoomWindowMsgs();
-        this.addChatroomWindowOpen = !this.addChatroomWindowOpen;
+        this.overlayOpen = !this.overlayOpen;
         const addChatroomWindow = document.getElementById('chatroom-creation-overlay');
-        if(this.addChatroomWindowOpen){
+        if(this.overlayOpen){
             addChatroomWindow.style.display = 'block';
         }else{
             addChatroomWindow.style.display = 'none';
@@ -70,10 +71,20 @@ export default class UserViewUpdater{
             deleteBtn.addEventListener(
                 'click',
                 () => {
-                    deleteChatroomCallback(chatroomInfo);
+                    this.toggleDeletionConfirmation(deleteChatroomCallback, chatroomInfo);
+                    //deleteChatroomCallback(chatroomInfo);
                     chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
                 }
             );
+        }
+    }
+    toggleDeletionConfirmation(deletionCallback, chatroomInfo){
+        const removeChat = document.getElementById('delete-chatroom-overlay');
+        this.overlayOpen = !this.overlayOpen;
+        if(this.overlayOpen){
+            removeChat.style.display = 'block';
+        }else{
+            removeChat.style.display = 'none';
         }
     }
     changeChatroom(chatroomInfo){
