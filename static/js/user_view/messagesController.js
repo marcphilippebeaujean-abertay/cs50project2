@@ -20,9 +20,9 @@ export default class MessagesController extends Controller{
     }
     dispatchMessage(e){
         e.preventDefault();
-        if(this.currentChatroom['roomName'] === ''){
-            return;
-        }
+        //if(this.currentChatroom['roomName'] === ''){
+        //    return;
+        //}
         const msg = document.getElementById('chat-msg-area').value;
         if(msg.length === 0){
             return;

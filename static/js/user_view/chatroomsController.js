@@ -38,11 +38,6 @@ export default class ChatroomsController extends Controller{
                 this.view.toggleChatroomAddWindow);
         });
         this.model.dispatchChatroomListRequest();
-        this.socketController = new SocketController(
-            this.userInfo,
-            this.getRoomInfo,
-            this.view);
-        this.socketController.initSocket();
     }
     onAddChatroomAttempt(e){
         e.preventDefault();

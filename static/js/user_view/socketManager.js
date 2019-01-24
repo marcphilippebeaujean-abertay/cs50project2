@@ -5,8 +5,7 @@ export default class SocketController{
         this.userinfo = userinfo;
         this.getRoomInfo = getRoomCallback;
         this.view = view;
-    }
-    initSocket(){
+
         // Connect to server websocket
         this.socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
         if(this.getRoomInfo === null){
@@ -21,6 +20,7 @@ export default class SocketController{
                     return;
                 }
                 const chatMsg = document.getElementById('chat-msg-area').value;
+                const uniqueKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
                 document.getElementById('chat-msg-area').value = "";
                 if(chatMsg !== ''){
                     const ts = new Date();
