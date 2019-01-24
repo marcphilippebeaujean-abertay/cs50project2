@@ -50,6 +50,7 @@ export default class ChatroomsController extends Controller{
         }
         switch(responseMessage['type']){
             case 'addChatRoom':
+                console.log(responseMessage);
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
@@ -72,6 +73,8 @@ export default class ChatroomsController extends Controller{
                 // queried from the backend
                 this.view.initChatroomView();
                 break;
+            case 'deleteRoom':
+                console.log('room deleted');
             default:
                 console.log('weird response form');
         }
@@ -87,6 +90,7 @@ export default class ChatroomsController extends Controller{
     deleteChatroom(chatroomInfo){
         const chatroomList = document.getElementById('chatroom-list');
         chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
+        this.model.dispatchRoomDeletionRequest(chatroomInfo);
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;

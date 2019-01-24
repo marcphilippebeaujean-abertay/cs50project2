@@ -166,6 +166,15 @@ def get_user_info():
     })
 
 
+@app.route('/delete_room', methods=['DELETE'])
+def delete_room():
+    print('deleting room')
+    return jsonify({
+        'success': True,
+
+    })
+
+
 @app.route('/get_room_msgs', methods=['POST'])
 def get_room_msgs():
     if session.get('user_id') is None:
