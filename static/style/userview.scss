@@ -5,6 +5,23 @@
   width: 100%;
 }
 
+#delete-chatroom-overlay{
+  h2{
+    text-align: center;
+  }
+}
+
+#delete-chat-btn-layout{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin: 20px 0px;
+  button{
+    margin: 0px 30px;
+  }
+}
+
 .interaction-logo{
   height: 30px;
   width: 30px;
@@ -24,7 +41,7 @@
   z-index: 2;
 }
 
-#chatroom-creation-window{
+.overlay-window{
   position: fixed;
   display: block;
   width: 500px;

@@ -19,8 +19,8 @@ export default class UserAccessController extends Controller{
             document.getElementsByClassName('sign-form')[0].addEventListener('submit', this.onUserSubmission);
         }
     }
-    onUserSubmission(event){
-        event.preventDefault();
+    onUserSubmission(e){
+        e.preventDefault();
         this.view.clearErrorMessages();
         this.view.toggleSubmitButtonEnabled();
         let formInput = formToJSON('sign-form');
@@ -52,6 +52,7 @@ export default class UserAccessController extends Controller{
         }else{
             // Otherwise, this is a log in request
             if(formErrors.length === 0){
+                console.log('making login request');
                 this.model.makeLoginRequest(formInput);
             }
         }
@@ -61,6 +62,7 @@ export default class UserAccessController extends Controller{
         }
     }
     handleResponse(respData){
+        console.log(respData);
         if(respData.redirect){
             window.location.href = respData.redirect;
             return;

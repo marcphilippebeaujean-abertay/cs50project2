@@ -1,7 +1,6 @@
 import Controller from '../interfaces/controller';
 import ChatroomsView from './chatroomsView';
 import ChatroomsModel from './chatroomsModel';
-import SocketController from './socketManager';
 import { formToJSON } from '../formUtilities';
 
 export default class ChatroomsController extends Controller{

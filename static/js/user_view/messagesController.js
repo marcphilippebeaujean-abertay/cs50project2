@@ -1,7 +1,6 @@
 import Controller from '../interfaces/controller'
 import MessagesView from './messagesView';
 import MessagesModel from './messagesModel';
-import SocketController from "./socketManager";
 
 export default class MessagesController extends Controller{
     constructor(userInfo){

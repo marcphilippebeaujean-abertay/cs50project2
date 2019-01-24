@@ -6,9 +6,25 @@
 {% block content %}
     <div id="user-view-grid">
         <div class="overlay" id="delete-chatroom-overlay">
+            <div class="overlay-window">
+                <h2>Are you sure you want to delete this chatroom?</h2>
+                <div id="delete-chat-btn-layout">
+                    <button
+                        type="button"
+                        class="btn btn-danger">
+                        Yes
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-dark"
+                        id="close-deletion-window">
+                        No
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="overlay" id="chatroom-creation-overlay">
-            <div id="chatroom-creation-window">
+            <div class="overlay-window">
                 <form class="add-chatroom-form">
                     <img
                         src="{{ url_for('static', filename='images/close_window_btn.png') }}"

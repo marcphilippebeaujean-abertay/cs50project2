@@ -12,6 +12,14 @@ export default class ChatroomsView{
         this.changeChatroom = this.changeChatroom.bind(this);
         this.initChatroomView = this.initChatroomView.bind(this);
         this.toggleDeletionConfirmation = this.toggleDeletionConfirmation.bind(this);
+
+        const chatDeletionWindow = document.getElementById('close-deletion-window');
+        if(chatDeletionWindow !== undefined){
+            chatDeletionWindow.addEventListener(
+                'click',
+                () => this.toggleDeletionConfirmation()
+            );
+        }
     }
     toggleChatroomAddWindow(){
         clearAddChatRoomWindowMsgs();
@@ -73,7 +81,6 @@ export default class ChatroomsView{
         }
     }
     changeChatroom(chatroomInfo){
-        this.lastMsgSender = '';
         const prevChat = document.getElementsByClassName('chatroom-current')[0];
         if(prevChat){
             prevChat.classList.remove('chatroom-current');

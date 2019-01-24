@@ -29,7 +29,6 @@ export default class UserAccessView{
         }
         errorElem.innerHTML = '';
         errorElem.style.display = 'none';
-        // test
     }
     addErrorMsg(errorMessage) {
         let errorElem = this.getFormErrorLog();
