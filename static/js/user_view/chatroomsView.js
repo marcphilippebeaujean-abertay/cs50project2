@@ -65,14 +65,21 @@ export default class ChatroomsView{
                 'click',
                 () => {
                     this.toggleDeletionConfirmation(deleteChatroomCallback, chatroomInfo);
-                    //deleteChatroomCallback(chatroomInfo);
-                    chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
                 }
             );
         }
     }
     toggleDeletionConfirmation(deletionCallback, chatroomInfo){
         const removeChat = document.getElementById('delete-chatroom-overlay');
+        if(deletionCallback !== undefined) {
+            document.getElementById('yes-deletion-window').addEventListener(
+                'click',
+                () => {
+                    deletionCallback(chatroomInfo);
+                    this.toggleDeletionConfirmation();
+                }
+            );
+        }
         this.overlayOpen = !this.overlayOpen;
         if(this.overlayOpen){
             removeChat.style.display = 'block';
@@ -80,6 +87,7 @@ export default class ChatroomsView{
             removeChat.style.display = 'none';
         }
     }
+
     changeChatroom(chatroomInfo){
         const prevChat = document.getElementsByClassName('chatroom-current')[0];
         if(prevChat){

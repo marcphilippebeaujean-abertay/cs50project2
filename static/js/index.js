@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () =>{
         if(respInfo['success'] === false){
             userAccessController = new UserAccessController();
         }else{
-            console.log('fetched user info');
-            console.log(respInfo);
             messagesController = new MessagesController(respInfo['userInfo']);
             chatroomsController = new ChatroomsController(
                 respInfo['userInfo'],

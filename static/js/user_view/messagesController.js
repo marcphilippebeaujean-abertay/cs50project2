@@ -19,9 +19,9 @@ export default class MessagesController extends Controller{
     }
     dispatchMessage(e){
         e.preventDefault();
-        //if(this.currentChatroom['roomName'] === ''){
-        //    return;
-        //}
+        if(this.currentChatroom['roomName'] === ''){
+            return;
+        }
         const msg = document.getElementById('chat-msg-area').value;
         if(msg.length === 0){
             return;
@@ -33,6 +33,7 @@ export default class MessagesController extends Controller{
         }
         switch(responseMessage['type']) {
             case 'getRoomMessages':
+                this.view.lastMsgSender = "";
                 responseMessage['messages'].forEach( msg => {
                    this.view.addMessageToView({
                        ...msg,

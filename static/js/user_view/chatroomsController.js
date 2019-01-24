@@ -10,7 +10,7 @@ export default class ChatroomsController extends Controller{
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
         this.getRoomInfo = this.getRoomInfo.bind(this);
-        this.onChatroomRemoved = this.onChatroomRemoved.bind(this);
+        this.deleteChatroom = this.deleteChatroom.bind(this);
         this.initialiseRoom = this.initialiseRoom.bind(this);
 
         this.currentChatroom = {
@@ -84,13 +84,14 @@ export default class ChatroomsController extends Controller{
         this.view.changeChatroom(chatroomInfo);
         this.roomSwitchCallback(chatroomInfo['roomId']);
     }
-    onChatroomRemoved(chatroomInfo){
-        console.log('delete callback called');
+    deleteChatroom(chatroomInfo){
+        const chatroomList = document.getElementById('chatroom-list');
+        chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;
         if(roomInfo['roomOwner'] === this.userInfo.userid){
-            chatDeleteCallback = this.onChatroomRemoved;
+            chatDeleteCallback = this.deleteChatroom;
         }
         this.view.addChatroomBtn(roomInfo, this.onChatroomOpened, chatDeleteCallback);
     }
