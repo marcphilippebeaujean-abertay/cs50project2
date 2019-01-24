@@ -9,14 +9,12 @@ export default class UserViewController extends Controller{
         super(new UserViewUpdater(), new UserViewModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
-        this.responseCallback = this.responseCallback.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
         this.dispatchMessage = this.dispatchMessage.bind(this);
         this.getRoomInfo = this.getRoomInfo.bind(this);
         this.onChatroomRemoved = this.onChatroomRemoved.bind(this);
         this.initialiseRoom = this.initialiseRoom.bind(this);
 
-        this.model.responseCallback = this.responseCallback;
         this.currentChatroom = {
             'roomName': ''
         };
@@ -51,11 +49,11 @@ export default class UserViewController extends Controller{
             ...formToJSON('add-chatroom-form')})
     }
     getRoomInfo(){ return this.currentChatroom; }
-    responseCallback(responseMessage){
+    handleResponse(responseMessage){
         if(('redirect' in responseMessage)) {
             window.location.href = responseMessage.redirect;
         }
-        switch(responseMessage['form']){
+        switch(responseMessage['type']){
             case 'addChatRoom':
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
@@ -113,7 +111,6 @@ export default class UserViewController extends Controller{
         console.log('delete callback called');
     }
     initialiseRoom(roomInfo){
-        console.log(roomInfo);
         let chatDeleteCallback = undefined;
         if(roomInfo['roomOwner'] === this.userInfo.userid){
             chatDeleteCallback = this.onChatroomRemoved;
