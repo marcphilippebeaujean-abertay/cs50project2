@@ -5,7 +5,7 @@ import SocketController from './socketManager';
 import { formToJSON } from '../formUtilities';
 
 export default class ChatroomsController extends Controller{
-    constructor(userInfo){
+    constructor(userInfo, roomSwitchCallback){
         super(new ChatroomsView(), new ChatroomsModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
@@ -17,6 +17,7 @@ export default class ChatroomsController extends Controller{
         this.currentChatroom = {
             'roomName': ''
         };
+        this.roomSwitchCallback = roomSwitchCallback;
         this.chatRooms = [];
         this.userInfo = userInfo;
 
@@ -77,15 +78,6 @@ export default class ChatroomsController extends Controller{
                 // queried from the backend
                 this.view.initChatroomView();
                 break;
-            case 'getRoomMessages':
-                responseMessage['messages'].forEach( msg => {
-                   this.view.addMessageToView({
-                       ...msg,
-                       'isPending': false,
-                       'fromCurrentUser': msg['username'] === this.userInfo.username
-                   });
-                });
-                break;
             default:
                 console.log('weird response form');
         }
@@ -96,7 +88,7 @@ export default class ChatroomsController extends Controller{
         }
         this.currentChatroom = chatroomInfo;
         this.view.changeChatroom(chatroomInfo);
-        this.model.dispatchGetMessagesRequest(chatroomInfo['roomId']);
+        this.roomSwitchCallback(chatroomInfo['roomId']);
     }
     onChatroomRemoved(chatroomInfo){
         console.log('delete callback called');

@@ -1,6 +1,7 @@
 import Controller from '../interfaces/controller'
 import MessagesView from './messagesView';
 import MessagesModel from './messagesModel';
+import SocketController from "./socketManager";
 
 export default class MessagesController extends Controller{
     constructor(userInfo){
@@ -25,6 +26,25 @@ export default class MessagesController extends Controller{
         const msg = document.getElementById('chat-msg-area').value;
         if(msg.length === 0){
             return;
+        }
+    }
+    handleResponse(responseMessage) {
+        if(('redirect' in responseMessage)) {
+            window.location.href = responseMessage.redirect;
+        }
+        switch(responseMessage['type']) {
+            case 'getRoomMessages':
+                responseMessage['messages'].forEach( msg => {
+                   this.view.addMessageToView({
+                       ...msg,
+                       'isPending': false,
+                       'fromCurrentUser': msg['username'] === this.userInfo.username
+                   });
+                });
+                break;
+            default:
+                console.log('weird response message type');
+                break;
         }
     }
 }

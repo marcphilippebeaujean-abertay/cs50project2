@@ -39,13 +39,6 @@ export default class ChatroomsModel extends Model{
         request.open('GET', '/get_user_info');
         request.send();
     }
-    dispatchGetMessagesRequest(roomId){
-        const request = this.initXMLHttpReq('getRoomMessages');
-        request.open('POST', '/get_room_msgs');
-        const data = new FormData();
-        data.append('roomId', roomId);
-        request.send(data);
-    }
     dispatchRoomDeletionRequest(roomInfo){
         console.log(`Deleting room with room info ${roomInfo}`);
     }

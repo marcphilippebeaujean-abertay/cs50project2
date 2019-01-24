@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () =>{
         }else{
             console.log('fetched user info');
             console.log(respInfo);
-            chatroomsController = new ChatroomsController(respInfo['userInfo']);
             messagesController = new MessagesController(respInfo['userInfo']);
+            chatroomsController = new ChatroomsController(respInfo['userInfo'], messagesController.model.dispatchGetMessagesRequest);
         }
     });
 });
