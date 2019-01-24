@@ -13,11 +13,14 @@ export default class UserViewController extends Controller{
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
         this.dispatchMessage = this.dispatchMessage.bind(this);
         this.getRoomInfo = this.getRoomInfo.bind(this);
+        this.onChatroomRemoved = this.onChatroomRemoved.bind(this);
+        this.initialiseRoom = this.initialiseRoom.bind(this);
 
         this.model.responseCallback = this.responseCallback;
         this.currentChatroom = {
             'roomName': ''
         };
+        this.chatRooms = [];
     }
     initController(){
         const addChatroomForm = document.getElementsByClassName('add-chatroom-form')[0];
@@ -49,31 +52,26 @@ export default class UserViewController extends Controller{
     }
     getRoomInfo(){ return this.currentChatroom; }
     responseCallback(responseMessage){
+        if(('redirect' in responseMessage)) {
+            window.location.href = responseMessage.redirect;
+        }
         switch(responseMessage['form']){
             case 'addChatRoom':
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
-                    let chatDeleteCallback = undefined;
-                    if(responseMessage['roomOwner'] === this.userInfo.userid){
-                        chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
-                    }
-                    this.view.addChatroomBtn(responseMessage['room'], this.onChatroomOpened, chatDeleteCallback);
-                    if(this.currentChatroom['roomName'] === '') {
-                        this.view.changeChatroom(responseMessage['room']);
-                        this.onChatroomOpened(responseMessage['room']);
-                    }
+                    this.initialiseRoom(responseMessage['room']);
+                    this.view.changeChatroom(responseMessage['room']);
+                    this.onChatroomOpened(responseMessage['room']);
+                    this.chatRooms.push(responseMessage['room']);
                 }
                 break;
             case 'getChatrooms':
                 const chatrooms = responseMessage['chatrooms'];
                 if(chatrooms.length > 0) {
+                    this.chatRooms = chatrooms;
                     chatrooms.forEach(chatroom => {
-                        let chatDeleteCallback = undefined;
-                        if(chatroom['roomOwner'] === this.userInfo.userid){
-                            chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
-                        }
-                        this.view.addChatroomBtn(chatroom, this.onChatroomOpened, chatDeleteCallback);
+                        this.initialiseRoom(chatroom);
                     });
                     this.onChatroomOpened(chatrooms[0]);
                 }
@@ -82,17 +80,13 @@ export default class UserViewController extends Controller{
                 this.view.initChatroomView();
                 break;
             case 'getUserInfo':
-                if(('redirect' in responseMessage)){
-                    window.location.href = responseMessage.redirect;
-                }else{
-                    this.userInfo = responseMessage['userInfo'];
-                    this.model.dispatchChatroomListRequest();
-                    this.socketController = new SocketController(
-                        this.userInfo,
-                        this.getRoomInfo,
-                        this.view);
-                    this.socketController.initSocket();
-                }
+                this.userInfo = responseMessage['userInfo'];
+                this.model.dispatchChatroomListRequest();
+                this.socketController = new SocketController(
+                    this.userInfo,
+                    this.getRoomInfo,
+                    this.view);
+                this.socketController.initSocket();
                 break;
             case 'getRoomMessages':
                 responseMessage['messages'].forEach( msg => {
@@ -114,6 +108,17 @@ export default class UserViewController extends Controller{
         this.currentChatroom = chatroomInfo;
         this.view.changeChatroom(chatroomInfo);
         this.model.dispatchGetMessagesRequest(chatroomInfo['roomId']);
+    }
+    onChatroomRemoved(chatroomInfo){
+        console.log('delete callback called');
+    }
+    initialiseRoom(roomInfo){
+        console.log(roomInfo);
+        let chatDeleteCallback = undefined;
+        if(roomInfo['roomOwner'] === this.userInfo.userid){
+            chatDeleteCallback = this.onChatroomRemoved;
+        }
+        this.view.addChatroomBtn(roomInfo, this.onChatroomOpened, chatDeleteCallback);
     }
     dispatchMessage(e){
         e.preventDefault();
