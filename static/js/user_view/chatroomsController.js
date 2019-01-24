@@ -1,12 +1,12 @@
 import Controller from '../interfaces/controller';
-import UserViewUpdater from './userViewUpdater';
-import UserViewModel from './userViewModel';
+import ChatroomsView from './chatroomsView';
+import ChatroomsModel from './chatroomsModel';
 import SocketController from './socketManager';
 import { formToJSON } from '../formUtilities';
 
-export default class UserViewController extends Controller{
+export default class ChatroomsController extends Controller{
     constructor(){
-        super(new UserViewUpdater(), new UserViewModel());
+        super(new ChatroomsView(), new ChatroomsModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);

@@ -17,7 +17,7 @@ const convertTimeStamp = (timestamp) => {
     ].join(' - ');
 };
 
-export default class UserViewUpdater{
+export default class ChatroomsView{
     constructor(){
         this.overlayOpen = false;
         this.lastMsgSender = '';

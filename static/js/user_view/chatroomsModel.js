@@ -4,7 +4,7 @@ const chatroomNameReg = new RegExp(
     /^[a-zA-Z]{3,}$/g
 );
 
-export default class UserViewModel extends Model{
+export default class ChatroomsModel extends Model{
     constructor(responseCallback){
         super(responseCallback);
         this.dispatchAddChatroomRequest = this.dispatchAddChatroomRequest.bind(this);

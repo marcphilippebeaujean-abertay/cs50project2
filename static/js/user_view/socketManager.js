@@ -1,4 +1,4 @@
-import './userViewUpdater';
+import './chatroomsView';
 
 export default class SocketController{
     constructor(userinfo, getRoomCallback, view){

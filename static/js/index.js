@@ -1,6 +1,8 @@
 import "../style/style.scss";
 import UserAccessController from "./user_access/userAccessController";
-import UserViewController from "./user_view/userViewController";
+import ChatroomsController from "./user_view/chatroomsController";
+import MessagesController from "./user_view/messagesController";
 
 const userAccessController = new UserAccessController();
-const userViewController = new UserViewController();
+const userViewController = new ChatroomsController();
+const messagesController = new MessagesController();
