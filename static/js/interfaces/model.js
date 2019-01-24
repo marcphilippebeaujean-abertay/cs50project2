@@ -31,4 +31,25 @@ export default class Model{
         };
         return request
     }
+    static dispatchUserInfoRequest(responseCallback){
+        const request = new XMLHttpRequest();
+        request.open('GET', '/get_user_info');
+        request.onload = () => {
+            responseCallback({
+                ...JSON.parse(request.responseText)
+            });
+        };
+        request.timeout = 2000;
+        request.onerror = () => {
+            responseCallback({
+                'success': false
+            });
+        };
+        request.ontimeout = (e) => {
+            responseCallback({
+                'success': false
+            });
+        };
+        request.send();
+    }
 }

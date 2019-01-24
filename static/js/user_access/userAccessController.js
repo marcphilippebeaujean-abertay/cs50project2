@@ -14,9 +14,6 @@ export default class UserAccessController extends Controller{
 
         this.handleResponse = this.handleResponse.bind(this);
         this.onUserSubmission = this.onUserSubmission.bind(this);
-    }
-
-    initController() {
         this.view.clearErrorMessages();
         if(document.getElementsByClassName(('sign-form')).length > 0) {
             document.getElementsByClassName('sign-form')[0].addEventListener('submit', this.onUserSubmission);

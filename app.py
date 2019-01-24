@@ -153,11 +153,12 @@ def get_user_chatrooms():
 
 @app.route('/get_user_info', methods=["GET"])
 def get_user_info():
-    if session.get('user_id') is None:
+    if session.get('user_id') is None or session.get('user_id') is '':
         return jsonify({'success': False})
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session.get('user_id')}).fetchone()
     return jsonify({
+        'success': True,
         'userInfo': {
             'username': user_info['username'],
             'userid': user_info['userid']

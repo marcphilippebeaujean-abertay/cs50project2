@@ -5,12 +5,11 @@ import SocketController from './socketManager';
 import { formToJSON } from '../formUtilities';
 
 export default class ChatroomsController extends Controller{
-    constructor(){
+    constructor(userInfo){
         super(new ChatroomsView(), new ChatroomsModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
-        this.dispatchMessage = this.dispatchMessage.bind(this);
         this.getRoomInfo = this.getRoomInfo.bind(this);
         this.onChatroomRemoved = this.onChatroomRemoved.bind(this);
         this.initialiseRoom = this.initialiseRoom.bind(this);
@@ -19,8 +18,8 @@ export default class ChatroomsController extends Controller{
             'roomName': ''
         };
         this.chatRooms = [];
-    }
-    initController(){
+        this.userInfo = userInfo;
+
         const addChatroomForm = document.getElementsByClassName('add-chatroom-form')[0];
         if(addChatroomForm === undefined){
             // Couldn't find add chat room button - that means this controller
@@ -28,7 +27,6 @@ export default class ChatroomsController extends Controller{
             return;
         }
         // Initialises chatrooms and other user info
-        this.model.dispatchUserInfoRequest();
         addChatroomForm.addEventListener(
             'submit',
             this.onAddChatroomAttempt);
@@ -38,10 +36,12 @@ export default class ChatroomsController extends Controller{
                 'click',
                 this.view.toggleChatroomAddWindow);
         });
-        const messageSend = document.getElementById('chat-msg-form');
-        messageSend.addEventListener(
-            'submit',
-            this.dispatchMessage);
+        this.model.dispatchChatroomListRequest();
+        this.socketController = new SocketController(
+            this.userInfo,
+            this.getRoomInfo,
+            this.view);
+        this.socketController.initSocket();
     }
     onAddChatroomAttempt(e){
         e.preventDefault();
@@ -77,15 +77,6 @@ export default class ChatroomsController extends Controller{
                 // queried from the backend
                 this.view.initChatroomView();
                 break;
-            case 'getUserInfo':
-                this.userInfo = responseMessage['userInfo'];
-                this.model.dispatchChatroomListRequest();
-                this.socketController = new SocketController(
-                    this.userInfo,
-                    this.getRoomInfo,
-                    this.view);
-                this.socketController.initSocket();
-                break;
             case 'getRoomMessages':
                 responseMessage['messages'].forEach( msg => {
                    this.view.addMessageToView({
@@ -116,15 +107,5 @@ export default class ChatroomsController extends Controller{
             chatDeleteCallback = this.onChatroomRemoved;
         }
         this.view.addChatroomBtn(roomInfo, this.onChatroomOpened, chatDeleteCallback);
-    }
-    dispatchMessage(e){
-        e.preventDefault();
-        if(this.currentChatroom['roomName'] === ''){
-            return;
-        }
-        const msg = document.getElementById('chat-msg-area').value;
-        if(msg.length === 0){
-            return;
-        }
     }
 }
