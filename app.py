@@ -81,7 +81,7 @@ def user_view(userid):
 def register_user():
     if db.execute('SELECT * FROM users WHERE username =:username OR email =:email', {
                   'username': request.form['name'],
-                  'email': request.form['email']}) is not None:
+                  'email': request.form['email']}).fetchone() is not None:
         # user entry already exists in one form or another
         return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
     else:

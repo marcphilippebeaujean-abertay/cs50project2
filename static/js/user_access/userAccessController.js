@@ -14,7 +14,6 @@ export default class UserAccessController extends Controller{
 
         this.handleResponse = this.handleResponse.bind(this);
         this.onUserSubmission = this.onUserSubmission.bind(this);
-        this.model.responseHandleCallback = this.handleResponse;
     }
 
     initController() {
