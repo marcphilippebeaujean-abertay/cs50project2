@@ -40,11 +40,13 @@ export default class ChatroomsModel extends Model{
         request.send();
     }
     dispatchRoomDeletionRequest(roomInfo){
-        console.log(`Deleting room with room info ${roomInfo}`);
+        console.log(roomInfo);
         const request = this.initXMLHttpReq('deleteRoom');
         request.open('DELETE', '/delete_room');
         const data = new FormData();
         data.append('roomId', roomInfo['roomId']);
+        data.append('userId', roomInfo['userId']);
+        data.append('roomName', roomInfo['roomName']);
         request.send(data);
     }
 }

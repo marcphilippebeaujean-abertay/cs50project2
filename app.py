@@ -168,8 +168,28 @@ def get_user_info():
 
 @app.route('/delete_room', methods=['DELETE'])
 def delete_room():
+    if request.form.get('roomId') is None:
+        return jsonify({
+            'success': False
+        })
+    if request.form.get('userId') is None:
+        return jsonify({
+            'success': False
+        })
+    if db.execute('SELECT * FROM chatrooms WHERE chatroomid :=chatroomid AND owner :=userid', {
+            'chatroomid': request.form['roomId'],
+            'userid': request.form['userId']
+        }).fetchone() is None:
+        return jsonify({
+            'success': False
+        })
+    db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid', {
+        'chatroomid': request.form['roomId']
+        })
     return jsonify({
-        'success': True
+        'success': True,
+        'roomId': request.form['roomId'],
+        'roomName': request.form['roomName']
     })
 
 

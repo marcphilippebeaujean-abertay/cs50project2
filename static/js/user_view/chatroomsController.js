@@ -74,7 +74,21 @@ export default class ChatroomsController extends Controller{
                 this.view.initChatroomView();
                 break;
             case 'deleteRoom':
-                console.log('room deleted');
+                if(responseMessage['success']) {
+                    const chatroomList = document.getElementById('chatroom-list');
+                    chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
+                    this.chatRooms = this.chatRooms.filter(elem => elem['roomId'] !== chatroomInfo['roomId']);
+                    if (this.chatRooms.length > 0) {
+                        this.onChatroomOpened(this.chatRooms[0]);
+                    } else {
+                        this.currentChatroom = {
+                            'roomName': '',
+                            'roomId': '',
+                            'inviteKey': ''
+                        };
+                        this.view.changeChatroom(this.currentChatroom);
+                    }
+                }
                 break;
             default:
                 console.log('weird response form');
@@ -89,20 +103,10 @@ export default class ChatroomsController extends Controller{
         this.roomSwitchCallback(chatroomInfo['roomId']);
     }
     deleteChatroom(chatroomInfo){
-        const chatroomList = document.getElementById('chatroom-list');
-        chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
-        this.model.dispatchRoomDeletionRequest(chatroomInfo);
-        this.chatRooms = this.chatRooms.filter( elem => elem['roomId'] !== chatroomInfo['roomId']);
-        if(this.chatRooms.length > 0){
-            this.onChatroomOpened(this.chatRooms[0]);
-        }else {
-            this.currentChatroom = {
-                'roomName': '',
-                'roomId': '',
-                'inviteKey': ''
-            };
-            this.view.changeChatroom(this.currentChatroom);
-        }
+        this.model.dispatchRoomDeletionRequest({
+            ...chatroomInfo,
+            'userId': this.userInfo.userid
+        });
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;
