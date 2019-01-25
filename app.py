@@ -176,16 +176,12 @@ def delete_room():
         return jsonify({
             'success': False
         })
-    if db.execute('SELECT * FROM chatrooms WHERE chatroomid :=chatroomid AND owner :=userid', {
-            'chatroomid': request.form['roomId'],
-            'userid': request.form['userId']
-        }).fetchone() is None:
-        return jsonify({
-            'success': False
+    db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid AND userid =:userid', {
+        'chatroomid': request.form['roomId'],
+        'userid': request.form['userId']
         })
-    db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid', {
-        'chatroomid': request.form['roomId']
-        })
+    db.commit()
+    print('room deleted')
     return jsonify({
         'success': True,
         'roomId': request.form['roomId'],
