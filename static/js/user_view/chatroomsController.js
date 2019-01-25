@@ -75,6 +75,7 @@ export default class ChatroomsController extends Controller{
                 break;
             case 'deleteRoom':
                 console.log('room deleted');
+                break;
             default:
                 console.log('weird response form');
         }
@@ -91,6 +92,17 @@ export default class ChatroomsController extends Controller{
         const chatroomList = document.getElementById('chatroom-list');
         chatroomList.removeChild(document.getElementById(`${chatroomInfo['roomName']}`));
         this.model.dispatchRoomDeletionRequest(chatroomInfo);
+        this.chatRooms = this.chatRooms.filter( elem => elem['roomId'] !== chatroomInfo['roomId']);
+        if(this.chatRooms.length > 0){
+            this.onChatroomOpened(this.chatRooms[0]);
+        }else {
+            this.currentChatroom = {
+                'roomName': '',
+                'roomId': '',
+                'inviteKey': ''
+            };
+            this.view.changeChatroom(this.currentChatroom);
+        }
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;

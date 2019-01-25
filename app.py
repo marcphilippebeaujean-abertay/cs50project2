@@ -168,10 +168,8 @@ def get_user_info():
 
 @app.route('/delete_room', methods=['DELETE'])
 def delete_room():
-    print('deleting room')
     return jsonify({
-        'success': True,
-
+        'success': True
     })
 
 

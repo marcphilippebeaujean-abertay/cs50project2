@@ -91,14 +91,21 @@ export default class ChatroomsView{
     changeChatroom(chatroomInfo){
         const prevChat = document.getElementsByClassName('chatroom-current')[0];
         if(prevChat){
+            // remove current chatroom tag from previous chatroom
             prevChat.classList.remove('chatroom-current');
         }
-        const newChatroom = document.getElementById(`${chatroomInfo['roomName']}`);
-        newChatroom.classList.add('chatroom-current');
+        if(chatroomInfo['roomId'] !== '') {
+            const newChatroom = document.getElementById(`${chatroomInfo['roomName']}`);
+            newChatroom.classList.add('chatroom-current');
+        }
         const chatView = document.getElementById('messages-view');
         chatView.innerHTML = '';
         const inviteKey = document.getElementById(`invite-key`);
-        inviteKey.innerHTML = chatroomInfo['inviteKey'];
+        if(chatroomInfo['roomId'] !== '') {
+            inviteKey.innerHTML = chatroomInfo['inviteKey'];
+        }else{
+            inviteKey.innerHTML = '';
+        }
     }
     initChatroomView(){
         document.getElementById('user-view-grid').style.display = 'grid';
