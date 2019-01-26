@@ -1,7 +1,7 @@
 import Controller from '../interfaces/controller'
 import MessagesView from './messagesView';
 import MessagesModel from './messagesModel';
-import { getLocalUserInformation } from '../localStorage';
+import { getLocalUserInformation, getLocalRoomInformation } from '../localStorage';
 
 export default class MessagesController extends Controller{
     constructor(){
@@ -20,7 +20,7 @@ export default class MessagesController extends Controller{
     }
     dispatchMessage(e){
         e.preventDefault();
-        if(this.currentChatroom['roomName'] === ''){
+        if(getLocalRoomInformation()['roomName'] === ''){
             return;
         }
         const msg = document.getElementById('chat-msg-area').value;

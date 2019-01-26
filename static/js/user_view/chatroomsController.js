@@ -2,7 +2,7 @@ import Controller from '../interfaces/controller';
 import ChatroomsView from './chatroomsView';
 import ChatroomsModel from './chatroomsModel';
 import { formToJSON } from '../formUtilities';
-import { getLocalUserInformation } from "../localStorage";
+import { getLocalUserInformation, updateLocalRoomInformation, getRoomInformation } from "../localStorage";
 
 export default class ChatroomsController extends Controller{
     constructor(roomSwitchCallback){
@@ -101,6 +101,7 @@ export default class ChatroomsController extends Controller{
             return;
         }
         this.currentChatroom = chatroomInfo;
+        updateLocalRoomInformation(chatroomInfo);
         this.view.changeChatroom(chatroomInfo);
         this.roomSwitchCallback(chatroomInfo['roomId']);
     }
