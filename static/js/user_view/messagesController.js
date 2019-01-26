@@ -1,12 +1,13 @@
 import Controller from '../interfaces/controller'
 import MessagesView from './messagesView';
 import MessagesModel from './messagesModel';
+import { getLocalUserInformation } from '../localStorage';
 
 export default class MessagesController extends Controller{
-    constructor(userInfo){
+    constructor(){
         super(new MessagesView(), new MessagesModel());
 
-        this.userInfo = userInfo;
+        this.userInfo = getLocalUserInformation();
 
         this.dispatchMessage = this.dispatchMessage.bind(this);
         const messageSend = document.getElementById('chat-msg-form');

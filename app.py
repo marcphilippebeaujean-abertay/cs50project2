@@ -42,6 +42,8 @@ def login():
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
+    if request.form.get('email') is None or request.form.get('email') is None:
+        return jsonify({'success': False, 'respMessage': 'Invalid request'})
     req_user = db.execute('SELECT * FROM users WHERE email =:email AND password =:password', {
                   'email': request.form['email'],
                   'password': request.form['password']}).fetchone()
@@ -49,7 +51,11 @@ def login_user():
         return jsonify({'success': False, 'respMessage': 'Email or password did not match!'})
     else:
         session['user_id'] = req_user.userid
-        return jsonify(dict(redirect=url_for('user_view', userid=req_user.userid)))
+        resp_dict = dict(redirect=url_for('user_view', userid=req_user.userid))
+        resp_dict['success'] = True
+        resp_dict['userId'] = req_user.userid
+        resp_dict['username'] = req_user.username
+        return jsonify(resp_dict)
 
 
 @app.route('/log_out')
@@ -181,7 +187,6 @@ def delete_room():
         'userid': request.form['userId']
         })
     db.commit()
-    print('room deleted')
     return jsonify({
         'success': True,
         'roomId': request.form['roomId'],

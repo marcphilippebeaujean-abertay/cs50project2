@@ -1,7 +1,7 @@
 import Controller from "../interfaces/controller";
 import UserAccessView from "./userAccessView";
 import UserAccessModel from "./userAccessModel";
-import {clearFormInput, formToJSON} from "../formUtilities";
+import {clearFormInput, formToJSON, getLocalUserInformation} from "../formUtilities";
 
 const emailRegex = new RegExp(
   /(?=.{7,})(?!.*[\s])(?!.*[A-Z])[a-z]+([.][a-z]+)?[@][\w]+[.][a-z]+([.][a-z]+)?$/
@@ -61,18 +61,32 @@ export default class UserAccessController extends Controller{
             this.view.toggleSubmitButtonEnabled();
         }
     }
-    handleResponse(respData){
-        console.log(respData);
-        if(respData.redirect){
-            window.location.href = respData.redirect;
-            return;
+    handleResponse(respData) {
+        switch (respData['type']) {
+            case 'logInUser':
+                if (respData['success']) {
+                    window.localStorage.setItem('userId', respData['userId']);
+                    window.localStorage.setItem('username', respData['username']);
+                    if (respData.redirect) {
+                        window.location.href = respData.redirect;
+                        return;
+                    }
+                }else{
+                    this.view.toggleSubmitButtonEnabled();
+                    this.view.addErrorMsg(respData['respMessage']);
+                }
+                break;
+            case 'addUser':
+                if (respData['success']) {
+                    clearFormInput('sign-form');
+                    this.view.addSuccessMsg(respData['respMessage']);
+                }else {
+                    this.view.addErrorMsg(respData['respMessage']);
+                }
+                this.view.toggleSubmitButtonEnabled();
+                break;
+            default:
+                break;
         }
-        if(respData['success']){
-            clearFormInput('sign-form');
-            this.view.addSuccessMsg(respData['respMessage']);
-        }else{
-            this.view.addErrorMsg(respData['respMessage']);
-        }
-        this.view.toggleSubmitButtonEnabled();
     }
 }

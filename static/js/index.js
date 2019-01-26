@@ -15,13 +15,11 @@ document.addEventListener('DOMContentLoaded', () =>{
         if(respInfo['success'] === false){
             userAccessController = new UserAccessController();
         }else{
-            messagesController = new MessagesController(respInfo['userInfo']);
+            messagesController = new MessagesController();
             chatroomsController = new ChatroomsController(
-                respInfo['userInfo'],
                 messagesController.model.dispatchGetMessagesRequest
             );
             socketController = new SocketController(
-                respInfo['userInfo'],
                 chatroomsController.getRoomInfo,
                 messagesController.view
             );

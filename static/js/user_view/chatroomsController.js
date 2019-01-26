@@ -2,9 +2,10 @@ import Controller from '../interfaces/controller';
 import ChatroomsView from './chatroomsView';
 import ChatroomsModel from './chatroomsModel';
 import { formToJSON } from '../formUtilities';
+import { getLocalUserInformation } from "../localStorage";
 
 export default class ChatroomsController extends Controller{
-    constructor(userInfo, roomSwitchCallback){
+    constructor(roomSwitchCallback){
         super(new ChatroomsView(), new ChatroomsModel());
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
@@ -18,7 +19,7 @@ export default class ChatroomsController extends Controller{
         };
         this.roomSwitchCallback = roomSwitchCallback;
         this.chatRooms = [];
-        this.userInfo = userInfo;
+        this.userInfo = getLocalUserInformation();
 
         const addChatroomForm = document.getElementsByClassName('add-chatroom-form')[0];
         if(addChatroomForm === undefined){
@@ -50,7 +51,6 @@ export default class ChatroomsController extends Controller{
         }
         switch(responseMessage['type']){
             case 'addChatRoom':
-                console.log(responseMessage);
                 this.view.setMessageForAddChatroom(responseMessage['respMessage'], responseMessage['success']);
                 if (responseMessage['success']) {
                     // Add new chatroom to list
@@ -88,6 +88,8 @@ export default class ChatroomsController extends Controller{
                         };
                         this.view.changeChatroom(this.currentChatroom);
                     }
+                }else{
+                    alert("Failed to delete chatroom");
                 }
                 break;
             default:

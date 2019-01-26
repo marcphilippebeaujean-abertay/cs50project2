@@ -1,8 +1,9 @@
 import './chatroomsView';
+import { getLocalUserInformation } from "../localStorage";
 
 export default class SocketController{
-    constructor(userinfo, getRoomCallback, view){
-        this.userinfo = userinfo;
+    constructor(getRoomCallback, view){
+        this.userinfo = getLocalUserInformation();
         this.getRoomInfo = getRoomCallback;
         this.view = view;
 
