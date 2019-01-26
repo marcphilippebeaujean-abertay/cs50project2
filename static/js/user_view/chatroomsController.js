@@ -27,6 +27,7 @@ export default class ChatroomsController extends Controller{
             // was not meant to be used for the given view
             return;
         }
+        //
         // Initialises chatrooms and other user info
         addChatroomForm.addEventListener(
             'submit',
