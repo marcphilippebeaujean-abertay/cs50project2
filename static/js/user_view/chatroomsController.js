@@ -5,7 +5,6 @@ import { formToJSON } from '../formUtilities';
 import {
     getLocalUserInformation,
     updateLocalRoomInformation,
-    getRoomInformation,
     getLocalRoomInformation
 } from "../localStorage";
 

@@ -10,6 +10,7 @@ export default class MessagesController extends Controller{
         this.userInfo = getLocalUserInformation();
 
         this.dispatchMessage = this.dispatchMessage.bind(this);
+
         const messageSend = document.getElementById('chat-msg-form');
         if(messageSend === undefined){
             return;
