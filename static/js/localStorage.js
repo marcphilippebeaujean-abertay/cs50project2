@@ -1,7 +1,7 @@
 export const getLocalUserInformation = () => {
     return {
         'username': window.localStorage.getItem('username'),
-        'userid': parseInt(window.localStorage.getItem('userId'))
+        'userId': parseInt(window.localStorage.getItem('userId'))
     }
 };
 

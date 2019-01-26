@@ -108,12 +108,12 @@ export default class ChatroomsController extends Controller{
     deleteChatroom(chatroomInfo){
         this.model.dispatchRoomDeletionRequest({
             ...chatroomInfo,
-            'userId': this.userInfo.userid
+            'userId': this.userInfo['userId']
         });
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;
-        if(roomInfo['roomOwner'] === this.userInfo.userid){
+        if(roomInfo['roomOwner'] === this.userInfo['userId']){
             chatDeleteCallback = this.deleteChatroom;
         }
         this.view.addChatroomBtn(roomInfo, this.onChatroomOpened, chatDeleteCallback);

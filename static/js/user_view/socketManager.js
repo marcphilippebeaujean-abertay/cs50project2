@@ -1,10 +1,9 @@
 import './chatroomsView';
-import { getLocalUserInformation } from "../localStorage";
+import { getLocalUserInformation, getLocalRoomInformation } from "../localStorage";
 
 export default class SocketController{
-    constructor(getRoomCallback, view){
+    constructor(view){
         this.userinfo = getLocalUserInformation();
-        this.getRoomInfo = getRoomCallback;
         this.view = view;
 
         // Connect to server websocket
@@ -16,7 +15,7 @@ export default class SocketController{
             'submit',
             (e) => {
                 e.preventDefault();
-                const roomInfo = this.getRoomInfo();
+                const roomInfo = getLocalRoomInformation();
                 if(roomInfo['roomName'] === ''){
                     return;
                 }

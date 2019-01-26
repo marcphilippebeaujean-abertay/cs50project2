@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () =>{
                 messagesController.model.dispatchGetMessagesRequest
             );
             socketController = new SocketController(
-                chatroomsController.getRoomInfo,
                 messagesController.view
             );
         }
