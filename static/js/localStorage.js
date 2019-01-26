@@ -8,7 +8,7 @@ export const getLocalUserInformation = () => {
 export const getLocalRoomInformation = () => {
     return {
         'roomName': window.localStorage.getItem('roomName'),
-        'roomId': window.localStorage.getItem('roomId'),
+        'roomId': parseInt(window.localStorage.getItem('roomId')),
         'inviteKey': window.localStorage.getItem('inviteKey')
     }
 };

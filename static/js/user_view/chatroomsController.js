@@ -2,7 +2,12 @@ import Controller from '../interfaces/controller';
 import ChatroomsView from './chatroomsView';
 import ChatroomsModel from './chatroomsModel';
 import { formToJSON } from '../formUtilities';
-import { getLocalUserInformation, updateLocalRoomInformation, getRoomInformation } from "../localStorage";
+import {
+    getLocalUserInformation,
+    updateLocalRoomInformation,
+    getRoomInformation,
+    getLocalRoomInformation
+} from "../localStorage";
 
 export default class ChatroomsController extends Controller{
     constructor(roomSwitchCallback){
@@ -27,7 +32,6 @@ export default class ChatroomsController extends Controller{
             // was not meant to be used for the given view
             return;
         }
-        //
         // Initialises chatrooms and other user info
         addChatroomForm.addEventListener(
             'submit',
@@ -56,19 +60,26 @@ export default class ChatroomsController extends Controller{
                 if (responseMessage['success']) {
                     // Add new chatroom to list
                     this.initialiseRoom(responseMessage['room']);
+                    // Also clears add chatroom name form after submission
                     this.view.changeChatroom(responseMessage['room']);
-                    this.onChatroomOpened(responseMessage['room']);
                     this.chatRooms.push(responseMessage['room']);
+                    this.onChatroomOpened(responseMessage['room']);
                 }
                 break;
             case 'getChatrooms':
                 const chatrooms = responseMessage['chatrooms'];
                 if(chatrooms.length > 0) {
                     this.chatRooms = chatrooms;
+                    const lastChatroom = getLocalRoomInformation();
+                    console.log(getLocalRoomInformation());
+                    let chatroomToOpen = chatrooms[0];
                     chatrooms.forEach(chatroom => {
                         this.initialiseRoom(chatroom);
+                        if(chatroom['roomId'] === lastChatroom['roomId']){
+                            chatroomToOpen = chatroom;
+                        }
                     });
-                    this.onChatroomOpened(chatrooms[0]);
+                    this.onChatroomOpened(chatroomToOpen);
                 }
                 // Initialise view after chatrooms have been
                 // queried from the backend

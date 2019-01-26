@@ -89,6 +89,7 @@ export default class ChatroomsView{
     }
 
     changeChatroom(chatroomInfo){
+        document.getElementById('roomName').value = "";
         const prevChat = document.getElementsByClassName('chatroom-current')[0];
         if(prevChat){
             // remove current chatroom tag from previous chatroom
