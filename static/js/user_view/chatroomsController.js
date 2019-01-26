@@ -100,7 +100,7 @@ export default class ChatroomsController extends Controller{
                         this.view.changeChatroom(this.currentChatroom);
                     }
                 }else{
-                    alert("Failed to delete chatroom");
+                    alert('Failed to delete chatroom');
                 }
                 break;
             default:

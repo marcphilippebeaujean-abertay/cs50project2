@@ -16,9 +16,12 @@ const convertTimeStamp = (timestamp) => {
 export default class MessagesView{
     constructor(){
         this.lastMsgSender = '';
+        this.spinnerEnabled = false;
 
         this.addMessageToView = this.addMessageToView.bind(this);
         this.confirmMessage = this.confirmMessage.bind(this);
+        this.toggleMessageLoadingSpinner = this.toggleMessageLoadingSpinner.bind(this);
+        this.scrollToBottom = this.scrollToBottom.bind(this);
     }
     addMessageToView(msgData){
         const msgList = document.getElementById('messages-view');
@@ -37,6 +40,9 @@ export default class MessagesView{
             this.lastMsgSender = msgData['username'];
         }
         msgList.insertAdjacentHTML('beforeend', markup);
+        if(msgData['fromCurrentUser'] === true){
+            this.scrollToBottom();
+        }
     }
     confirmMessage(msgData){
         const pendingMsg = document.getElementById(msgData['pendingId']);
@@ -47,5 +53,24 @@ export default class MessagesView{
             pendingMsg.className = 'chat-msg';
         }
     }
-
+        toggleMessageLoadingSpinner(){
+        const spinner = document.getElementById('msg-loader');
+        const messagesView = document.getElementById('messages-view');
+        if(spinner === undefined){
+            throw 'spinner toggle called but element is undefined';
+            return;
+        }
+        this.spinnerEnabled = !this.spinnerEnabled;
+        if(this.spinnerEnabled){
+            spinner.style.display = 'inherit';
+            messagesView.style.display = 'none';
+        }else{
+            spinner.style.display = 'none';
+            messagesView.style.display = 'flex';
+        }
+    }
+    scrollToBottom(){
+        const element = document.getElementById('scroll-to-bottom-elem');
+        element.scrollIntoView({behavior: "smooth"});
+    }
 }

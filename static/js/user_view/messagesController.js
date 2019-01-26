@@ -35,6 +35,7 @@ export default class MessagesController extends Controller{
         }
         switch(responseMessage['type']) {
             case 'getRoomMessages':
+                this.view.toggleMessageLoadingSpinner();
                 this.view.lastMsgSender = "";
                 responseMessage['messages'].forEach( msg => {
                    this.view.addMessageToView({
@@ -43,6 +44,8 @@ export default class MessagesController extends Controller{
                        'fromCurrentUser': msg['username'] === this.userInfo.username
                    });
                 });
+                this.view.scrollToBottom();
+                this.view.toggleMessageLoadingSpinner();
                 break;
             default:
                 console.log('weird response message type');
