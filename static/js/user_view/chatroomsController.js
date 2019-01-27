@@ -45,8 +45,9 @@ export default class ChatroomsController extends Controller{
         e.preventDefault();
         const formInfo = formToJSON('add-chatroom-form');
         console.log(formInfo['roomCreationChoice']);
+        //console.log(formInfo['roomCreationChoice']);
         if(formInfo['roomCreationChoice'] === 'create') {
-            this.model.dispatchAddChatroomRequest();
+            this.model.dispatchAddChatroomRequest(formInfo['roomName']);
         }else{
             this.model.dispatchJoinChatroomRequest(formInfo['roomName']);
         }

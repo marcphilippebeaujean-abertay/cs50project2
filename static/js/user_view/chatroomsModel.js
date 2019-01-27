@@ -8,8 +8,8 @@ export default class ChatroomsModel extends Model{
         this.dispatchUserInfoRequest = this.dispatchUserInfoRequest.bind(this);
         this.dispatchRoomDeletionRequest = this.dispatchRoomDeletionRequest.bind(this);
     }
-    dispatchAddChatroomRequest(formInput){
-        if(!/^[a-zA-Z]{3,}$/g.test(formInput['roomName'])){
+    dispatchAddChatroomRequest(roomName){
+        if(!/^[a-zA-Z]{3,}$/g.test(roomName)){
             this.responseCallback({
                 'type': 'addChatRoom',
                 'success': false,
@@ -17,12 +17,10 @@ export default class ChatroomsModel extends Model{
             });
         }else{
             const request = this.initXMLHttpReq('addChatRoom');
-            if(formInput['roomCreationChoice'] === 'create') {
-                request.open('POST', '/add_chatroom');
-                const data = new FormData();
-                data.append('roomName', formInput['roomName']);
-                request.send(data);
-            }
+            request.open('POST', '/add_chatroom');
+            const data = new FormData();
+            data.append('roomName', roomName);
+            request.send(data);
         }
     }
     dispatchChatroomListRequest(){
