@@ -45,4 +45,11 @@ export default class ChatroomsModel extends Model{
         data.append('roomName', roomInfo['roomName']);
         request.send(data);
     }
+    dispatchJoinChatroomRequest(inviteKey){
+        const request = this.initXMLHttpReq('addChatRoom');
+        request.open('POST', '/join_chatroom');
+        const data = new FormData();
+        data.append('inviteKey', inviteKey);
+        request.send(data);
+    }
 }

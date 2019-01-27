@@ -7,19 +7,21 @@ import string
 import random
 import os
 
-# Configure DB
-if not os.getenv('DATABASE_URI'):
-    raise RuntimeError("DATABASE_URI is not set")
-engine = create_engine(os.getenv('DATABASE_URI'))
-db = scoped_session(sessionmaker(bind=engine))
-
 app = Flask(__name__)
+if __name__ is "__main__":
+    app.run(debug=True)
 # Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = 'secret!'
 Session(app)
 socketio = SocketIO(app)
+
+# Configure DB
+if not os.getenv('DATABASE_URI'):
+    raise RuntimeError("DATABASE_URI is not set")
+engine = create_engine(os.getenv('DATABASE_URI'))
+db = scoped_session(sessionmaker(bind=engine))
 
 
 def random_string(string_len=10):
@@ -142,7 +144,7 @@ def get_user_chatrooms():
     if session.get('user_id') is None:
         return redirect(url_for('home'))
     else:
-        chatrooms = db.execute('SELECT * FROM chatrooms WHERE userid =:userid', {
+        chatrooms = db.execute('SELECT * FROM chatrooms cr join chatroomusers cru on cru.chatid=cr.chatroomid', {
                     'userid': session.get('user_id')}).fetchall()
         chatrooms_list = []
         for chatroom in chatrooms:
@@ -220,6 +222,39 @@ def get_room_msgs():
         'success': True,
         'messages': message_list
     })
+
+
+@app.route('/join_chatroom', methods=['POST'])
+def join_room():
+    if session.get('user_id') is None:
+        return jsonify({'success': False,
+                        'respMessage': 'Not logged into session'})
+    if request.form.get('inviteKey') is None:
+        return jsonify({'success': False,
+                       'respMessage': 'Invalid inite key'})
+    room = db.execute('SELECT * FROM chatrooms WHERE inviteid =:invitekey',{
+        'invitekey': request.form.get('inviteKey')
+        }).fetchone()
+    if room is None:
+        return jsonify({
+            'success': False,
+            'respMessage': 'Key did not match any rooms'
+        })
+    else:
+        # TODO ensure that user is not redundant in the chatroom
+        db.execute('INSERT INTO chatroomusers (userid, chatid) VALUES (:userid, :chatid)', {
+            'userid': session.get('user_id'),
+            'chatid': room.chatroomid
+        })
+        db.commit()
+        return jsonify({
+            'success': True,
+            'room': {'roomName': room.roomname,
+                     'roomOwner': session.get('user_id'),
+                     'inviteKey': request.form.get('inviteKey'),
+                     'roomId': room.chatroomid}
+        })
+
 
 
 @socketio.on('post message')
