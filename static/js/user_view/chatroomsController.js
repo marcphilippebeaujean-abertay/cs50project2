@@ -60,6 +60,8 @@ export default class ChatroomsController extends Controller{
                     this.view.changeChatroom(responseMessage['room']);
                     this.chatRooms.push(responseMessage['room']);
                     this.onChatroomOpened(responseMessage['room']);
+                }else{
+
                 }
                 break;
             case 'getChatrooms':
