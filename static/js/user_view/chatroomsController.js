@@ -43,8 +43,8 @@ export default class ChatroomsController extends Controller{
     }
     onAddChatroomAttempt(e){
         e.preventDefault();
-        this.model.dispatchAddChatroomRequest({
-            ...formToJSON('add-chatroom-form')})
+        console.log(formToJSON('add-chatroom-form'));
+        this.model.dispatchAddChatroomRequest(formToJSON('add-chatroom-form'));
     }
     handleResponse(responseMessage){
         if(('redirect' in responseMessage)) {

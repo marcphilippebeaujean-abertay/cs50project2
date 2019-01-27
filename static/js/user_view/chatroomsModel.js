@@ -1,18 +1,19 @@
 import Model from '../interfaces/model';
 
-const chatroomNameReg = new RegExp(
-    /^[a-zA-Z]{3,}$/g
-);
-
 export default class ChatroomsModel extends Model{
     constructor(responseCallback){
         super(responseCallback);
+
+        this.chatroomNameReg = new RegExp(
+    /^[a-zA-Z]{3,}$/g
+        );
         this.dispatchAddChatroomRequest = this.dispatchAddChatroomRequest.bind(this);
         this.dispatchUserInfoRequest = this.dispatchUserInfoRequest.bind(this);
         this.dispatchRoomDeletionRequest = this.dispatchRoomDeletionRequest.bind(this);
     }
     dispatchAddChatroomRequest(formInput){
-        if(!chatroomNameReg.test(formInput['roomName'])){
+        console.log(formInput);
+        if(!this.chatroomNameReg.test(formInput['roomName'])){
             this.responseCallback({
                 'type': 'addChatRoom',
                 'success': false,

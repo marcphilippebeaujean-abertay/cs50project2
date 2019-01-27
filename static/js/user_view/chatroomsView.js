@@ -26,6 +26,7 @@ export default class ChatroomsView{
         this.overlayOpen = !this.overlayOpen;
         const addChatroomWindow = document.getElementById('chatroom-creation-overlay');
         if(this.overlayOpen){
+            document.getElementById('roomName').value = "";
             addChatroomWindow.style.display = 'block';
         }else{
             addChatroomWindow.style.display = 'none';

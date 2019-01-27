@@ -99,7 +99,7 @@ def register_user():
         return jsonify({'success': True})
 
 
-@app.route('/add_chatroom', methods=["POST"])
+@app.route('/add_chatroom', methods=['POST'])
 def add_chat_room():
     if db.execute('SELECT * FROM chatrooms WHERE roomname =:roomName', {
                 'roomName': request.form['roomName']}).fetchone() is not None:
@@ -157,7 +157,7 @@ def get_user_chatrooms():
         })
 
 
-@app.route('/get_user_info', methods=["GET"])
+@app.route('/get_user_info', methods=['GET'])
 def get_user_info():
     if session.get('user_id') is None or session.get('user_id') is '':
         return jsonify({'success': False})
