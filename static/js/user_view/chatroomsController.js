@@ -15,7 +15,6 @@ export default class ChatroomsController extends Controller{
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
         this.getRoomInfo = this.getRoomInfo.bind(this);
-        this.deleteChatroom = this.deleteChatroom.bind(this);
         this.initialiseRoom = this.initialiseRoom.bind(this);
 
         this.currentChatroom = {
@@ -70,7 +69,6 @@ export default class ChatroomsController extends Controller{
                 if(chatrooms.length > 0) {
                     this.chatRooms = chatrooms;
                     const lastChatroom = getLocalRoomInformation();
-                    console.log(getLocalRoomInformation());
                     let chatroomToOpen = chatrooms[0];
                     chatrooms.forEach(chatroom => {
                         this.initialiseRoom(chatroom);
@@ -86,6 +84,7 @@ export default class ChatroomsController extends Controller{
                 break;
             case 'deleteRoom':
                 if(responseMessage['success']) {
+                    console.log(responseMessage);
                     const chatroomList = document.getElementById('chatroom-list');
                     chatroomList.removeChild(document.getElementById(`${responseMessage['roomName']}`));
                     this.chatRooms = this.chatRooms.filter(elem => elem['roomId'] !== responseMessage['roomId']);
@@ -116,17 +115,11 @@ export default class ChatroomsController extends Controller{
         this.view.changeChatroom(chatroomInfo);
         this.roomSwitchCallback(chatroomInfo['roomId']);
     }
-    deleteChatroom(chatroomInfo){
-        this.model.dispatchRoomDeletionRequest({
-            ...chatroomInfo,
-            'userId': this.userInfo['userId']
-        });
-    }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;
         if(roomInfo['roomOwner'] === this.userInfo['userId']){
-            chatDeleteCallback = this.deleteChatroom;
+            chatDeleteCallback = this.model.dispatchRoomDeletionRequest;
         }
-        this.view.addChatroomBtn(roomInfo, this.onChatroomOpened, chatDeleteCallback);
+        this.view.addChatroomBtn({...roomInfo, 'ownerId': this.userInfo['userId']}, this.onChatroomOpened, chatDeleteCallback);
     }
 }

@@ -178,13 +178,13 @@ def delete_room():
         return jsonify({
             'success': False
         })
-    if request.form.get('userId') is None:
+    if request.form.get('ownerId') is None:
         return jsonify({
             'success': False
         })
     db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid AND userid =:userid', {
         'chatroomid': request.form['roomId'],
-        'userid': request.form['userId']
+        'userid': request.form['ownerId']
         })
     db.commit()
     return jsonify({

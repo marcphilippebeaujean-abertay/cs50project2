@@ -71,14 +71,16 @@ export default class ChatroomsView{
     }
     toggleDeletionConfirmation(deletionCallback, chatroomInfo){
         const removeChat = document.getElementById('delete-chatroom-overlay');
+        console.log(deletionCallback);
         if(deletionCallback !== undefined) {
             document.getElementById('yes-deletion-window').addEventListener(
                 'click',
                 () => {
-                    deletionCallback(chatroomInfo);
+                    //this.overlayOpen = false;
+                    //removeChat.style.display = 'none';
                     this.toggleDeletionConfirmation();
-                }
-            );
+                    deletionCallback(chatroomInfo);
+                });
         }
         this.overlayOpen = !this.overlayOpen;
         if(this.overlayOpen){
