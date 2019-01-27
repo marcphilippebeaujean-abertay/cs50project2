@@ -82,10 +82,9 @@ export default class ChatroomsController extends Controller{
                 break;
             case 'deleteRoom':
                 if(responseMessage['success']) {
-                    console.log(responseMessage);
                     const chatroomList = document.getElementById('chatroom-list');
                     chatroomList.removeChild(document.getElementById(`${responseMessage['roomName']}`));
-                    this.chatRooms = this.chatRooms.filter(elem => elem['roomId'] !== responseMessage['roomId']);
+                    this.chatRooms = this.chatRooms.filter(elem => elem['roomId'] !== parseInt(responseMessage['roomId']));
                     if (this.chatRooms.length > 0) {
                         this.onChatroomOpened(this.chatRooms[0]);
                     } else {

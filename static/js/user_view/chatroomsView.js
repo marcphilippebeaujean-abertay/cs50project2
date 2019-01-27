@@ -71,14 +71,11 @@ export default class ChatroomsView{
     }
     toggleDeletionConfirmation(deletionCallback, chatroomInfo){
         const removeChat = document.getElementById('delete-chatroom-overlay');
-        console.log(deletionCallback);
         const yesBtn = document.getElementById('yes-deletion-window');
         if(deletionCallback !== undefined) {
             yesBtn.addEventListener(
                 'click',
                 () => {
-                    //this.overlayOpen = false;
-                    //removeChat.style.display = 'none';
                     this.toggleDeletionConfirmation();
                     deletionCallback(chatroomInfo);
                 });
