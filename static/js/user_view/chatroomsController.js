@@ -14,7 +14,6 @@ export default class ChatroomsController extends Controller{
 
         this.onAddChatroomAttempt = this.onAddChatroomAttempt.bind(this);
         this.onChatroomOpened = this.onChatroomOpened.bind(this);
-        this.getRoomInfo = this.getRoomInfo.bind(this);
         this.initialiseRoom = this.initialiseRoom.bind(this);
 
         this.currentChatroom = {
@@ -47,7 +46,6 @@ export default class ChatroomsController extends Controller{
         this.model.dispatchAddChatroomRequest({
             ...formToJSON('add-chatroom-form')})
     }
-    getRoomInfo(){ return this.currentChatroom; }
     handleResponse(responseMessage){
         if(('redirect' in responseMessage)) {
             window.location.href = responseMessage.redirect;
