@@ -144,7 +144,7 @@ def get_user_chatrooms():
     if session.get('user_id') is None:
         return redirect(url_for('home'))
     else:
-        chatrooms = db.execute('SELECT * FROM chatrooms cr join chatroomusers cru on cru.chatid=cr.chatroomid', {
+        chatrooms = db.execute('SELECT * FROM chatrooms cr join chatroomusers cru on cru.chatid=cr.chatroomid AND cru.userid =:userid', {
                     'userid': session.get('user_id')}).fetchall()
         chatrooms_list = []
         for chatroom in chatrooms:

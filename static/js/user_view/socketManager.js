@@ -31,12 +31,12 @@ export default class SocketController{
                         'roomName': roomInfo['roomName'],
                         'message': chatMsg,
                         'pendingId': uniqueKey,
-                        'isPending': true,
                         'timestamp': ts.getTime()
                     };
                     this.socket.emit('post message', msg);
                     this.view.addMessageToView({
                         ...msg,
+                        'isPending': true,
                         'fromCurrentUser': true
                     });
                 }

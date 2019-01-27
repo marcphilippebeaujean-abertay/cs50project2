@@ -31,12 +31,12 @@ export default class MessagesView{
             <div class="chat-msg ${curUserClass} ${pendingClass}" id="${msgData['pendingId']}">
                 <span class="msg-content">${msgData['message']}</span>
             </div>
-            <small class="msg-timestamp">${convertTimeStamp(msgData['timestamp'])}</small>
+            <small class="msg-timestamp ${curUserClass}">${convertTimeStamp(msgData['timestamp'])}</small>
         `;
         if(this.lastMsgSender !== msgData['username']){
             const curUsername = msgData['fromCurrentUser'] ? 'You' : msgData['username'];
-            const userStyleMsg = msgData['fromCurrentUser'] ? '' : 'other-user-name-display';
-            msgList.insertAdjacentHTML('beforeend', `<p class='user-indicator ${userStyleMsg}'>${curUsername}</p>`);
+            const userStyleMsg = msgData['fromCurrentUser'] ? '' : 'other-user-text-display';
+            msgList.insertAdjacentHTML('beforeend', `<p class='user-indicator ${curUserClass}'>${curUsername}</p>`);
             this.lastMsgSender = msgData['username'];
         }
         msgList.insertAdjacentHTML('beforeend', markup);

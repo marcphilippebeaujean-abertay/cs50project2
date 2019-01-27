@@ -12,10 +12,6 @@ $msg-margin-sides: 10px;
   background-color: $scndry-clr;
 }
 
-.chat-msg:hover{
-  cursor: default;
-}
-
 .msg-content{
   margin-left: 5px;
   margin-right: 5px;
@@ -27,13 +23,10 @@ $msg-margin-sides: 10px;
 }
 
 .other-user-msg{
-  float: right;
+  position: relative;
+  left: 50%;
   background-color: white;
   color: black;
-}
-
-.other-user-name-display{
-  text-align: left;
 }
 
 .user-indicator{
