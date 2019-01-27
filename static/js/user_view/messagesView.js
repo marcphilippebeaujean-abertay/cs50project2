@@ -31,8 +31,7 @@ export default class MessagesView{
             <div class="chat-msg ${curUserClass} ${pendingClass}" id="${msgData['pendingId']}">
                 <span class="msg-content">${msgData['message']}</span>
             </div>
-            <small class="msg-timestamp ${curUserClass}">${convertTimeStamp(msgData['timestamp'])}</small>
-        `;
+            <small class="msg-timestamp ${curUserClass}">${convertTimeStamp(msgData['timestamp'])}</small>`;
         if(this.lastMsgSender !== msgData['username']){
             const curUsername = msgData['fromCurrentUser'] ? 'You' : msgData['username'];
             const userStyleMsg = msgData['fromCurrentUser'] ? '' : 'other-user-text-display';

@@ -177,16 +177,12 @@ def get_user_info():
 @app.route('/delete_room', methods=['DELETE'])
 def delete_room():
     if request.form.get('roomId') is None:
-        return jsonify({
-            'success': False
-        })
-    if request.form.get('ownerId') is None:
-        return jsonify({
-            'success': False
-        })
+        return jsonify({'success': False})
+    if request.form.get('userId') is None:
+        return jsonify({'success': False})
     db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid AND userid =:userid', {
         'chatroomid': request.form['roomId'],
-        'userid': request.form['ownerId']
+        'userid': request.form['userId']
         })
     db.commit()
     return jsonify({
@@ -194,6 +190,31 @@ def delete_room():
         'roomId': request.form['roomId'],
         'roomName': request.form['roomName']
     })
+
+
+@app.route('/remove_chat_user', methods=['DELETE'])
+def remove_chat_user():
+    print(request.form)
+    if request.form.get('roomId') is None:
+        return jsonify({'success': False})
+    if session.get('user_id') is None:
+        return jsonify({'success': False})
+    print('nothing was none so far...')
+    chatuser = db.execute('SELECT * FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
+        'userid': session['user_id'],
+        'roomid': request.form['roomId']}).fetchone()
+    if chatuser is not None:
+        db.execute('DELETE FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
+            'userid': session.get('user_id'),
+            'roomid': request.form['roomId']})
+        db.commit()
+        return jsonify({
+            'success': True,
+            'roomName': request.form['roomName'],
+            'roomId': request.form['roomId']})
+    else:
+        print('couldnt find chatroom user')
+        return jsonify({'success': False})
 
 
 @app.route('/get_room_msgs', methods=['POST'])

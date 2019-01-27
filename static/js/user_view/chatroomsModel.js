@@ -7,6 +7,7 @@ export default class ChatroomsModel extends Model{
         this.dispatchAddChatroomRequest = this.dispatchAddChatroomRequest.bind(this);
         this.dispatchUserInfoRequest = this.dispatchUserInfoRequest.bind(this);
         this.dispatchRoomDeletionRequest = this.dispatchRoomDeletionRequest.bind(this);
+        this.dispatchLeaveRoomRequest = this.dispatchLeaveRoomRequest.bind(this);
     }
     dispatchAddChatroomRequest(roomName){
         if(!/^[a-zA-Z]{3,}$/g.test(roomName)){
@@ -39,7 +40,15 @@ export default class ChatroomsModel extends Model{
         request.open('DELETE', '/delete_room');
         const data = new FormData();
         data.append('roomId', roomInfo['roomId']);
-        data.append('ownerId', roomInfo['ownerId']);
+        data.append('userId', roomInfo['ownerId']);
+        data.append('roomName', roomInfo['roomName']);
+        request.send(data);
+    }
+    dispatchLeaveRoomRequest(roomInfo){
+        const request = this.initXMLHttpReq('deleteRoom');
+        request.open('DELETE', '/remove_chat_user');
+        const data = new FormData();
+        data.append('roomId', roomInfo['roomId']);
         data.append('roomName', roomInfo['roomName']);
         request.send(data);
     }
