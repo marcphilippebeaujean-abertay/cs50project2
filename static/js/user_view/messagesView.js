@@ -53,7 +53,7 @@ export default class MessagesView{
             pendingMsg.className = 'chat-msg';
         }
     }
-        toggleMessageLoadingSpinner(){
+    toggleMessageLoadingSpinner(){
         const spinner = document.getElementById('msg-loader');
         const messagesView = document.getElementById('messages-view');
         if(spinner === undefined){
