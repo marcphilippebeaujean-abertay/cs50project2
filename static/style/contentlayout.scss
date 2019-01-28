@@ -1,4 +1,5 @@
-$sidebar-width: 30;
+$sidebar-width: 250px;
+
 #content{
   margin: $navbar-height auto;
 }
@@ -6,21 +7,25 @@ $sidebar-width: 30;
 #user-view-grid{
   position: relative;
   display: flex;
-  width: 100%;
+  width: $init-content-width;
+  margin: 0px auto;
   flex-direction: row;
+}
+
+#sidebar-whitespace{
+  width: $sidebar-width;
+  max-width: $sidebar-width;
 }
 
 #user-sidebar{
   position: fixed;
-  width: 30%;
+  width: $sidebar-width;
+  max-width: $sidebar-width;
 }
 
-#sidebar-whitespace{
-  width: percentage($sidebar-width);
-}
 
 #chatroom-view{
-  width: percentage(100 - $sidebar-width);
+  flex-grow: 1;
 }
 
 #chat-msg-form{
