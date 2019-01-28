@@ -24,7 +24,7 @@ $msg-margin-sides: 10px;
 
 .other-user-msg{
   position: relative;
-  left: 50%;
+  left: 49%;
   background-color: white;
   color: black;
 }
@@ -41,4 +41,13 @@ $msg-margin-sides: 10px;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 700px) {
+  .other-user-msg{
+    left: 0%;
+  }
+  .chat-msg{
+    width: 90%;
+  }
 }
