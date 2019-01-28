@@ -280,7 +280,7 @@ def join_room():
                      'inviteKey': request.form.get('inviteKey'),
                      'roomId': room.chatroomid}
         })
-
+# hsd
 
 @socketio.on('post message')
 def add_new_msg(data):
