@@ -40,7 +40,7 @@ export default class ChatroomsModel extends Model{
         request.open('DELETE', '/delete_room');
         const data = new FormData();
         data.append('roomId', roomInfo['roomId']);
-        data.append('userId', roomInfo['ownerId']);
+        data.append('userId', roomInfo['roomOwner']);
         data.append('roomName', roomInfo['roomName']);
         request.send(data);
     }

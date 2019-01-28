@@ -182,7 +182,7 @@ def delete_room():
         return jsonify({'success': False})
     db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid AND userid =:userid', {
         'chatroomid': request.form['roomId'],
-        'userid': request.form['userId']
+        'userid': request.form.get('userId')
         })
     db.commit()
     return jsonify({
@@ -205,7 +205,7 @@ def remove_chat_user():
         'roomid': request.form['roomId']}).fetchone()
     if chatuser is not None:
         db.execute('DELETE FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
-            'userid': session.get('user_id'),
+            'userid': session['user_id'],
             'roomid': request.form['roomId']})
         db.commit()
         return jsonify({
@@ -213,7 +213,6 @@ def remove_chat_user():
             'roomName': request.form['roomName'],
             'roomId': request.form['roomId']})
     else:
-        print('couldnt find chatroom user')
         return jsonify({'success': False})
 
 
@@ -275,7 +274,6 @@ def join_room():
                      'inviteKey': request.form.get('inviteKey'),
                      'roomId': room.chatroomid}
         })
-
 
 
 @socketio.on('post message')
