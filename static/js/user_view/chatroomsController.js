@@ -83,6 +83,8 @@ export default class ChatroomsController extends Controller{
                         }
                     });
                     this.onChatroomOpened(chatroomToOpen);
+                }else{
+                    updateLocalRoomInformation(this.currentChatroom);
                 }
                 // Initialise view after chatrooms have been
                 // queried from the backend
@@ -101,6 +103,7 @@ export default class ChatroomsController extends Controller{
                             'roomId': '',
                             'inviteKey': ''
                         };
+                        updateLocalRoomInformation(this.currentChatroom);
                         this.view.changeChatroom(this.currentChatroom);
                     }
                 }else{

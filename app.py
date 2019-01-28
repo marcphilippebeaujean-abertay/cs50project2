@@ -182,7 +182,6 @@ def delete_room():
         return jsonify({'success': False, 'respMessage': 'Invalid request'})
     print(session.get('user_id')!= request.form.get('userId'))
     if session.get('user_id') is None:
-        print('lol')
         return jsonify({'success': False, 'respMessage': 'Log in for this action'})
     if int(session['user_id']) != int(request.form['userId']):
         print('wtf')

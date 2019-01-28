@@ -4,66 +4,66 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-    <div id="user-view-grid">
-        <div class="overlay" id="delete-chatroom-overlay">
-            <div class="overlay-window">
-                <h2 id="deletion-header">Are you sure you want to remove this chatroom?</h2>
-                <div id="delete-chat-btn-layout">
-                    <button
-                        type="button"
-                        class="btn btn-outline-danger"
-                        id="yes-deletion-window">
-                        Yes
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-outline-primary"
-                        id="close-deletion-window">
-                        No
-                    </button>
+    <div class="overlay" id="delete-chatroom-overlay">
+        <div class="overlay-window">
+            <h2 id="deletion-header">Are you sure you want to remove this chatroom?</h2>
+            <div id="delete-chat-btn-layout">
+                <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    id="yes-deletion-window">
+                    Yes
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    id="close-deletion-window">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="chatroom-creation-overlay">
+        <div class="overlay-window">
+            <form class="add-chatroom-form">
+                <img
+                    src="{{ url_for('static', filename='images/close_window_btn.png') }}"
+                    alt="close window button"
+                    id="close-chat-window"
+                    class="toggle-add-chatroom-window"
+                />
+                <h2>Add New Chat Room</h2>
+                <div class="form-group">
+                    <label for="roomName">Room Name or Invite Key</label>
+                    <input name="roomName"
+                           type="name"
+                           class="form-control"
+                           id="roomName"
+                           aria-describedby="newRoomName"
+                           placeholder="Enter room name or invite key"
+                    >
                 </div>
-            </div>
-        </div>
-        <div class="overlay" id="chatroom-creation-overlay">
-            <div class="overlay-window">
-                <form class="add-chatroom-form">
-                    <img
-                        src="{{ url_for('static', filename='images/close_window_btn.png') }}"
-                        alt="close window button"
-                        id="close-chat-window"
-                        class="toggle-add-chatroom-window"
-                    />
-                    <h2>Add New Chat Room</h2>
-                    <div class="form-group">
-                        <label for="roomName">Room Name or Invite Key</label>
-                        <input name="roomName"
-                               type="name"
-                               class="form-control"
-                               id="roomName"
-                               aria-describedby="newRoomName"
-                               placeholder="Enter room name or invite key"
-                        >
-                    </div>
-                    <div class="form-group">
-                        <fieldset class="inline-radio-btns">
-                            <input type="radio" id="create-room" name="roomCreationChoice"  value="create" checked />
-                            <label for="create-room" >Create Room</label>
-                            <input type="radio" id="join-room" name="roomCreationChoice"  value="join" />
-                            <label for="join-room" >Join Room</label>
-                        </fieldset>
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-outline-primary"
-                        id="add-chatroom-btn">
-                            Submit
-                    </button>
-                    <div class="adding-chat-error">
+                <div class="form-group">
+                    <fieldset class="inline-radio-btns">
+                        <input type="radio" id="create-room" name="roomCreationChoice"  value="create" checked />
+                        <label for="create-room" >Create Room</label>
+                        <input type="radio" id="join-room" name="roomCreationChoice"  value="join" />
+                        <label for="join-room" >Join Room</label>
+                    </fieldset>
+                </div>
+                <button
+                    type="submit"
+                    class="btn btn-outline-primary"
+                    id="add-chatroom-btn">
+                        Submit
+                </button>
+                <div class="adding-chat-error">
 
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
+    <div id="user-view-grid">
         <div id="user-sidebar">
             <h2>{{ username }}</h2>
             <ul id="chatroom-list">
@@ -83,6 +83,8 @@
                 /></a>
             </div>
         </div>
+        <div id="sidebar-whitespace">
+        </div>
         <div id="chatroom-view">
             <i class="fas fa-4x fa-spinner" id="msg-loader"></i>
             <div id="messages-view">
@@ -92,10 +94,10 @@
                 <button type="submit"
                         class="btn btn-outline-primary"
                         id="send-msg-btn">
-                            Send
+                        Send
                 </button>
             </form>
         </div>
-        <div id="scroll-to-bottom-elem"></div>
     </div>
+    <div id="scroll-to-bottom-elem"></div>
 {% endblock %}

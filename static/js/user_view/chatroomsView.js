@@ -120,6 +120,6 @@ export default class ChatroomsView{
         }
     }
     initChatroomView(){
-        document.getElementById('user-view-grid').style.display = 'grid';
+        document.getElementById('user-view-grid').style.display = 'flex';
     }
 }

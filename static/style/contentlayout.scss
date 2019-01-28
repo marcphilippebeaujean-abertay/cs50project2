@@ -1,24 +1,26 @@
-#main-display-div{
-  grid-column: 2;
-  background-color: gray;
-}
-
+$sidebar-width: 30;
 #content{
-  width: $init-content-width;
   margin: $navbar-height auto;
 }
 
 #user-view-grid{
-  display: grid;
-  grid-template-columns: 2fr 6fr;
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
 }
 
 #user-sidebar{
-  grid-column: 1;
+  position: fixed;
+  width: 30%;
+}
+
+#sidebar-whitespace{
+  width: percentage($sidebar-width);
 }
 
 #chatroom-view{
-  grid-column: 2;
+  width: percentage(100 - $sidebar-width);
 }
 
 @media only screen and (max-width: 980px) {
