@@ -117,11 +117,6 @@
   color: white;
 }
 
-#send-msg-btn{
-  position: relative;
-  bottom: 14px;
-}
-
 #user-view-grid{
   display: none;
 }
@@ -138,10 +133,13 @@
   color: white;
 }
 
+#send-msg-btn{
+  position: absolute;
+  bottom: 0px;
+  left: 100%;
+}
+
 @media only screen and (max-width: 760px) {
-  #send-msg-btn{
-    bottom: 0px;
-  }
   #chat-msg-form{
       left: 60%;
       transform: translateX(-60%);
