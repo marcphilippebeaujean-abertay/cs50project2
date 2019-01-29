@@ -282,7 +282,7 @@ def join_room():
                 'roomId': room.chatroomid
             }
         })
-# hsd
+
 
 @socketio.on('post message')
 def add_new_msg(data):

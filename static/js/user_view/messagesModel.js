@@ -7,7 +7,7 @@ export default class MessagesModel extends Model{
     }
     dispatchGetMessagesRequest(roomId){
         const request = this.initXMLHttpReq('getRoomMessages');
-        request.open('POST', '/get_room_msgs');
+        request.open('POST', `/get_room_msgs`);
         const data = new FormData();
         data.append('roomId', roomId);
         request.send(data);
