@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} {{ super() }} - {{ username }} {% endblock %}
+{% block title %} {{ super() }} - Session {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -65,7 +65,7 @@
     </div>
     <div id="user-view-grid">
         <div id="user-sidebar">
-            <h2>{{ username }}</h2>
+            <h2 id="username-header"></h2>
             <ul id="chatroom-list">
             </ul>
             <h3>Invite Key:</h3>

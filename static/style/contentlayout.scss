@@ -23,27 +23,12 @@ $sidebar-width: 250px;
   max-width: $sidebar-width;
 }
 
-
 #chatroom-view{
   flex-grow: 1;
-}
-
-#chat-msg-form{
-  position: fixed;
-  bottom: 10px;
-  display: flex;
-  flex-direction: row;
-}
-
-#chat-msg-area{
-  resize: none;
 }
 
 @media only screen and (max-width: $init-content-width) {
   #user-view-grid {
     width: 100%;
-  }
-  #chat-msg-form{
-    width: 40%;
   }
 }

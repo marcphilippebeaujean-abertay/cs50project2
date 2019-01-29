@@ -80,17 +80,17 @@ def register():
     return render_template('register_form.html')
 
 
-@app.route('/user/<int:userid>/')
+@app.route('/user/<int:userid>')
 def user_view(userid):
     session_user_id = session.get('user_id')
+    print(session_user_id)
     if session_user_id is None:
+        print('redirecting cause id is none')
         return redirect(url_for('home'))
     if session_user_id is not userid:
+        print('redirecting cause user id is not for session user')
         return redirect(url_for('home'))
-    username = db.execute('SELECT username FROM users WHERE userid =:userid', {
-                'userid': session_user_id
-                }).fetchone().username
-    return render_template('user_view.html', username=username)
+    return render_template('user_view.html')
 
 
 @app.route('/add_user', methods=["POST"])
@@ -144,7 +144,7 @@ def add_chat_room():
                      'roomOwner': session_user_id,
                      'inviteKey': unique_id,
                      'roomId': chatroom_id}
-        })
+            })
 
 
 @app.route('/get_chatrooms', methods=['GET'])

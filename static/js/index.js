@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () =>{
                 // left the user view without logging out, redirect
                 window.location.href = respInfo.redirect;
             }
+            const usernameHeader = document.getElementById('username-header');
+            usernameHeader.innerHTML = respInfo['userInfo'].username;
             messagesController = new MessagesController();
             chatroomsController = new ChatroomsController(
                 messagesController.model.dispatchGetMessagesRequest

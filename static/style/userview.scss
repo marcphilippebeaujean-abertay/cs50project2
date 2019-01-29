@@ -11,27 +11,6 @@
   }
 }
 
-#delete-chat-btn-layout{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
-  margin: 20px 0px;
-  button{
-    margin: 0px 30px;
-  }
-}
-
-.interaction-logo{
-  height: 30px;
-  width: 30px;
-  margin-right: 30px;
-}
-
-.interaction-logo:hover{
-  cursor: pointer;
-}
-
 .overlay{
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
@@ -100,22 +79,6 @@
   position: relative;
 }
 
-.chatroom-btn{
-  padding-left: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  list-style-type: none;
-  font-size: 16px;
-  color: black;
-  background-color: white;
-}
-
-.chatroom-btn:hover{
-  cursor: pointer;
-  background-color: $main-clr;
-  color: white;
-}
-
 .chatroom-current{
   background-color: $scndry-clr;
   color: white;
@@ -123,24 +86,6 @@
 
 #user-view-grid{
   display: none;
-}
-
-.delete-room-btn{
-  color: #de604b;
-  float: right;
-  margin-right: 10px;
-  margin-top: 3px;
-  z-index: 2;
-}
-
-.delete-room-btn:hover{
-  color: white;
-}
-
-#send-msg-btn{
-  position: absolute;
-  bottom: 0px;
-  left: 100%;
 }
 
 @media only screen and (max-width: 760px) {

@@ -1,0 +1,22 @@
+#chat-msg-form{
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+#chat-msg-area{
+  resize: none;
+}
+
+@media only screen and (max-width: $init-content-width) {
+    #chat-msg-form{
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: $phone-screen-width){
+  #chat-msg-form{
+    width: 90%;
+  }
+}
