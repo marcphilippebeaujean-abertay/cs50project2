@@ -17,6 +17,10 @@ $navbar-height-phone: 50px;
   margin: auto;
 }
 
+#bars-nav{
+  display: none;
+}
+
 @media only screen and (max-width: 980px) {
   #nav-bar{
     width: 100%;
@@ -26,5 +30,12 @@ $navbar-height-phone: 50px;
 @media only screen and (max-width: $phone-screen-width){
   #nav-bar{
     height: $navbar-height-phone;
+  }
+  #bars-nav{
+    display: block;
+    position: absolute;
+    top: 2%;
+    right: 10%;
+    color: white;
   }
 }
