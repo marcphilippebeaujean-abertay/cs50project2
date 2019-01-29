@@ -43,7 +43,7 @@ $msg-margin-sides: 10px;
   flex-direction: column;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: $init-content-width) {
   .other-user-msg{
     left: 0%;
   }

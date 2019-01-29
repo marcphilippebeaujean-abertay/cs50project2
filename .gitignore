@@ -18,6 +18,7 @@ _mailinglist
 sass-cache/
 docs/_build/
 flask_session/
+static/style/sass-cache/
 
 # Coverage reports
 htmlcov/
