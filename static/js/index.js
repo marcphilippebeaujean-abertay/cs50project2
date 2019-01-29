@@ -18,8 +18,11 @@ window.addEventListener("popstate", function(e) {
 document.addEventListener('DOMContentLoaded', () =>{
     Model.dispatchUserInfoRequest((respInfo) => {
         if(respInfo['success'] === false){
+            console.log('not logged in');
+            window.localStorage.clear();
             userAccessController = new UserAccessController();
         }else{
+
             if(getLocalUserInformation().username == null ||
                getLocalUserInformation().userId == null){
                 window.localStorage.setItem('username', respInfo['userInfo'].username);

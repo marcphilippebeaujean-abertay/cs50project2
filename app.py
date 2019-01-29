@@ -185,11 +185,9 @@ def delete_room():
         return jsonify({'success': False, 'respMessage': 'Invalid request'})
     if request.form.get('userId') is None:
         return jsonify({'success': False, 'respMessage': 'Invalid request'})
-    print(session.get('user_id')!= request.form.get('userId'))
     if session.get('user_id') is None:
         return jsonify({'success': False, 'respMessage': 'Log in for this action'})
     if int(session['user_id']) != int(request.form['userId']):
-        print('wtf')
         return jsonify({'success': False, 'respMessage': 'No permission to delete this room'})
     db.execute('DELETE FROM chatrooms WHERE chatroomid =:chatroomid AND userid =:userid', {
         'chatroomid': request.form['roomId'],
@@ -205,12 +203,10 @@ def delete_room():
 
 @app.route('/remove_chat_user', methods=['DELETE'])
 def remove_chat_user():
-    print(request.form)
     if request.form.get('roomId') is None:
         return jsonify({'success': False})
     if session.get('user_id') is None:
         return jsonify({'success': False})
-    print('nothing was none so far...')
     chatuser = db.execute('SELECT * FROM chatroomusers WHERE userid =:userid AND chatid =:roomid', {
         'userid': session['user_id'],
         'roomid': request.form['roomId']}).fetchone()
