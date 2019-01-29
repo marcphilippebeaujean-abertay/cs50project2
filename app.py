@@ -275,10 +275,12 @@ def join_room():
         db.commit()
         return jsonify({
             'success': True,
-            'room': {'roomName': room.roomname,
-                     'roomOwner': session.get('user_id'),
-                     'inviteKey': request.form.get('inviteKey'),
-                     'roomId': room.chatroomid}
+            'room': {
+                'roomName': room.roomname,
+                'roomOwner': session.get('user_id'),
+                'inviteKey': request.form.get('inviteKey'),
+                'roomId': room.chatroomid
+            }
         })
 # hsd
 

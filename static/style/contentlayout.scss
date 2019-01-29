@@ -38,3 +38,9 @@ $sidebar-width: 250px;
 #chat-msg-area{
   resize: none;
 }
+
+@media only screen and (max-width: $init-content-width) {
+  #user-view-grid {
+    width: 100%;
+  }
+}
