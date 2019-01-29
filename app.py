@@ -270,20 +270,28 @@ def join_room():
         })
     else:
         # TODO ensure that user is not redundant in the chatroom
-        db.execute('INSERT INTO chatroomusers (userid, chatid) VALUES (:userid, :chatid)', {
-            'userid': session.get('user_id'),
-            'chatid': room.chatroomid
-        })
+        sql_query = 'INSERT INTO chatroomusers (userid, chatid) '
+        sql_query += 'SELECT :userid, :chatid '
+        sql_query += 'WHERE NOT EXISTS (SELECT 1 FROM chatroomusers WHERE userid = :userid AND chatid = :chatid)'
+        row_count = db.execute(sql_query, {
+                    'userid': session.get('user_id'),
+                    'chatid': room.chatroomid}).rowcount
         db.commit()
-        return jsonify({
-            'success': True,
-            'room': {
-                'roomName': room.roomname,
-                'roomOwner': session.get('user_id'),
-                'inviteKey': request.form.get('inviteKey'),
-                'roomId': room.chatroomid
-            }
-        })
+        if row_count > 0:
+            return jsonify({
+                'success': True,
+                'room': {
+                    'roomName': room.roomname,
+                    'roomOwner': session.get('user_id'),
+                    'inviteKey': request.form.get('inviteKey'),
+                    'roomId': room.chatroomid
+                }
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'respMessage': 'Already in room'
+            })
 
 
 @socketio.on('post message')
