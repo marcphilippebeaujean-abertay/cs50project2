@@ -13,10 +13,6 @@ export const getLocalRoomInformation = () => {
     }
 };
 
-export const deleteLocalInformation = () => {
-
-};
-
 export const updateLocalRoomInformation = (roomInfo) => {
     window.localStorage.setItem('roomName', roomInfo['roomName']);
     window.localStorage.setItem('roomId', roomInfo['roomId']);

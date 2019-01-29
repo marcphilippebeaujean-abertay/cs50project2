@@ -11,15 +11,24 @@ let chatroomsController = undefined;
 let messagesController = undefined;
 let socketController = undefined;
 
+window.addEventListener("popstate", function(e) {
+    window.location.reload();
+});
+
 document.addEventListener('DOMContentLoaded', () =>{
     Model.dispatchUserInfoRequest((respInfo) => {
         if(respInfo['success'] === false){
             userAccessController = new UserAccessController();
         }else{
+            console.log(respInfo);
             if(getLocalUserInformation().username == null ||
                getLocalUserInformation().userId == null){
                 window.localStorage.setItem('username', respInfo['userInfo'].username);
                 window.localStorage.setItem('userId', respInfo['userInfo'].userid);
+            }else{
+                // If user is still logged in locally and has
+                // left the user view without logging out, redirect
+                window.location.href = respInfo.redirect;
             }
             messagesController = new MessagesController();
             chatroomsController = new ChatroomsController(
