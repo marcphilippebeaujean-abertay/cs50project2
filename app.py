@@ -72,7 +72,7 @@ def register():
     return render_template('register_form.html')
 
 
-@app.route('/user/<int:userid>')
+@app.route('/user/<int:userid>/')
 def user_view(userid):
     session_user_id = session.get('user_id')
     if session_user_id is None:

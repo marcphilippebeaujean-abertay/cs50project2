@@ -114,7 +114,7 @@ export default class ChatroomsController extends Controller{
                 console.log('weird response form');
         }
     }
-    onChatroomOpened(chatroomInfo){
+    onChatroomOpened(chatroomInfo, pop=false){
         if(this.currentChatroom['roomName'] === chatroomInfo['roomName']){
             return;
         }
@@ -122,7 +122,6 @@ export default class ChatroomsController extends Controller{
         updateLocalRoomInformation(chatroomInfo);
         this.view.changeChatroom(chatroomInfo);
         this.roomSwitchCallback(chatroomInfo['roomId']);
-        history.pushState({'roomInfo': chatroomInfo}, chatroomInfo['roomName'], chatroomInfo['roomName']);
     }
     initialiseRoom(roomInfo){
         let chatDeleteCallback = undefined;
