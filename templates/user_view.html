@@ -76,11 +76,12 @@
                     alt="add chatroom button"
                     class="interaction-logo toggle-add-chatroom-window"
                 />
-                <a href="{{ url_for('log_out_user') }}"><img
+                <img
                     src="{{ url_for('static', filename='images/logout.png') }}"
                     alt="log out button"
                     class="interaction-logo"
-                /></a>
+                    id="log-out-btn"
+                />
             </div>
         </div>
         <div id="sidebar-whitespace">

@@ -40,6 +40,13 @@ export default class ChatroomsController extends Controller{
                 this.view.toggleChatroomAddWindow);
         });
         this.model.dispatchChatroomListRequest();
+        const logOutElem = document.getElementById('log-out-btn');
+        if(logOutElem !== undefined){
+            logOutElem.addEventListener(
+                'click',
+                () => this.model.dispatchLogOutRequest()
+            );
+        }
     }
     onAddChatroomAttempt(e){
         e.preventDefault();
@@ -53,6 +60,12 @@ export default class ChatroomsController extends Controller{
         }
     }
     handleResponse(responseMessage){
+        if(responseMessage['type'] === 'logOutUser' &&
+           responseMessage['success'] === false){
+            return;
+        }else{
+            localStorage.clear();
+        }
         if(('redirect' in responseMessage)) {
             window.location.href = responseMessage.redirect;
         }

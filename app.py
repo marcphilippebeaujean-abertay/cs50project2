@@ -39,6 +39,8 @@ def home():
 
 @app.route('/login')
 def login():
+    if session.get('user_id') is not None:
+        return redirect(url_for('user_view', userid=session.get('user_id')))
     return render_template('login.html')
 
 
@@ -60,15 +62,21 @@ def login_user():
         return jsonify(resp_dict)
 
 
-@app.route('/log_out')
+@app.route('/log_out', methods=['POST'])
 def log_out_user():
     if session.get('user_id') is not None:
         session['user_id'] = None
-    return redirect(url_for('home'))
+    else:
+        return jsonify({'success': False})
+    resp = dict(redirect=url_for('home'))
+    resp['success'] = True
+    return jsonify(resp)
 
 
 @app.route('/register')
 def register():
+    if session.get('user_id') is not None:
+        return redirect(url_for('user_view', userid=session.get('user_id')))
     return render_template('register_form.html')
 
 
@@ -165,13 +173,13 @@ def get_user_info():
         return jsonify({'success': False})
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session.get('user_id')}).fetchone()
-    return jsonify({
-        'success': True,
-        'userInfo': {
+    resp = dict(redirect=url_for('user_view', userid=user_info.userid))
+    resp['success'] = True
+    resp['userInfo'] = {
             'username': user_info['username'],
             'userid': user_info['userid']
         }
-    })
+    return jsonify(resp)
 
 
 @app.route('/delete_room', methods=['DELETE'])

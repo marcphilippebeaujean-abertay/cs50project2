@@ -59,4 +59,9 @@ export default class ChatroomsModel extends Model{
         data.append('inviteKey', inviteKey);
         request.send(data);
     }
+    dispatchLogOutRequest(){
+        const request = this.initXMLHttpReq('logOutUser');
+        request.open('POST', '/log_out');
+        request.send();
+    }
 }
