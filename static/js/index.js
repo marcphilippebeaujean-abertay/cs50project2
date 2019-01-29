@@ -3,6 +3,7 @@ import UserAccessController from "./user_access/userAccessController";
 import ChatroomsController from "./user_view/chatroomsController";
 import MessagesController from "./user_view/messagesController";
 import SocketController from "./user_view/socketManager";
+import MobileNavController from "./mobilenavController";
 import {getLocalUserInformation} from './localStorage';
 import Model from './interfaces/model';
 
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () =>{
             socketController = new SocketController(
                 messagesController.view
             );
+            const mobileNavController = new MobileNavController();
         }
     });
 });

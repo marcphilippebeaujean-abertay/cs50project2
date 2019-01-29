@@ -38,4 +38,8 @@ $navbar-height-phone: 50px;
     right: 10%;
     color: white;
   }
+  #bars-nav{
+    cursor: pointer;
+    z-index: 1;
+  }
 }
