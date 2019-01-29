@@ -34,6 +34,7 @@ def random_string(string_len=10):
 def home():
     if session.get('user_id') is None:
         return redirect(url_for('login'))
+    print('redirect to user view')
     return redirect(url_for('user_view', userid=session.get('user_id')))
 
 
@@ -65,7 +66,7 @@ def login_user():
 @app.route('/log_out', methods=['POST'])
 def log_out_user():
     if session.get('user_id') is not None:
-        session['user_id'] = None
+        session.pop('user_id')
     else:
         return jsonify({'success': False})
     resp = dict(redirect=url_for('home'))

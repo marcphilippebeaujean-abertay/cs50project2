@@ -11,9 +11,6 @@ let chatroomsController = undefined;
 let messagesController = undefined;
 let socketController = undefined;
 
-window.addEventListener("popstate", function(e) {
-    window.location.reload();
-});
 
 document.addEventListener('DOMContentLoaded', () =>{
     Model.dispatchUserInfoRequest((respInfo) => {
@@ -22,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () =>{
             window.localStorage.clear();
             userAccessController = new UserAccessController();
         }else{
-
             if(getLocalUserInformation().username == null ||
                getLocalUserInformation().userId == null){
                 window.localStorage.setItem('username', respInfo['userInfo'].username);
@@ -30,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () =>{
             }else{
                 // If user is still logged in locally and has
                 // left the user view without logging out, redirect
-                window.location.href = respInfo.redirect;
+                if(document.getElementsByClassName('sign-form').length > 0) {
+                    window.location.href = respInfo.redirect;
+                    console.log('redirecting from login/register');
+                }
             }
             const usernameHeader = document.getElementById('username-header');
             usernameHeader.innerHTML = respInfo['userInfo'].username;
