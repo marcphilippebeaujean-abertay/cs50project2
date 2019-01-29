@@ -4,31 +4,6 @@ $sidebar-width: 250px;
   margin: $navbar-height auto;
 }
 
-#user-view-grid{
-  position: relative;
-  display: flex;
-  width: $init-content-width;
-  margin: 0px auto;
-  flex-direction: row;
-}
-
-#sidebar-whitespace{
-  width: $sidebar-width;
-  max-width: $sidebar-width;
-}
-
-#user-sidebar{
-  position: fixed;
-  width: $sidebar-width;
-  max-width: $sidebar-width;
-}
-
 #chatroom-view{
   flex-grow: 1;
-}
-
-@media only screen and (max-width: $init-content-width) {
-  #user-view-grid {
-    width: 100%;
-  }
 }

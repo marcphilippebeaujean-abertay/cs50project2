@@ -80,9 +80,38 @@
 }
 
 #user-view-grid{
-  display: none;
+  position: relative;
+  display: flex;
+  width: $init-content-width;
+  margin: 0px auto;
+  flex-direction: row;
 }
 
-@media only screen and (max-width: 760px) {
+#sidebar-whitespace{
+  width: $sidebar-width;
+  max-width: $sidebar-width;
+}
 
+#user-sidebar{
+  position: fixed;
+  width: $sidebar-width;
+  max-width: $sidebar-width;
+}
+
+@media only screen and (max-width: $init-content-width) {
+  #user-view-grid {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: $phone-screen-width) {
+  #user-view-grid{
+    width: 100%;
+  }
+  #user-sidebar{
+    display: none;
+  }
+  #sidebar-whitespace{
+    display: none;
+  }
 }

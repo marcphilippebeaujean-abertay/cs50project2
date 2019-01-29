@@ -51,3 +51,9 @@ $msg-margin-sides: 10px;
     width: 90%;
   }
 }
+
+@media only screen and (max-width: $phone-screen-width){
+  .chat-msg{
+    width: 95%;
+  }
+}

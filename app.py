@@ -92,18 +92,19 @@ def user_view(userid):
 
 @app.route('/add_user', methods=["POST"])
 def register_user():
-    if db.execute('SELECT * FROM users WHERE username =:username OR email =:email', {
-                  'username': request.form['name'],
-                  'email': request.form['email']}).fetchone() is not None:
-        # user entry already exists in one form or another
-        return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
-    else:
-        db.execute('INSERT INTO users (username, password, email) VALUES (:username, :password, :email)', {
-                   'username': request.form['name'],
-                   'password': request.form['password'],
-                   'email': request.form['email']})
-        db.commit()
+    sql_query = 'INSERT INTO users (username, password, email) '
+    sql_query += 'SELECT :username, :password, :email '
+    sql_query += 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = :username OR email = :email)'
+    row_count = db.execute(sql_query, {
+        'username': request.form['name'],
+        'password': request.form['password'],
+        'email': request.form['email']}).rowcount
+    db.commit()
+    if row_count > 0:
         return jsonify({'success': True})
+    else:
+        return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
+
 
 
 @app.route('/add_chatroom', methods=['POST'])

@@ -18,9 +18,9 @@
 }
 
 #send-msg-btn{
-  position: absolute;
+  position: relative;
   bottom: 0px;
-  left: 100%;
+  //left: 100%;
 }
 
 .interaction-logo{
@@ -139,3 +139,9 @@ button{
             transform: rotate(360deg);
         }
     }
+
+@media only screen and (max-width: $phone-screen-width){
+  #send-msg-btn {
+    position: initial;
+  }
+}
