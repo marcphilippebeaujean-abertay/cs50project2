@@ -83,12 +83,9 @@ def register():
 @app.route('/user/<int:userid>')
 def user_view(userid):
     session_user_id = session.get('user_id')
-    print(session_user_id)
     if session_user_id is None:
-        print('redirecting cause id is none')
         return redirect(url_for('home'))
     if session_user_id is not userid:
-        print('redirecting cause user id is not for session user')
         return redirect(url_for('home'))
     return render_template('user_view.html')
 

@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () =>{
         if(respInfo['success'] === false){
             userAccessController = new UserAccessController();
         }else{
-            console.log(respInfo);
             if(getLocalUserInformation().username == null ||
                getLocalUserInformation().userId == null){
                 window.localStorage.setItem('username', respInfo['userInfo'].username);
