@@ -1,5 +1,6 @@
 $navbar-bg-clr: rgb(221, 222, 224);
 $navbar-height: 80px;
+$navbar-height-phone: 50px;
 
 #nav-bar{
   height: $navbar-height;
@@ -8,6 +9,7 @@ $navbar-height: 80px;
   margin-top: 0px;
   position: fixed;
   width: 100%;
+  z-index: 1;
 }
 
 #nav-bar-content{
@@ -19,5 +21,10 @@ $navbar-height: 80px;
   #nav-bar{
     width: 100%;
   }
-  
+}
+
+@media only screen and (max-width: $phone-screen-width){
+  #nav-bar{
+    height: $navbar-height-phone;
+  }
 }

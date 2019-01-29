@@ -3,14 +3,25 @@
   bottom: 10px;
   display: flex;
   flex-direction: row;
+  width: 500px;
 }
 
 #chat-msg-area{
   resize: none;
+  flex-grow: 1;
+}
+
+#send-msg-btn-wrapper{
+  position: relative;
+}
+
+#send-msg-btn{
+  position: absolute;
+  bottom: 0px;
 }
 
 @media only screen and (max-width: $init-content-width) {
-    #chat-msg-form{
+  #chat-msg-form {
     width: 40%;
   }
 }
@@ -23,5 +34,9 @@
   }
   #chat-msg-area{
     height: 2.5em;
+  }
+  #send-msg-btn {
+    position: initial;
+    width: 70px;
   }
 }

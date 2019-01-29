@@ -269,7 +269,6 @@ def join_room():
             'respMessage': 'Key did not match any rooms'
         })
     else:
-        # TODO ensure that user is not redundant in the chatroom
         sql_query = 'INSERT INTO chatroomusers (userid, chatid) '
         sql_query += 'SELECT :userid, :chatid '
         sql_query += 'WHERE NOT EXISTS (SELECT 1 FROM chatroomusers WHERE userid = :userid AND chatid = :chatid)'
