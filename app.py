@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify
 from flask_session import Session
 from flask_socketio import SocketIO, emit
+from passlib.hash import sha256_crypt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import string
@@ -49,18 +50,18 @@ def login():
 def login_user():
     if request.form.get('email') is None or request.form.get('email') is None:
         return jsonify({'success': False, 'respMessage': 'Invalid request'})
-    req_user = db.execute('SELECT * FROM users WHERE email =:email AND password =:password', {
-                  'email': request.form['email'],
-                  'password': request.form['password']}).fetchone()
+    req_user = db.execute('SELECT * FROM users WHERE email =:email', {
+                  'email': request.form['email']}).fetchone()
     if req_user is None:
         return jsonify({'success': False, 'respMessage': 'Email or password did not match!'})
     else:
-        session['user_id'] = req_user.userid
-        resp_dict = dict(redirect=url_for('user_view', userid=req_user.userid))
-        resp_dict['success'] = True
-        resp_dict['userId'] = req_user.userid
-        resp_dict['username'] = req_user.username
-        return jsonify(resp_dict)
+        if sha256_crypt.verify(request.form['password'], req_user.password):
+            session['user_id'] = req_user.userid
+            resp_dict = dict(redirect=url_for('user_view', userid=req_user.userid))
+            resp_dict['success'] = True
+            resp_dict['userId'] = req_user.userid
+            resp_dict['username'] = req_user.username
+            return jsonify(resp_dict)
 
 
 @app.route('/log_out', methods=['POST'])
@@ -98,7 +99,7 @@ def register_user():
     sql_query += 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = :username OR email = :email)'
     row_count = db.execute(sql_query, {
         'username': request.form['name'],
-        'password': request.form['password'],
+        'password': sha256_crypt.encrypt(request.form['password']),
         'email': request.form['email']}).rowcount
     db.commit()
     if row_count > 0:
