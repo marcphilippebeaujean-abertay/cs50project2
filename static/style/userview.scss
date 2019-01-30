@@ -47,6 +47,7 @@
   position: relative;
   width: 90%;
   margin: 5px auto;
+  z-index: 3;
 }
 
 #close-chat-window{
@@ -110,10 +111,12 @@
     top: -9999px !important;
     left: -9999px !important;
   }
-
+  .overlay-window{
+    width: 100%;
+  }
   #user-sidebar{
     width: 100%;
-    z-index: 2;
+    z-index: -1;
     left: 50%;
     transform: translate(-50%, 0%);
   }
