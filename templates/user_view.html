@@ -64,7 +64,7 @@
         </div>
     </div>
     <div id="user-view-grid">
-        <div id="user-sidebar">
+        <div id="user-sidebar" class="hide-for-phone">
             <h2 id="username-header"></h2>
             <ul id="chatroom-list">
             </ul>
@@ -91,7 +91,10 @@
             <div id="messages-view">
             </div>
             <form id="chat-msg-form">
-                <textarea id="chat-msg-area" rows="4" cols="50" maxlength="250"></textarea>
+                <textarea id="chat-msg-area"
+                          rows="4" cols="50"
+                          maxlength="250">
+                </textarea>
                 <div id="send-msg-btn-wrapper">
                     <button type="submit"
                         class="btn btn-outline-primary"

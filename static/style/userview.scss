@@ -105,8 +105,13 @@
 }
 
 @media only screen and (max-width: $phone-screen-width) {
+  .hide-for-phone {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+
   #user-sidebar{
-    //display: none;
     width: 100%;
     z-index: 2;
     left: 50%;

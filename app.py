@@ -107,7 +107,6 @@ def register_user():
         return jsonify({'success': False, 'respMessage': 'Username or Email already in use!'})
 
 
-
 @app.route('/add_chatroom', methods=['POST'])
 def add_chat_room():
     if db.execute('SELECT * FROM chatrooms WHERE roomname =:roomName', {
