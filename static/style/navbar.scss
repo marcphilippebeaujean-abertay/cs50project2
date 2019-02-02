@@ -17,9 +17,6 @@ $navbar-height-phone: 50px;
   margin: auto;
 }
 
-#bars-nav{
-  display: none;
-}
 
 @media only screen and (max-width: 980px) {
   #nav-bar{
@@ -27,19 +24,28 @@ $navbar-height-phone: 50px;
   }
 }
 
+@media only screen and (min-width: $phone-screen-width){
+  .bars-nav{
+    display: none !important;
+  }
+}
+
 @media only screen and (max-width: $phone-screen-width){
   #nav-bar{
     height: $navbar-height-phone;
   }
-  #bars-nav{
-    display: block;
+  .bars-nav{
     position: fixed;
     top: 0%;
     right: 10%;
     color: white;
-  }
-  #bars-nav{
     cursor: pointer;
     z-index: 1;
+  }
+  #hamburger-bar{
+    display: block;
+  }
+  #back-arrow{
+    display: none;
   }
 }
