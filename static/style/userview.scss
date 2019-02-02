@@ -115,12 +115,18 @@
     width: 100%;
   }
   #user-sidebar{
+    position: fixed;
     width: 100%;
     z-index: -1;
-    left: 50%;
-    transform: translate(-50%, 0%);
+    max-width: 100%;
+    h2{
+      text-align: center;
+    }
   }
   #sidebar-whitespace{
     display: none;
+  }
+  #user-inceractions-div{
+    position: relative;
   }
 }

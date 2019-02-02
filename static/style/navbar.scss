@@ -33,8 +33,8 @@ $navbar-height-phone: 50px;
   }
   #bars-nav{
     display: block;
-    position: absolute;
-    top: 2%;
+    position: fixed;
+    top: 0%;
     right: 10%;
     color: white;
   }
