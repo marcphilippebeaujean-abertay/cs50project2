@@ -41,9 +41,9 @@ def home():
 
 @app.route('/login')
 def login():
-    if session.get('user_id') is not None:
-        return redirect(url_for('user_view', userid=session.get('user_id')))
-    return render_template('login.html')
+    if session.get('user_id') is None:
+        return render_template('login.html')
+    return redirect(url_for('user_view', userid=session.get('user_id')))
 
 
 @app.route('/login_user', methods=['POST'])
@@ -66,10 +66,10 @@ def login_user():
 
 @app.route('/log_out', methods=['POST'])
 def log_out_user():
-    if session.get('user_id') is not None:
-        session.pop('user_id')
-    else:
+    if session.get('user_id') is None:
         return jsonify({'success': False})
+    else:
+        session.pop('user_id')
     resp = dict(redirect=url_for('home'))
     resp['success'] = True
     return jsonify(resp)
@@ -77,9 +77,9 @@ def log_out_user():
 
 @app.route('/register')
 def register():
-    if session.get('user_id') is not None:
-        return redirect(url_for('user_view', userid=session.get('user_id')))
-    return render_template('register_form.html')
+    if session.get('user_id') is None:
+        return render_template('register_form.html')
+    return redirect(url_for('user_view', userid=session.get('user_id')))
 
 
 @app.route('/user/<int:userid>')
@@ -87,9 +87,9 @@ def user_view(userid):
     session_user_id = session.get('user_id')
     if session_user_id is None:
         return redirect(url_for('home'))
-    if session_user_id is not userid:
-        return redirect(url_for('home'))
-    return render_template('user_view.html')
+    if session_user_id is userid:
+        return render_template('user_view.html')
+    return redirect(url_for('home'))
 
 
 @app.route('/add_user', methods=["POST"])
