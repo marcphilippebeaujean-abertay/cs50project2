@@ -35,7 +35,6 @@ def random_string(string_len=10):
 def home():
     if session.get('user_id') is None:
         return redirect(url_for('login'))
-    print('redirect to user view')
     return redirect(url_for('user_view', userid=session.get('user_id')))
 
 
@@ -171,7 +170,9 @@ def get_user_info():
     if session.get('user_id') is None or session.get('user_id') is '':
         return jsonify({'success': False})
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
-                'userid': session.get('user_id')}).fetchone()
+                'userid': session['user_id']}).fetchone()
+    if user_info is None:
+        return jsonify({'success': False})
     resp = dict(redirect=url_for('user_view', userid=user_info.userid))
     resp['success'] = True
     resp['userInfo'] = {
