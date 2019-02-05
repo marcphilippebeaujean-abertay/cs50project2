@@ -297,11 +297,16 @@ def join_room():
 @socketio.on('post message')
 def add_new_msg(data):
     data['isPending'] = False
-    emit('server message callback', data, broadcast=True)
-    db.execute('INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) VALUES (:chatroomid, :messagecontent, :timestamp, :sendername)', {
-        'chatroomid': data['roomId'],
-        'messagecontent': data['message'],
-        'timestamp': data['timestamp'],
-        'sendername': data['username']
-        })
+    sql_query = 'INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) '
+    sql_query += 'SELECT :chatroomid, :messagecontent, :timestamp, :sendername '
+    sql_query += 'WHERE EXISTS (SELECT 1 FROM chatrooms WHERE chatroomid = :chatroomid)'
+    row_count = db.execute(sql_query, {
+                'chatroomid': data['roomId'],
+                'messagecontent': data['message'],
+                'timestamp': data['timestamp'],
+                'sendername': data['username']
+                }).rowcount
     db.commit()
+    if row_count > 0:
+        emit('server message callback', data, broadcast=True)
+
