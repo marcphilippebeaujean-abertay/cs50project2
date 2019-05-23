@@ -168,7 +168,7 @@ def get_user_chatrooms():
 @app.route('/get_user_info', methods=['GET'])
 def get_user_info():
     if session.get('user_id') is None or session.get('user_id') is '':
-        return jsonify({'success': False})
+        return jsonify({'success': False, 'redirect'=url_for('home')})
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session['user_id']}).fetchone()
     if user_info is None:

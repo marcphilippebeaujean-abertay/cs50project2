@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () =>{
             console.log('not logged in');
             window.localStorage.clear();
             userAccessController = new UserAccessController();
+            if(document.getElementsByClassName('sign-form').length == 0){
+                window.location.href = respInfo.redirect;
+            }
         }else{
             console.log('logged in');
             if(getLocalUserInformation().username == null ||
