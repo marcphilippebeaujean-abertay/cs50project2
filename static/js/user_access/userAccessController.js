@@ -67,6 +67,7 @@ export default class UserAccessController extends Controller{
                 if (respData['success']) {
                     window.localStorage.setItem('userId', respData['userId']);
                     window.localStorage.setItem('username', respData['username']);
+                    console.log(respData.redirect);
                     if (respData.redirect) {
                         window.location.href = respData.redirect;
                         return;

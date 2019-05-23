@@ -15,22 +15,23 @@ let socketController = undefined;
 
 document.addEventListener('DOMContentLoaded', () =>{
     Model.dispatchUserInfoRequest((respInfo) => {
+        console.log('dc');
         if(respInfo['success'] === false){
             console.log('not logged in');
             window.localStorage.clear();
             userAccessController = new UserAccessController();
         }else{
+            console.log('logged in');
             if(getLocalUserInformation().username == null ||
                getLocalUserInformation().userId == null){
                 window.localStorage.setItem('username', respInfo['userInfo'].username);
                 window.localStorage.setItem('userId', respInfo['userInfo'].userid);
-            }else{
-                // If user is still logged in locally and has
-                // left the user view without logging out, redirect
-                if(document.getElementsByClassName('sign-form').length > 0) {
-                    window.location.href = respInfo.redirect;
-                    console.log('redirecting from login/register');
-                }
+            }
+            // If user is still logged in locally and has
+            // left the user view without logging out, redirect
+            if(document.getElementsByClassName('sign-form').length > 0) {
+                window.location.href = respInfo.redirect;
+                console.log('redirecting from login/register');
             }
             const usernameHeader = document.getElementById('username-header');
             usernameHeader.innerHTML = respInfo['userInfo'].username;

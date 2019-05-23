@@ -14,7 +14,7 @@ if __name__ is "__main__":
 # Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config["SECRET_KEY"] = 'secret!'
+app.config["SECRET_KEY"] = 'secret_key'#os.urandom(24)
 Session(app)
 socketio = SocketIO(app)
 
