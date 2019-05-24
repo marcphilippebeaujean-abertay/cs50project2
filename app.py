@@ -33,16 +33,12 @@ def random_string(string_len=10):
 
 @app.route('/')
 def home():
-    if session.get('user_id') is None:
-        return redirect(url_for('login'))
-    return redirect(url_for('user_view', userid=session.get('user_id')))
+    return redirect(url_for('login'))
 
 
 @app.route('/login')
 def login():
-    if session.get('user_id') is None:
-        return render_template('login.html')
-    return redirect(url_for('user_view', userid=session.get('user_id')))
+    return render_template('login.html')
 
 
 @app.route('/login_user', methods=['POST'])
@@ -61,6 +57,8 @@ def login_user():
             resp_dict['userId'] = req_user.userid
             resp_dict['username'] = req_user.username
             return jsonify(resp_dict)
+        else:
+            return jsonify({'success': False})
 
 
 @app.route('/log_out', methods=['POST'])
@@ -76,19 +74,12 @@ def log_out_user():
 
 @app.route('/register')
 def register():
-    if session.get('user_id') is None:
-        return render_template('register_form.html')
-    return redirect(url_for('user_view', userid=session.get('user_id')))
+    return render_template('register_form.html')
 
 
 @app.route('/user/<int:userid>')
 def user_view(userid):
-    session_user_id = session.get('user_id')
-    if session_user_id is None:
-        return redirect(url_for('home'))
-    if session_user_id is userid:
-        return render_template('user_view.html')
-    return redirect(url_for('home'))
+    return render_template('user_view.html')
 
 
 @app.route('/add_user', methods=["POST"])
@@ -137,7 +128,7 @@ def add_chat_room():
         db.commit()
         return jsonify({
             'success': True,
-            'respMessage': f'Generated new room with invite key {unique_id}',
+            'respMessage': 'Generated new room with invite key {}'.format(unique_id),
             'room': {'roomName': request.form['roomName'],
                      'roomOwner': session_user_id,
                      'inviteKey': unique_id,
@@ -168,7 +159,9 @@ def get_user_chatrooms():
 @app.route('/get_user_info', methods=['GET'])
 def get_user_info():
     if session.get('user_id') is None or session.get('user_id') is '':
-        return jsonify({'success': False, 'redirect'=url_for('home')})
+        resp = dict(redirect=url_for('home'))
+        resp['success'] = False
+        return jsonify(resp)
     user_info = db.execute('SELECT * FROM users WHERE userid =:userid', {
                 'userid': session['user_id']}).fetchone()
     if user_info is None:
