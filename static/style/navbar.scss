@@ -17,6 +17,13 @@ $navbar-height-phone: 50px;
   margin: auto;
 }
 
+#content-loading{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  background-color: white;
+}
 
 @media only screen and (max-width: 980px) {
   #nav-bar{

@@ -4,7 +4,7 @@
   {% block head %}
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8"/>
-    <title>{% block title %}Let's Talk {% endblock %}</title>
+    <title>{% block title %}LetzChat {% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/style.css') }}"/>
     <link
@@ -29,11 +29,13 @@
     <div id="nav-bar">
         <div id="nav-bar-content">
             <div id="logo">
-                 <h1><span id="logo_pt1">let's</span><span id="logo_pt2">chat</span></h1>
+                 <h1><span id="logo_pt1">letz</span><span id="logo_pt2">chat</span></h1>
             </div>
         </div>
     </div>
     <div id="content">
+        <div id="content-loading">
+        </div>
         {% block  content %}
         {% endblock %}
     </div>

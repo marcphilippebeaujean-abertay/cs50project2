@@ -15,7 +15,7 @@ let socketController = undefined;
 
 document.addEventListener('DOMContentLoaded', () =>{
     Model.dispatchUserInfoRequest((respInfo) => {
-        console.log('dc');
+        let loadingScreen = document.getElementById('content-loading')
         if(respInfo['success'] === false){
             console.log('not logged in');
             window.localStorage.clear();
@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () =>{
             if(document.getElementsByClassName('sign-form').length == 0){
                 window.location.href = respInfo.redirect;
             }
+            let loadingScreen = document.getElementById('content-loading')
+            loadingScreen.hidden = true;
         }else{
             console.log('logged in');
             if(getLocalUserInformation().username == null ||

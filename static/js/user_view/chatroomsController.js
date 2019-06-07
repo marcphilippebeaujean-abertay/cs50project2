@@ -102,6 +102,10 @@ export default class ChatroomsController extends Controller{
                 // Initialise view after chatrooms have been
                 // queried from the backend
                 this.view.initChatroomView();
+                let loadingScreen = document.getElementById('content-loading')
+                if(!loadingScreen.hidden) {
+                    loadingScreen.hidden = true;
+                }
                 break;
             case 'deleteRoom':
                 if(responseMessage['success']) {

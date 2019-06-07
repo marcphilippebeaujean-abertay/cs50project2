@@ -45,7 +45,6 @@ export default class MessagesController extends Controller{
                    });
                 });
                 this.view.scrollToBottom();
-                this.view.toggleMessageLoadingSpinner();
                 break;
             default:
                 console.log('weird response message type');
