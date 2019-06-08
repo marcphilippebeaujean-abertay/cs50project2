@@ -9,8 +9,6 @@ import random
 import os
 
 app = Flask(__name__)
-if __name__ is "__main__":
-    app.run(debug=True)
 # Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -232,8 +230,13 @@ def get_room_msgs():
         'roomid': room_id}).fetchone() is None:
         return jsonify({ 'success': False, 'respMessage': 'User does not have permission to these messages or chatroom does not exist' })
     # Get all messages from a given chatroom
-    msgs = db.execute('SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY timestamp) FROM messages WHERE chatroomid =:chatroomid) a WHERE row_number <= 30', {
+    print(room_id)
+    sql_query = 'SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY timestamp) '
+    sql_query += 'FROM messages WHERE chatroomid =:chatroomid) AS a '
+    sql_query += 'WHERE row_number <= 30'
+    msgs = db.execute(sql_query, {
                       'chatroomid': room_id}).fetchall()
+    print(len(msgs))
     message_list = []
     for msg in msgs:
         message_list.append({
@@ -241,6 +244,7 @@ def get_room_msgs():
             'timestamp': msg[2],
             'username': msg[3]
         })
+    print(len(msgs))
     return jsonify({
         'success': True,
         'messages': message_list
@@ -290,6 +294,7 @@ def join_room():
 
 @socketio.on('post message')
 def add_new_msg(data):
+    print('sent new message')
     data['isPending'] = False
     sql_query = 'INSERT INTO messages (chatroomid, messagecontent, timestamp, sendername) '
     sql_query += 'SELECT :chatroomid, :messagecontent, :timestamp, :sendername '
@@ -304,3 +309,6 @@ def add_new_msg(data):
     if row_count > 0:
         emit('server message callback', data, broadcast=True)
 
+
+if __name__ is "__main__":
+    socketio.run(app)

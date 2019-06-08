@@ -35,7 +35,6 @@ export default class MessagesController extends Controller{
         }
         switch(responseMessage['type']) {
             case 'getRoomMessages':
-                this.view.toggleMessageLoadingSpinner();
                 this.view.lastMsgSender = "";
                 responseMessage['messages'].forEach( msg => {
                    this.view.addMessageToView({
