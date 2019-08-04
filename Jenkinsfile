@@ -22,13 +22,11 @@ pipeline {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
-        }
-        stage('Deploy') {
-            agent { label 'master' }
-            steps {
-                sh 'docker build -f Dockerfile -t jenkins-pipeline .'
-                sh 'docker run -p 8180:8180 jenkins-pipeline &'
-            }
         }*/
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose up'
+            }
+        }
     }
 }
