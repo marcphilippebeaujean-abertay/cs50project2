@@ -42,9 +42,11 @@ export default class SocketController{
                 }
             });
         this.socket.on('server message callback', data => {
-            if(data['userid'] == this.userinfo['userid']) {
+            console.log("recieved message from user");
+            if(data['userid'] === this.userinfo['userid']) {
                 this.view.confirmMessage(data);
             }else{
+                console.log("recieved message from other user");
                 this.view.addMessageToView({
                     ...data,
                     'fromCurrentUser': false

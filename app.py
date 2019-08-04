@@ -1,9 +1,12 @@
+#!/usr/bin/python3
+
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify
 from flask_session import Session
 from flask_socketio import SocketIO, emit
 from passlib.hash import sha256_crypt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from threading import Thread
 import string
 import random
 import os
@@ -17,9 +20,9 @@ Session(app)
 socketio = SocketIO(app)
 
 # Configure DB
-if not os.getenv('DATABASE_URI'):
-    raise RuntimeError("DATABASE_URI is not set")
-engine = create_engine(os.getenv('DATABASE_URI'))
+#if not os.getenv('DATABASE_URI'):
+#    raise RuntimeError("DATABASE_URI is not set")
+engine = create_engine('postgres://mtcawriaieekfa:878c2c19e6524a72342de8943973871d1c6a88b77ee5c84b34a83458124e75da@ec2-54-75-230-41.eu-west-1.compute.amazonaws.com:5432/db4jqtlpevbq8v')
 db = scoped_session(sessionmaker(bind=engine))
 
 
@@ -310,5 +313,8 @@ def add_new_msg(data):
         emit('server message callback', data, broadcast=True)
 
 
+#def emit_async(data):
+#    emit('server message callback', data, broadcast=True)
+
 if __name__ is "__main__":
-    socketio.run(app)
+    app.run()

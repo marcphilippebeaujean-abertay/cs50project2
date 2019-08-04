@@ -39,7 +39,7 @@ export default class MessagesView{
             this.lastMsgSender = msgData['username'];
         }
         msgList.insertAdjacentHTML('beforeend', markup);
-        if(msgData['fromCurrentUser'] === true){
+        if(msgData['fromCurrentUser']){
             this.scrollToBottom();
         }
     }

@@ -1,7 +1,8 @@
 #chat-msg-form{
   position: fixed;
-  bottom: 10px;
+  bottom: 2px;
   display: flex;
+  height: 80px;
   flex-direction: row;
   width: 500px;
 }
@@ -25,6 +26,7 @@
 @media only screen and (max-width: $init-content-width) {
   #chat-msg-form {
     width: 40%;
+    bottom: 0px;
   }
 }
 
@@ -32,7 +34,8 @@
   #chat-msg-form{
     width: 98%;
     left: 50%;
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, 40%);
+    bottom: 0px;
   }
   #chat-msg-area{
     height: 2.5em;
