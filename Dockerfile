@@ -17,4 +17,4 @@ COPY ./templates/* ./templates/
 COPY ./letzchat/* ./letzchat/
 COPY ./wsgi.py .
 
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:9999", "wsgi:app", "--worker-class", "eventlet", "--reload"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:9999", "wsgi:letzchat_app", "--worker-class", "eventlet", "--reload"]
