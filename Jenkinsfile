@@ -7,7 +7,7 @@ pipeline {
             }
         }
         stage('Test') {
-            agent { docker { image 'python:latest' } }
+            agent { docker { image 'python' } }
             steps {
                 sh 'python3 application/tests.py'
             }
