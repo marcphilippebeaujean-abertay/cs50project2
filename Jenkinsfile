@@ -7,10 +7,8 @@ pipeline {
             }
         }
         stage('Test') {
-            post {
-                always {
-                    python3 'application/tests.py'
-                }
+            steps {
+                python3 'application/tests.py'
             }
         }
         stage('Build') {
