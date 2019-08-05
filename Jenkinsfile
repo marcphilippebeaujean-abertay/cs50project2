@@ -6,22 +6,18 @@ pipeline {
                 sh 'ls'
             }
         }
+        stage('Test') {
+            post {
+                always {
+                    python3 'application/tests.py'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh 'docker-compose build'
             }
         }
-        /*stage('Test') {
-            agent { docker { image 'maven:3.3.3' } }
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }*/
         stage('Deploy') {
             steps {
                 /* stop running containers */

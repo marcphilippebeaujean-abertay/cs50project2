@@ -6,10 +6,8 @@ from flask_socketio import SocketIO, emit
 from passlib.hash import sha256_crypt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from threading import Thread
 import string
 import random
-import os
 
 app = Flask(__name__, template_folder='../templates')
 # Configure session
@@ -312,9 +310,6 @@ def add_new_msg(data):
     if row_count > 0:
         emit('server message callback', data, broadcast=True)
 
-
-#def emit_async(data):
-#    emit('server message callback', data, broadcast=True)
 
 if __name__ is "__main__":
     app.run()
