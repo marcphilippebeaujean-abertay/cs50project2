@@ -11,7 +11,7 @@ import string
 import random
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates')
 # Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"

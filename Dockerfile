@@ -11,10 +11,9 @@ RUN pip3 install -r /project/requirements.txt
 RUN rm -r /root/.cache
 
 RUN mkdir templates
-RUN mkdir letzchat
+RUN mkdir appplication
 
 COPY ./templates/* ./templates/
-COPY ./letzchat/* ./letzchat/
-COPY ./wsgi.py .
+COPY ./application/* ./application/
 
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:9999", "wsgi:letzchat_app", "--worker-class", "eventlet", "--reload"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:9999", "application.app:app", "--worker-class", "eventlet", "--reload"]
