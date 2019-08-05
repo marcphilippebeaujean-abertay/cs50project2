@@ -6,7 +6,7 @@ class TestURLs(unittest.TestCase):
        print('starting test')
 
     def test_addition(self):
-        assert(1+1 == 2)
+        assert(1+2 == 2)
 
 
 if __name__ == '__main__':
