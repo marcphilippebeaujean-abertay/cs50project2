@@ -1,0 +1,393 @@
+#logo {
+  margin-top: 0px; }
+  #logo h1 {
+    font-size: 80px;
+    margin-top: 0px; }
+
+#logo:hover {
+  cursor: default; }
+
+#logo_pt1 {
+  color: #5d8ba6; }
+
+#logo_pt2 {
+  color: #31539b; }
+
+@media only screen and (max-width: 600px) {
+  #logo {
+    position: relative;
+    bottom: 10px;
+    margin-top: 0px; }
+    #logo h1 {
+      font-size: 50px;
+      margin-top: 0px; } }
+
+#nav-bar {
+  height: 80px;
+  top: 0;
+  background-color: #dddee0;
+  margin-top: 0px;
+  position: fixed;
+  width: 100%;
+  z-index: 1; }
+
+#nav-bar-content {
+  width: 1000px;
+  margin: auto; }
+
+#content-loading {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  background-color: white; }
+
+@media only screen and (max-width: 980px) {
+  #nav-bar {
+    width: 100%; } }
+
+@media only screen and (min-width: 600px) {
+  .bars-nav {
+    display: none !important; } }
+
+@media only screen and (max-width: 600px) {
+  #nav-bar {
+    height: 50px; }
+  .bars-nav {
+    position: fixed;
+    top: 0%;
+    right: 10%;
+    color: white;
+    cursor: pointer;
+    z-index: 1; }
+  #hamburger-bar {
+    display: block; }
+  #back-arrow {
+    display: none; } }
+
+#content {
+  margin: 80px auto; }
+
+#chatroom-view {
+  flex-grow: 1; }
+
+@media only screen and (max-width: 600px) {
+  #content {
+    margin: 50px auto; } }
+
+#user-inceractions-div {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  width: 100%; }
+
+#delete-chatroom-overlay h2 {
+  text-align: center; }
+
+.overlay {
+  position: fixed;
+  /* Sit on top of the page content */
+  display: none;
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(1, 1, 1, 0.5);
+  /* Black background with opacity */
+  z-index: 2; }
+
+.overlay-window {
+  position: fixed;
+  display: block;
+  width: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-width: thin;
+  border-color: #000;
+  border-style: solid; }
+
+.inline-radio-btns span {
+  margin-right: 10px; }
+
+.add-chatroom-form {
+  position: relative;
+  width: 90%;
+  margin: 5px auto;
+  z-index: 3; }
+
+#close-chat-window {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0%; }
+
+.toggle-add-chatroom-window:hover {
+  cursor: pointer; }
+
+.adding-chat-error {
+  margin-top: 10px; }
+
+#adding-chat-update-msg {
+  margin-top: 10px; }
+
+#user-sidebar ul {
+  margin: 0;
+  /* To remove default bottom margin */
+  padding: 0;
+  /* To remove default left padding */ }
+
+#chatroom-view {
+  position: relative; }
+
+#user-view-grid {
+  position: relative;
+  display: flex;
+  width: 1000px;
+  margin: 0px auto;
+  flex-direction: row; }
+
+#sidebar-whitespace {
+  width: 250px;
+  max-width: 250px; }
+
+#user-sidebar {
+  position: fixed;
+  width: 250px;
+  max-width: 250px; }
+
+@media only screen and (max-width: 1000px) {
+  #user-view-grid {
+    width: 100%; } }
+
+@media only screen and (max-width: 600px) {
+  .hide-for-phone {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important; }
+  .overlay-window {
+    width: 100%; }
+  #user-sidebar {
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+    max-width: 100%; }
+    #user-sidebar h2 {
+      text-align: center; }
+  #sidebar-whitespace {
+    display: none; }
+  #user-inceractions-div {
+    position: relative; } }
+
+.chat-msg {
+  margin: 0px 10px;
+  font-size: 16px;
+  border-style: solid;
+  border-radius: 15px;
+  border-width: thin;
+  display: inline-block;
+  color: white;
+  width: 48%;
+  background-color: #31539b; }
+
+.msg-content {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px; }
+
+.chat-msg-pending {
+  background-color: #5d8ba6; }
+
+.other-user-msg {
+  position: relative;
+  left: 49%;
+  background-color: white;
+  color: black; }
+
+.user-indicator {
+  margin: 0px 5px; }
+
+.msg-timestamp {
+  margin: 3px 10px; }
+
+#messages-view {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column; }
+
+@media only screen and (max-width: 1000px) {
+  .other-user-msg {
+    left: 0%; }
+  .chat-msg {
+    width: 90%; } }
+
+@media only screen and (max-width: 600px) {
+  .chat-msg {
+    width: 95%; } }
+
+#signup-header h1 {
+  color: #5d8ba6;
+  text-align: center; }
+
+#signup-header h1:hover {
+  cursor: default; }
+
+#signup-header h2 {
+  color: #31539b; }
+
+#sign-in-link {
+  padding-top: 10px; }
+
+.sign-form {
+  width: 500px;
+  margin: auto; }
+  .sign-form h2:hover {
+    cursor: default; }
+
+@media only screen and (max-width: 760px) {
+  .sign-form {
+    width: 80%; } }
+
+#chat-msg-form {
+  position: fixed;
+  bottom: 2px;
+  display: flex;
+  height: 80px;
+  flex-direction: row;
+  width: 500px; }
+
+#chat-msg-area {
+  resize: none;
+  flex-grow: 1; }
+
+#send-msg-btn-wrapper {
+  position: relative; }
+
+#send-msg-btn {
+  position: absolute;
+  bottom: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px; }
+
+@media only screen and (max-width: 1000px) {
+  #chat-msg-form {
+    width: 40%;
+    bottom: 0px; } }
+
+@media only screen and (max-width: 600px) {
+  #chat-msg-form {
+    width: 98%;
+    left: 50%;
+    transform: translate(-50%, 40%);
+    bottom: 0px; }
+  #chat-msg-area {
+    height: 2.5em; }
+  #send-msg-btn {
+    position: initial;
+    width: 70px; } }
+
+.delete-room-btn {
+  color: #de604b;
+  float: right;
+  margin-right: 10px;
+  margin-top: 3px;
+  z-index: 2; }
+
+#delete-chat-btn-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin: 20px 0px; }
+  #delete-chat-btn-layout button {
+    margin: 0px 30px; }
+
+.interaction-logo {
+  height: 30px;
+  width: 30px;
+  margin-right: 30px; }
+
+.interaction-logo:hover {
+  cursor: pointer; }
+
+.chatroom-btn {
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  list-style-type: none;
+  font-size: 16px;
+  color: black;
+  background-color: white; }
+
+.chatroom-btn:hover {
+  cursor: pointer;
+  background-color: #5d8ba6;
+  color: white; }
+
+.chatroom-current {
+  background-color: #31539b;
+  color: white; }
+
+.delete-room-btn:hover {
+  color: white; }
+
+button {
+  width: 100px;
+  height: 40px; }
+
+#msg-loader {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  display: none;
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 4000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: spin;
+  -moz-animation-duration: 4000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 4000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+  animation-name: spin;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
+
+@-ms-keyframes spin {
+  from {
+    -ms-transform: rotate(0deg); }
+  to {
+    -ms-transform: rotate(360deg); } }
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg); }
+  to {
+    -moz-transform: rotate(360deg); } }
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
+body {
+  margin: 0px;
+  font-family: 'Source Sans Pro', sans-serif; }

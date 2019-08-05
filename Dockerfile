@@ -16,6 +16,6 @@ COPY ./templates/* ./templates/
 COPY ./app.py .
 COPY ./wsgi.py .
 
-EXPOSE 8080
+EXPOSE 9999
 
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "wsgi:app", "--worker-class", "eventlet", "--reload"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:9999", "wsgi:app", "--worker-class", "eventlet", "--reload"]

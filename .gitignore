@@ -1,5 +1,4 @@
 venv/
-*.css
 .DS_Store
 .env
 .flaskenv
