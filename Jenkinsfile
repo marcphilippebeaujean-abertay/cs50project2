@@ -6,12 +6,11 @@ pipeline {
                 sh 'ls'
             }
         }
-        /*stage('Build') {
-            agent { docker { image 'maven:3.3.3' } }
+        stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'docker-compose build'
             }
-        }
+        }/*
         stage('Test') {
             agent { docker { image 'maven:3.3.3' } }
             steps {
@@ -25,6 +24,8 @@ pipeline {
         }*/
         stage('Deploy') {
             steps {
+                sh 'docker stop letschat_web_server_1'
+                sh 'docker stop letschat_app_1'
                 sh 'docker-compose up -d'
             }
         }
